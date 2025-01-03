@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.0
+* Updated to MCreator 2024.4
+
 ## 1.10
 (Thank you NerdyPuzzle)
 * [#520] Removed support for TerraBlender API (biome generation is now done similarly to Forge generators)
