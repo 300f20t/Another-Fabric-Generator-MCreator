@@ -1,0 +1,1 @@
+net.fabricmc.loader.api.FabricLoader.getInstance().isModLoaded(${input$modid})
