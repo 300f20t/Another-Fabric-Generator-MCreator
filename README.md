@@ -1,4 +1,4 @@
-I decided to stop MCreator and leave the community. Please read this [topic](https://mcreator.net/forum/107531/final-chapter-my-journey).
+**This is a hard fork of the Goldorion plugin for Fabric.**
 
 # MCreator Fabric Generator
 
