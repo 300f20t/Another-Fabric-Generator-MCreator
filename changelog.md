@@ -2,6 +2,8 @@
 
 ## 2.0
 * Updated to MCreator 2024.4
+* [Bugfix] Added the ability to find out if the mod is loaded
+* [Bugfix] The GUI closing procedure has been fixed
 
 ## 1.10
 (Thank you NerdyPuzzle)
