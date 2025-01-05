@@ -1,1 +1,6 @@
-if(${input$entity} instanceof Player _player) _player.containerMenu = _player.inventoryMenu;
+<#-- @formatter:off -->
+if (entity instanceof ServerPlayer) {
+        ServerPlayer player = (ServerPlayer) entity;
+        player.closeContainer();
+}
+<#-- @formatter:on -->
