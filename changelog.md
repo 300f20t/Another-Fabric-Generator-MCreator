@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.0.1
+* [Bugfix #1] Fixed Potion Effect
+
 ## 2.0
 * Updated to MCreator 2024.4
 * [Bugfix] Added the ability to find out if the mod is loaded
