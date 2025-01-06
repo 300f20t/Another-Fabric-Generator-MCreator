@@ -19,74 +19,20 @@
 -->
 
 <#-- @formatter:off -->
-<#include "mcitems.ftl">
-<#include "procedures.java.ftl">
-
 package ${package}.potion;
+
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
 public class ${name}MobEffect extends MobEffect {
 
-	public ${name}MobEffect() {
-		super(MobEffectCategory.<#if data.isBad>HARMFUL<#elseif data.isBenefitical>BENEFICIAL<#else>NEUTRAL</#if>, ${data.color.getRGB()});
-	}
+    public ${name}MobEffect() {
+        super(MobEffectCategory.${data.mobEffectCategory}, ${data.color.getRGB()});
+    }
 
-	@Override public String getDescriptionId() {
-		return "effect.${modid}.${registryname}";
-	}
-
-	<#if data.isInstant>
-		@Override public boolean isInstantenous() {
-	   		return true;
-   		}
-   	</#if>
-
-	<#if hasProcedure(data.onStarted)>
-		<#if data.isInstant>
-			@Override public void applyInstantenousEffect(Entity source, Entity indirectSource, LivingEntity entity, int amplifier, double health) {
-				Level world = entity.level();
-				double x = entity.getX();
-				double y = entity.getY();
-				double z = entity.getZ();
-				<@procedureOBJToCode data.onStarted/>
-			}
-		<#else>
-			@Override public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-				Level world = entity.level();
-				double x = entity.getX();
-				double y = entity.getY();
-				double z = entity.getZ();
-				<@procedureOBJToCode data.onStarted/>
-			}
-		</#if>
-	</#if>
-
-	<#if hasProcedure(data.onActiveTick)>
-		@Override public void applyEffectTick(LivingEntity entity, int amplifier) {
-			Level world = entity.level();
-			double x = entity.getX();
-			double y = entity.getY();
-			double z = entity.getZ();
-			<@procedureOBJToCode data.onActiveTick/>
-	}
-	</#if>
-
-   	<#if hasProcedure(data.onExpired)>
-		@Override public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-   			super.removeAttributeModifiers(entity, attributeMap, amplifier);
-   			Level world = entity.level();
-			double x = entity.getX();
-			double y = entity.getY();
-			double z = entity.getZ();
-			<@procedureOBJToCode data.onExpired/>
-	}
-	</#if>
-
-	@Override public boolean isDurationEffectTick(int duration, int amplifier) {
-			<#if hasProcedure(data.activeTickCondition)>
-				return <@procedureOBJToConditionCode data.activeTickCondition/>;
-			<#else>
-				return true;
-			</#if>
-	}
+    @Override
+    public String getDescriptionId() {
+        return "effect.${modid}.${registryname}";
+    }
 }
 <#-- @formatter:on -->
