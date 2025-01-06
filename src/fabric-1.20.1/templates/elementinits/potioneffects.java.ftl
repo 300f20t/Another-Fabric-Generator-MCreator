@@ -36,7 +36,7 @@ public class ${JavaModName}MobEffects {
 		</#list>
 	}
 
-	private static Item register(String registryName, MobEffect element) {
+	private static MobEffect register(String registryName, MobEffect element) {
 		return Registry.register(BuiltInRegistries.MOB_EFFECT, new ResourceLocation(${JavaModName}.MODID, registryName), element);
 	}
 }
