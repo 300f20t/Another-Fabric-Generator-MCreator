@@ -76,9 +76,6 @@ public class ${JavaModName}Items {
 				</#if>
 			<#elseif item.getModElement().getTypeString() == "block" || item.getModElement().getTypeString() == "plant">
 				${item.getModElement().getRegistryNameUpper()} = register("${item.getModElement().getRegistryName()}", new BlockItem(${JavaModName}Blocks.${item.getModElement().getRegistryNameUpper()}, new Item.Properties()));
-					<#if item.creativeTab.getUnmappedValue() != "No creative tab entry">
-						ItemGroupEvents.modifyEntriesEvent(${item.creativeTab}).register(content -> content.accept(${item.getModElement().getRegistryNameUpper()}));
-					</#if>
 			<#else>
 				<#if item.getModElement().getTypeString() != "dimension">
 					${item.getModElement().getRegistryNameUpper()} = register("${item.getModElement().getRegistryName()}", new ${item.getModElement().getName()}Item());
