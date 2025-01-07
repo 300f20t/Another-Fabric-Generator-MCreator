@@ -49,10 +49,6 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 					return ${data.damageVsEntity - 2}f;
 				}
 
-   				public int getLevel() {
-					return ${data.harvestLevel};
-				}
-
    				public int getEnchantmentValue() {
 					return ${data.enchantability};
 				}
@@ -60,6 +56,9 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
    				public Ingredient getRepairIngredient() {
 					return ${mappedMCItemsToIngredient(data.repairItems)};
 				}
+				public int getLevel() {
+                    return 1;
+                }
 			},
 
 			<#if data.toolType!="MultiTool">
@@ -78,9 +77,6 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 				</#if>
 		</#if>);
 
-		<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-			ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-		</#if>
 	}
 
 	<#if data.toolType == "Shield" && data.repairItems?has_content>
