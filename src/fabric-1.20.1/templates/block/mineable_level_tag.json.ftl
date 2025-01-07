@@ -1,8 +1,5 @@
 <#assign mineableblocks = []>
 <#list blocks as block>
-	<#if block.breakHarvestLevel == var_level?number>
-		<#assign mineableblocks += [block]>
-	</#if>
 </#list>
 
 {
