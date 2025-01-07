@@ -1,5 +1,10 @@
 # Changelogs:
 
+## 2.0.2
+* [Bugfix] Fixed compilation errors when creating an item
+* [Bugfix] Fixed compilation errors when creating a block
+* [Bugfix] Fixed compilation errors when creating a tool
+
 ## 2.0.1
 * [Bugfix #1] Fixed Potion Effect
 
