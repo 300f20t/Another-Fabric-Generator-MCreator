@@ -31,7 +31,9 @@
 
 <#-- @formatter:off -->
 
+<#include "../procedures.java.ftl">
 <#include "../mcitems.ftl">
+<#include "../triggers.java.ftl">
 
 package ${package}.item;
 
@@ -44,7 +46,7 @@ public class ${name}Item extends Item {
 
     public ${name}Item() {
         super(new Item.Properties()
-            <#if data.stackSize>
+            <#if data.stackSize??>
                 .stacksTo(${data.stackSize})
             <#else>
                 .stacksTo(1)
@@ -52,9 +54,6 @@ public class ${name}Item extends Item {
             .rarity(Rarity.${data.rarity})
         );
 
-        <#if data.creativeTab != "No creative tab entry">
-            ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-        </#if>
     }
 
     @Override
@@ -62,7 +61,6 @@ public class ${name}Item extends Item {
         return ${data.useDuration};
     }
 
-    @Override
     public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
         return true;
     }
