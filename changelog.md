@@ -1,5 +1,9 @@
 # Changelogs:
 
+## 2.0.3
+* [Bugfix] Fixed potion effect procedures
+* [Bugfix] Fixed compilation errors when creating an armor
+
 ## 2.0.2
 * [Bugfix] Fixed compilation errors when creating an item
 * [Bugfix] Fixed compilation errors when creating a block
