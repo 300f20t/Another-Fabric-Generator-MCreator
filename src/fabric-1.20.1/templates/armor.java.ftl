@@ -81,9 +81,6 @@ public abstract class ${name}Item extends ArmorItem {
 			public Helmet() {
 				super(Type.HELMET, new Item.Properties()<#if data.helmetImmuneToFire>.fireResistant()</#if>);
 
-				<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-					ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-				</#if>
 			}
 
 		    <@addSpecialInformation data.helmetSpecialInformation/>
@@ -110,9 +107,6 @@ public abstract class ${name}Item extends ArmorItem {
 			public Chestplate() {
 				super(Type.CHESTPLATE, new Item.Properties()<#if data.bodyImmuneToFire>.fireResistant()</#if>);
 
-				<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-					ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-				</#if>
 			}
 
 		    <@addSpecialInformation data.bodySpecialInformation/>
@@ -139,9 +133,6 @@ public abstract class ${name}Item extends ArmorItem {
 			public Leggings() {
 				super(Type.LEGGINGS, new Item.Properties()<#if data.leggingsImmuneToFire>.fireResistant()</#if>);
 
-				<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-					ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-				</#if>
 			}
 
 		    <@addSpecialInformation data.leggingsSpecialInformation/>
@@ -168,9 +159,6 @@ public abstract class ${name}Item extends ArmorItem {
 			public Boots() {
 				super(Type.BOOTS, new Item.Properties()<#if data.bootsImmuneToFire>.fireResistant()</#if>);
 
-				<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-					ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-				</#if>
 			}
 
 		    <@addSpecialInformation data.bootsSpecialInformation/>
