@@ -1,7 +1,7 @@
 import java.nio.file.Files
 
 class Globals {
-	private static final def PLUGIN_VERSION = "2.0.2"
+	private static final def PLUGIN_VERSION = "2.0.3"
 	private static final def ARCHIVE_NAME = "another-fabric-generator-1.20.1-V" + PLUGIN_VERSION // The name of the exported file
 
 	// You can change the root folder of your OS if you have a custom installation
