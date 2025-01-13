@@ -22,6 +22,10 @@
 <#include "procedures.java.ftl">
 <#include "triggers.java.ftl">
 
+<#assign tabMap = w.getCreativeTabMap()>
+<#assign vanillaTabs = tabMap.keySet()?filter(e -> !e?starts_with('CUSTOM:'))>
+<#assign customTabs = tabMap.keySet()?filter(e -> e?starts_with('CUSTOM:'))>
+
 package ${package}.item;
 
 import net.minecraft.sounds.SoundEvent;
@@ -81,6 +85,35 @@ public abstract class ${name}Item extends ArmorItem {
 			public Helmet() {
 				super(Type.HELMET, new Item.Properties()<#if data.helmetImmuneToFire>.fireResistant()</#if>);
 
+						<#list vanillaTabs as tabName>
+                		    <#if tabName == "DECORATIONS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "REDSTONE">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "FOOD">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "TOOLS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+                		    <#elseif tabName == "MATERIALS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+                		    <#elseif tabName == "MISC">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+                		    <#elseif tabName == "TRANSPORTATION">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "BREWING">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+                		    <#else>
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+                		    </#if>
+
+                		</#list>
+
+                        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+                        <#list modifiedTabs as tabName>
+                            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+                        </#list>
+
 			}
 
 		    <@addSpecialInformation data.helmetSpecialInformation/>
@@ -103,9 +136,38 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableBody>
 		public static class Chestplate extends ${name}Item {
-	
+
 			public Chestplate() {
 				super(Type.CHESTPLATE, new Item.Properties()<#if data.bodyImmuneToFire>.fireResistant()</#if>);
+
+		<#list vanillaTabs as tabName>
+		    <#if tabName == "DECORATIONS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "REDSTONE">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "FOOD">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+		    <#elseif tabName == "TOOLS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+		    <#elseif tabName == "MATERIALS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+		    <#elseif tabName == "MISC">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+		    <#elseif tabName == "TRANSPORTATION">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "BREWING">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+		    <#else>
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+		    </#if>
+
+		</#list>
+
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+        <#list modifiedTabs as tabName>
+            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+        </#list>
 
 			}
 
@@ -129,9 +191,38 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableLeggings>
 		public static class Leggings extends ${name}Item {
-	
+
 			public Leggings() {
 				super(Type.LEGGINGS, new Item.Properties()<#if data.leggingsImmuneToFire>.fireResistant()</#if>);
+
+		<#list vanillaTabs as tabName>
+		    <#if tabName == "DECORATIONS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "REDSTONE">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "FOOD">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+		    <#elseif tabName == "TOOLS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+		    <#elseif tabName == "MATERIALS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+		    <#elseif tabName == "MISC">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+		    <#elseif tabName == "TRANSPORTATION">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "BREWING">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+		    <#else>
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+		    </#if>
+
+		</#list>
+
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+        <#list modifiedTabs as tabName>
+            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+        </#list>
 
 			}
 
@@ -155,9 +246,38 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableBoots>
 		public static class Boots extends ${name}Item {
-	
+
 			public Boots() {
 				super(Type.BOOTS, new Item.Properties()<#if data.bootsImmuneToFire>.fireResistant()</#if>);
+
+		<#list vanillaTabs as tabName>
+		    <#if tabName == "DECORATIONS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "REDSTONE">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "FOOD">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+		    <#elseif tabName == "TOOLS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+		    <#elseif tabName == "MATERIALS">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+		    <#elseif tabName == "MISC">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+		    <#elseif tabName == "TRANSPORTATION">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+		    <#elseif tabName == "BREWING">
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+		    <#else>
+		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+		    </#if>
+
+		</#list>
+
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+        <#list modifiedTabs as tabName>
+            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+        </#list>
 
 			}
 
