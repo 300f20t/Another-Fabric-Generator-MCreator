@@ -23,6 +23,10 @@
 <#include "procedures.java.ftl">
 <#include "triggers.java.ftl">
 
+<#assign tabMap = w.getCreativeTabMap()>
+<#assign vanillaTabs = tabMap.keySet()?filter(e -> !e?starts_with('CUSTOM:'))>
+<#assign customTabs = tabMap.keySet()?filter(e -> e?starts_with('CUSTOM:'))>
+
 package ${package}.item;
 
 import com.google.common.collect.Multimap;
@@ -59,6 +63,8 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 				public int getLevel() {
                     return 1;
                 }
+
+
 			},
 
 			<#if data.toolType!="MultiTool">
@@ -76,6 +82,35 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 				.fireResistant()
 				</#if>
 		</#if>);
+
+						<#list vanillaTabs as tabName>
+                		    <#if tabName == "DECORATIONS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "REDSTONE">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "FOOD">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "TOOLS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+                		    <#elseif tabName == "MATERIALS">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+                		    <#elseif tabName == "MISC">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+                		    <#elseif tabName == "TRANSPORTATION">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+                		    <#elseif tabName == "BREWING">
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+                		    <#else>
+                		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+                		    </#if>
+
+                		</#list>
+
+                        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+                        <#list modifiedTabs as tabName>
+                            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+                        </#list>
 
 	}
 
@@ -191,9 +226,34 @@ public class ${name}Item extends Item {
 			</#if>
 		);
 
-		<#if data.creativeTab.getUnmappedValue() != "No creative tab entry">
-			ItemGroupEvents.modifyEntriesEvent(${data.creativeTab}).register(content -> content.accept(this));
-		</#if>
+				<#list vanillaTabs as tabName>
+        		    <#if tabName == "DECORATIONS">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
+        		    <#elseif tabName == "REDSTONE">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
+        		    <#elseif tabName == "FOOD">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
+        		    <#elseif tabName == "TOOLS">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
+        		    <#elseif tabName == "MATERIALS">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
+        		    <#elseif tabName == "MISC">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
+        		    <#elseif tabName == "TRANSPORTATION">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
+        		    <#elseif tabName == "BREWING">
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
+        		    <#else>
+        		        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+        		    </#if>
+
+        		</#list>
+
+                <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+
+                <#list modifiedTabs as tabName>
+                    ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+                </#list>
 	}
 
 	@Override public float getDestroySpeed(ItemStack itemstack, BlockState blockstate) {
