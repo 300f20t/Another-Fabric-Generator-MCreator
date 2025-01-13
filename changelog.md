@@ -2,6 +2,8 @@
 
 ## 2.1.0
 * [Bugfix] Fixed the display of items in creative mode tabs (vanilla and custom)
+* [Bugfix] Fixed the display of tools in creative mode tabs (vanilla and custom)
+* [Bugfix] Fixed the display of armor in creative mode tabs (vanilla and custom)
 
 ## 2.0.3
 * [Bugfix] Fixed potion effect procedures
