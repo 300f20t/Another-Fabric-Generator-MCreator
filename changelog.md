@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.1.0
+* [Bugfix] Fixed the display of items in creative mode tabs (vanilla and custom)
+
 ## 2.0.3
 * [Bugfix] Fixed potion effect procedures
 * [Bugfix] Fixed compilation errors when creating an armor
