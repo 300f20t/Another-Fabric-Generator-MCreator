@@ -1,5 +1,9 @@
 # Changelogs:
 
+## 2.1.1
+* Gradle updated to 8.6
+* Updated build.gradle
+
 ## 2.1.0
 * [Bugfix] Fixed the display of items in creative mode tabs (vanilla and custom)
 * [Bugfix] Fixed the display of tools in creative mode tabs (vanilla and custom)
