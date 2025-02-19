@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.1.2
+* [Bugfix] Fixed a bug where the names of the creative mode tabs were in lowercase
+
 ## 2.1.1
 * Gradle updated to 8.6
 * Updated build.gradle
