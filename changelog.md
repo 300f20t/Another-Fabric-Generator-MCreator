@@ -2,6 +2,7 @@
 
 ## 2.1.2
 * [Bugfix] Fixed a bug where the names of the creative mode tabs were in lowercase
+* Updated Fabric API to 0.85.0
 
 ## 2.1.1
 * Gradle updated to 8.6
