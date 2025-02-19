@@ -108,7 +108,7 @@ public abstract class ${name}Item extends ArmorItem {
 
                 		</#list>
 
-                        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+                        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case)>
 
                         <#list modifiedTabs as tabName>
                             ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
@@ -163,7 +163,7 @@ public abstract class ${name}Item extends ArmorItem {
 
 		</#list>
 
-        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case)>
 
         <#list modifiedTabs as tabName>
             ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
@@ -218,7 +218,7 @@ public abstract class ${name}Item extends ArmorItem {
 
 		</#list>
 
-        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case)>
 
         <#list modifiedTabs as tabName>
             ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
@@ -273,7 +273,7 @@ public abstract class ${name}Item extends ArmorItem {
 
 		</#list>
 
-        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))>
+        <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case)>
 
         <#list modifiedTabs as tabName>
             ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
