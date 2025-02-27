@@ -1,5 +1,9 @@
 # Changelogs:
 
+## 2.1.3
+* [Bugfix] Fixed adding a block to custom creative mode tabs (vanilla tabs are not working yet)
+* Updated Fabric API to 0.90.7
+
 ## 2.1.2
 * [Bugfix] Fixed a bug where the names of the creative mode tabs were in lowercase
 * Updated Fabric API to 0.85.0
