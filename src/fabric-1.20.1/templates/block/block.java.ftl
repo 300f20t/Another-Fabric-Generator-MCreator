@@ -24,6 +24,9 @@
 <#include "../procedures.java.ftl">
 <#include "../triggers.java.ftl">
 
+<#assign tabMap = w.getCreativeTabMap()>
+<#assign customTabs = tabMap.keySet()?filter(e -> e?starts_with('CUSTOM:'))>
+
 package ${package}.block;
 
 import net.minecraft.sounds.SoundEvent;
@@ -55,7 +58,7 @@ public class ${name}Block extends
 		implements ${interfaces?join(",")}
 	</#if>
 {
-	public static BlockBehaviour.Properties PROPERTIES = <@blockProperties/>;
+    public static BlockBehaviour.Properties PROPERTIES = <@blockProperties/>;
 
 	<#if data.rotationMode == 1 || data.rotationMode == 3>
 		public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -248,6 +251,12 @@ public class ${name}Block extends
 		<#if data.flammability != 0 || data.fireSpreadSpeed != 0>
 			FlammableBlockRegistry.getDefaultInstance().add(this, ${data.flammability}, ${data.fireSpreadSpeed});
 		</#if>
+
+		<#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', '')?upper_case)>
+
+        <#list modifiedTabs as tabName>
+            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
+        </#list>
 	}
 
 	<#if data.specialInfo?has_content>
