@@ -5,7 +5,7 @@ subversion: 25
 
 import:
   - datapack-1.20.4
-  - forge-1.20.4
+  - neoforge-1.20.4
 
 java_models:
   key: mojmap-1.20.x
