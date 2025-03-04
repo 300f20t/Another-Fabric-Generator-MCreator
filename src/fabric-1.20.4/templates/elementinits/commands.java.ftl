@@ -24,6 +24,8 @@
 
 package ${package}.init;
 
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+
 public class ${JavaModName}Commands {
 
 	public static void load() {
