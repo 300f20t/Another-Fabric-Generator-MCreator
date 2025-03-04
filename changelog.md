@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.1.4
+* [Bugfix] The outdated API in the command generator has been removed.
+
 ## 2.1.3
 * [Bugfix] Fixed adding a block to custom creative mode tabs (vanilla tabs are not working yet)
 * Updated Fabric API to 0.90.7
