@@ -1,7 +1,7 @@
 # Changelogs:
 
 ## 3.0.0
-*
+* Updated Fabric API to 0.97.1
 
 ## 2.1.3
 * [Bugfix] Fixed adding a block to custom creative mode tabs (vanilla tabs are not working yet)
