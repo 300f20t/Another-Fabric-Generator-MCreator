@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.2.0
+* Added support for MCreator 2025.1
+
 ## 2.1.4
 * [Bugfix] The outdated API in the command generator has been removed.
 
