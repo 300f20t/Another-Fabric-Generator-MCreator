@@ -166,7 +166,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> {
 		super.containerTick();
 		<#list data.components as component>
 			<#if component.getClass().getSimpleName() == "TextField">
-				${component.name}.tick();
+				${component.name}.setFocused(true);
 			</#if>
 		</#list>
 	}
@@ -209,8 +209,8 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> {
 						setSuggestion(null);
 				}
 
-				@Override public void moveCursorTo(int pos) {
-					super.moveCursorTo(pos);
+				public void moveCursorTo(int pos) {
+					super.moveCursorTo(pos, true);
 
 					if (getValue().isEmpty())
 						setSuggestion(Component.translatable("gui.${modid}.${registryname}.${component.getName()}").getString());
