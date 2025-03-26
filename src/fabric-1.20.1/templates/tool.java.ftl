@@ -249,7 +249,7 @@ public class ${name}Item extends Item {
 
         		</#list>
 
-                <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case)>
+                <#assign modifiedTabs = customTabs?map(tab -> tab?replace('CUSTOM:', ''))?upper_case>
 
                 <#list modifiedTabs as tabName>
                     ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${tabName}).register(content -> content.accept(this));
