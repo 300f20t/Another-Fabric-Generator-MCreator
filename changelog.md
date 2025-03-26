@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.2.1
+* [Bugfix #13] Removed deprecated import that prevented import of Java models
+
 ## 2.2.0
 * Added support for MCreator 2025.1
 
