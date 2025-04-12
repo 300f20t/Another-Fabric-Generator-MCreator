@@ -3,6 +3,20 @@
 ## 3.0.0
 * Updated Fabric API to 0.97.1
 
+## 2.2.2
+* Added definition for villager profession and placeholder for generated code
+* [Bugfix #6] Added a check to ensure that the item is in this tab
+
+## 2.2.1
+* [Bugfix #13] Removed deprecated import that prevented import of Java models
+* [Bugfix #4, #8, #14] Fixed a typo in the code that prevented items from working
+
+## 2.2.0
+* Added support for MCreator 2025.1
+
+## 2.1.4
+* [Bugfix] The outdated API in the command generator has been removed
+
 ## 2.1.3
 * [Bugfix] Fixed adding a block to custom creative mode tabs (vanilla tabs are not working yet)
 * Updated Fabric API to 0.90.7
