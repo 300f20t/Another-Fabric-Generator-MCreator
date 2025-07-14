@@ -1,5 +1,9 @@
 # Changelogs:
 
+## 2.2.3
+* Added support for MCreator 2025.2
+* Fixed version
+
 ## 2.2.2
 * Added definition for villager profession and placeholder for generated code
 * [Bugfix #6] Added a check to ensure that the item is in this tab
