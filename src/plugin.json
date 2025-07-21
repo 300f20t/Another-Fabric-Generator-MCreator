@@ -1,6 +1,6 @@
 {
   "id": "another-generator-fabric-1.20.4",
-  "supportedversions": [2024004, 2025001],
+  "supportedversions": [2024004, 2025001, 2025002],
   "info": {
     "name": "Minecraft Fabric 1.20.4 Generator, for new MCreator versions",
     "version": "3.0.0",
