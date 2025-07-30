@@ -6,7 +6,7 @@ sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = 'modid'
-version = '1.0.0'
+version = '1.0.0'ф
 group = 'com.yourname.modid'
 actualmodid = '${modid}'
 
@@ -19,12 +19,12 @@ loom {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.20.4"
+    minecraft "com.mojang:minecraft:1.21.1"
     mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:0.15.1"
+    modImplementation "net.fabricmc:fabric-loader:0.16.1"
 
     //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${generator.getGeneratorBuildFileVersion()}+1.20.4"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${generator.getGeneratorBuildFileVersion()}+1.21.1"
 }
 
 processResources {

@@ -35,7 +35,7 @@
   "depends": {
 	"fabricloader": ">=0.14.21",
 	"fabric": "*",
-	"minecraft": "~1.20",
+	"minecraft": "~1.21.1",
 	"java": ">=17"
   }<#if w.hasElementsOfBaseType("item") || w.hasElementsOfType("biome")>,
   "mixins": [

@@ -1,11 +1,11 @@
 name: Minecraft Fabric for @minecraft - @buildfileversion
 status: experimental
-buildfileversion: 0.97.1
+buildfileversion: 0.116.4
 subversion: 25
 
 import:
-  - datapack-1.20.4
-  - neoforge-1.20.4
+  - datapack-1.21.1
+  - neoforge-1.21.1
 
 java_models:
   key: mojmap-1.20.x

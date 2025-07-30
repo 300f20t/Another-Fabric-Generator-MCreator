@@ -1,5 +1,10 @@
 # Changelogs:
 
+## 4.0.0
+* Updated Minecraft and Fabric to 1.21.1
+* Updated Fabric API to 0.116.4
+* Updated Fabric Loader to 0.16.1
+
 ## 3.0.0
 * Updated Minecraft and Fabric to 1.20.4
 * Updated Fabric API to 0.97.1
