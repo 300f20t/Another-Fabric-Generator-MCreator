@@ -1,0 +1,10 @@
+localizationkeys:
+  - key: item_group.@modid.@registryname
+    mapto: name
+
+global_templates:
+  - template: elementinits/tabs.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameTabs.java"
+
+field_exclusions: [ showSearch ]

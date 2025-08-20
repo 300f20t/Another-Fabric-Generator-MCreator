@@ -45,7 +45,6 @@ public class ${JavaModName} implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing ${JavaModName}");
-
 	}
 }
 <#-- @formatter:on -->
