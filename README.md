@@ -1,5 +1,3 @@
-I decided to stop MCreator and leave the community. Please read this [topic](https://mcreator.net/forum/107531/final-chapter-my-journey).
-
 # MCreator Fabric Generator
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F7EKDC0)
@@ -8,32 +6,17 @@ A plugin for [MCreator](https://mcreator.net/), a code generator to create Minec
 
 This project is not official. It is not affiliated with the respective owners and maintainers of Fabric, Minecraft, or MCreator. Do not expect any official support from their communities.
 
-**The current targeted Minecraft version is 1.20.1.**
+**The current targeted Minecraft version is 1.21.8.**
 
-## Features
-Mod elements that are not mentioned are completely supported with all available features with Fabric.
-
-### Partially supported (almost completed)
-* Armor
-* Biome
-* Living entity
-* Variables
-  
-### Partially supported
-* Dimension
-* Procedure
-
-### Unsupported
-* Fluid
-* Villager profession
+### **This plugin is currently being recoded entirely for a better plugin. Please be patient and consider this matter when developing a mod using this plugin.**
 
 ## Important Information
-- Make sure you use MCreator 2023.4
+- Make sure you use MCreator 2025.2
 - Back up your workspace before updating to a newer version of the plugin.
 - Mods will also require [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) to function properly, so when you want to play your mod, make sure you have Fabric API.
 
 ## Credits/License
-Dev - [Goldorion](https://github.com/Goldorion)
+Dev - [Goldorion](https://github.com/Goldorion) and contributors
 This generator re-uses code used from the official Forge generators.
 
 The plugin's MCreator page is [here](https://mcreator.net/plugin/64512/mcreator-fabric-generator).
