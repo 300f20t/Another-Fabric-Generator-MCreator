@@ -10,5 +10,4 @@ Ce paramètre contrôle dans quel système d'artisanat votre recette sera dispon
 * "Brewing" se passe dans un alambic.
 
 **Fabric** :
-Pour les potions, les tags ne peuvent pas être utilisés.
-De plus, uniquement des potions peuvent être utilisées pour l'entrée et le résultat.
+Les potions ("Brewing") ne fonctionnent pas et ne sont pas encore implémentées.

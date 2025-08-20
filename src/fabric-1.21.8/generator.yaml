@@ -4,7 +4,13 @@ buildfileversion: 0.132.0
 
 import:
   - datapack-1.21.8
-  - forge-1.21.8
+  - neoforge-1.21.8:
+    exclude:
+      - procedures
+      - aitasks
+      - cmdargs
+      - features
+      - triggers
 
 gradle:
   setup_task: tasks genSourcesWithCfr
@@ -22,6 +28,7 @@ import_formatter:
     Codec: com.mojang.serialization
     SoundEvent: net.minecraft.sounds
     Environment: net.fabricmc.api
+    Blocks: net.minecraft.world.level.block.Blocks
 
 source_root: "@WORKSPACEROOT/src/main/java"
 res_root: "@WORKSPACEROOT/src/main/resources"

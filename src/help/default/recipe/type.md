@@ -10,4 +10,4 @@ This parameter controls in which crafting system your recipe will be available.
 * Brewing is a recipe insite a Brewing Stand.  
 
 **Fabric**: 
-For the brewing stand recipes, tags are not allowed and potions have to be used for the input and the output.
+The brewing stand recipes are not yet implemented.
