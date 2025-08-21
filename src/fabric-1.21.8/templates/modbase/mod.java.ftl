@@ -45,6 +45,8 @@ public class ${JavaModName} implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing ${JavaModName}");
+
+		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
 	}
 }
 <#-- @formatter:on -->
