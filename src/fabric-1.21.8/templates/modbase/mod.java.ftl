@@ -45,6 +45,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
 		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
 		<#if w.hasElementsOfType("command")>${JavaModName}Commands.load();</#if>
+		<#if w.hasElementsOfType("potioneffect")>${JavaModName}MobEffects.load();</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init
