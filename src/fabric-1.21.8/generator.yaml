@@ -10,7 +10,6 @@ import:
       - procedures
       - aitasks
       - cmdargs
-      - features
       - triggers
 
 # gradle task definitions
@@ -73,6 +72,16 @@ base_templates:
   - template: pack.mcmeta.ftl # loaded from datapack generator
     writer: json
     name: "@RESROOT/pack.mcmeta"
+  - template: elementinits/tabs.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameTabs.java"
+    condition: hasItemsInTabs()
+  - template: elementinits/features.java.ftl
+    writer: java
+    condition_any:
+      - "${w.getGElementsOfType('block')?filter(e -> e.generateFeature)?size != 0}"
+      - "${w.getGElementsOfType('plant')?filter(e -> e.generateFeature)?size != 0}"
+      - "${w.hasElementsOfType('feature')}"
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameFeatures.java"
 
 java_models:
   key: mojmap-1.21.x

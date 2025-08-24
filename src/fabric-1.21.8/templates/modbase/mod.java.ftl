@@ -35,6 +35,9 @@ public class ${JavaModName} implements ModInitializer {
 		// End of user code block mod constructor
 
 		LOGGER.info("Initializing ${JavaModName}");
+
+		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
+		<#if w.hasElementsOfBaseType("feature")>${JavaModName}Features.load();</#if>
 		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
