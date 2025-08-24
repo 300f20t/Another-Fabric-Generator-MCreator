@@ -67,6 +67,9 @@ base_templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModName.java"
   - template: modbase/mod_client.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModNameClient.java"
+  - template: modbase/variableslist.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/network/@JavaModNameVariables.java"
+    condition: hasVariables()
   - template: modbase/fabric.mod.json.ftl
     writer: file
     name: "@RESROOT/fabric.mod.json"

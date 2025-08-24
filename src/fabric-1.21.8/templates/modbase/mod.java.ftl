@@ -38,6 +38,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
+		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init
