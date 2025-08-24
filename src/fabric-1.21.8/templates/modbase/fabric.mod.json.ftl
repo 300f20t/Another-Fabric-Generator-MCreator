@@ -19,9 +19,9 @@
 	"sources": ""
   },
 </#if>
-  "license": "${settings.getLicense()}",
+  "license": "${JavaConventions.escapeStringForJava(settings.getLicense())}",
 <#if settings.getModPicture()?has_content>
-  "icon": "assets/${modid}/icon.png",
+  "icon": "logo.png",
 </#if>
   "environment": "*",
   "entrypoints": {
@@ -29,13 +29,12 @@
 	  "${package}.${JavaModName}"
 	],
 	"client":[
-	  "${package}.ClientInit"
+	  "${package}.${JavaModName}Client"
 	]
   },
   "depends": {
 	"fabricloader": ">=0.17.2",
-	"fabric": "*",
-	"minecraft": "~1.21",
+	"minecraft": "~${generator.getGeneratorMinecraftVersion()}",
 	"java": ">=21"
   }
 }
