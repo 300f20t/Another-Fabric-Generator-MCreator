@@ -44,6 +44,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
 		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
+		<#if w.hasElementsOfType("command")>${JavaModName}Commands.load();</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init
