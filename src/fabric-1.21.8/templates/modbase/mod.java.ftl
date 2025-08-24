@@ -45,6 +45,8 @@ public class ${JavaModName} implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Initializing ${JavaModName}");
+
+		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 	}
 }
 <#-- @formatter:on -->
