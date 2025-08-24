@@ -17,19 +17,6 @@
 -->
 
 <#-- @formatter:off -->
-/*
- *	MCreator note:
- *
- *	If you lock base mod element files, you can edit this file and the proxy files
- *	and they won't get overwritten. If you change your mod package or modid, you
- *	need to apply these changes to this file MANUALLY.
- *
- *
- *	If you do not lock base mod element files in Workspace settings, this file
- *	will be REGENERATED on each build.
- *
- */
-
 package ${package};
 
 import org.apache.logging.log4j.Logger;
@@ -38,15 +25,25 @@ import ${package}.init.*;
 
 public class ${JavaModName} implements ModInitializer {
 
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger(${JavaModName}.class);
 
 	public static final String MODID = "${modid}";
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info("Initializing ${JavaModName}");
+		// Start of user code block mod constructor
+		// End of user code block mod constructor
 
+		LOGGER.info("Initializing ${JavaModName}");
+		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
+		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
+
+		// Start of user code block mod init
+		// End of user code block mod init
 	}
+
+	// Start of user code block mod methods
+	// End of user code block mod methods
 }
 <#-- @formatter:on -->
