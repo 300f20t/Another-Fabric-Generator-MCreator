@@ -3,7 +3,6 @@
   "schemaVersion": 1,
   "id": "${settings.getModID()}",
   "version": "${settings.getCleanVersion()}",
-
   "name": "${JavaConventions.escapeStringForJava(settings.getModName())}",
 <#if settings.getDescription()?has_content>
   "description": "${JavaConventions.escapeStringForJava(settings.getDescription())}",
@@ -32,6 +31,14 @@
 	  "${package}.${JavaModName}Client"
 	]
   },
+  <#if (w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether || e.hasVines() || e.hasFruits())?size != 0) || w.hasElementsOfType('feature')>
+  "accessWidener" : "META-INF/${modid}.accesswidener",
+  </#if>
+  <#if w.getGElementsOfType("biome")?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
+  "mixins": [
+    "${modid}.mixins.json"
+  ],
+  </#if>
   "depends": {
 	"fabricloader": ">=0.17.2",
 	"minecraft": "~${generator.getGeneratorMinecraftVersion()}",
