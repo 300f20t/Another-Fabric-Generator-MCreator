@@ -17,19 +17,25 @@
 -->
 
 <#-- @formatter:off -->
+
 /*
  *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
 
-@Environment(EnvType.CLIENT) public class ${JavaModName}Overlays {
+public class ${JavaModName}Screens {
 
 	public static void load() {
-		<#list overlays as overlay>
-			HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, 
-				"${overlay.getModElement().getRegistryName()}"), ${overlay.getModElement().getName()}Overlay::render);
+		<#list guis as gui>
+			MenuScreens.register(${JavaModName}Menus.${gui.getModElement().getRegistryNameUpper()}, ${gui.getModElement().getName()}Screen::new);
 		</#list>
 	}
+
+	public interface ${JavaModName}ScreenAccessor {
+		void updateMenuState(int elementType, String name, Object elementState);
+	}
+
 }
+
 <#-- @formatter:on -->

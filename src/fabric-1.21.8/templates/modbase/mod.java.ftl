@@ -50,6 +50,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>ServerLifecycleEvents.SERVER_STARTING.register(${JavaModName}Biomes::load);</#if>
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappingsServer.serverLoad();</#if>
 		<#if w.hasElementsOfType("villagertrade")>${JavaModName}Trades.registerTrades();</#if>
+		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.load();</#if>
 		
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			PayloadTypeRegistry.playS2C().register(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage.STREAM_CODEC);
