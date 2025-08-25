@@ -14,6 +14,7 @@ This project is not official. It is not affiliated with the respective owners an
 - Make sure you use MCreator 2025.2
 - Back up your workspace before updating to a newer version of the plugin.
 - Mods will also require [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) to function properly, so when you want to play your mod, make sure you have Fabric API.
+- **In order to decompile your code, a recent change in MCreator no longer allow us to do it automatically. You have to go in Build & info -> Run Gradle task and paste this task `genSourcesWithCfr`**
 
 ## Credits/License
 Dev - [Goldorion](https://github.com/Goldorion) and contributors
