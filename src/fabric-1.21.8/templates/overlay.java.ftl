@@ -1,7 +1,7 @@
 <#--
  # This file is part of Fabric-Generator-MCreator.
  # Copyright (C) 2012-2020, Pylo
- # Copyright (C) 2020-2023, Pylo, opensource contributors
+ # Copyright (C) 2020-2025, Pylo, opensource contributors
  # Copyright (C) 2020-2025, Goldorion, opensource contributors
  #
  # Fabric-Generator-MCreator is free software: you can redistribute it and/or modify
@@ -19,15 +19,12 @@
 -->
 
 <#-- @formatter:off -->
-<#compress>
 <#include "procedures.java.ftl">
 
 package ${package}.client.gui;
 
-import net.fabricmc.api.Environment;
-
-@Environment(EnvType.CLIENT)
-public class ${name}Overlay {
+<#compress>
+@Environment(EnvType.CLIENT) public class ${name}Overlay {
 
 	public static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
 		float tickDelta = deltaTracker.getGameTimeDeltaTicks();

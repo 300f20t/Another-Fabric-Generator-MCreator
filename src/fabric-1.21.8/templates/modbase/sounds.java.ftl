@@ -19,21 +19,27 @@
 -->
 
 <#-- @formatter:off -->
-<#include "procedures.java.ftl">
 
-package ${package}.command;
+/*
+ *    MCreator note: This file will be REGENERATED on each build.
+ */
 
-<#if data.type == "CLIENTSIDE">@Environment(EnvType.CLIENT)</#if>
-public class ${name}Command {
+package ${package}.init;
 
-	public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandBuildContext, Commands.CommandSelection environment) {
-	    <#if data.type = "MULTIPLAYER_ONLY" || data.type = "SINGLEPLAYER_ONLY">
-		if (environment.include${data.type?replace("MULTIPLAYER_ONLY", "Dedicated")?replace("SINGLEPLAYER_ONLY", "Integrated")})
-		</#if>
-		dispatcher.register(Commands.literal("${data.commandName}")
-			<#if data.permissionLevel != "No requirement">.requires(s -> s.hasPermission(${data.permissionLevel}))</#if>
-			${argscode}
-		);
+public class ${JavaModName}Sounds {
+
+	<#list sounds as sound>
+	public static SoundEvent ${sound.getJavaName()};
+	</#list>
+
+	public static void load() {
+		<#list sounds as sound>
+		    ${sound.getJavaName()} = register("${sound.getName()}", SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("${modid}", "${sound}")));
+		</#list>
+	}
+
+	private static SoundEvent register(String registryname, SoundEvent soundEvent) {
+		return Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), soundEvent);
 	}
 }
 <#-- @formatter:on -->
