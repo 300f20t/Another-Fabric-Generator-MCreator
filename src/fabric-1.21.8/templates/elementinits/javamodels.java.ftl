@@ -18,22 +18,18 @@
 
 <#-- @formatter:off -->
 
-<#include "../procedures.java.ftl">
-
 /*
- *	MCreator note: This file will be REGENERATED on each build.
+ *    MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
 
-public class ${JavaModName}KeyMappingsServer {
+@Environment(EnvType.CLIENT) public class ${JavaModName}Models {
 
-	public static void serverLoad() {
-    	<#list keybinds as keybind>
-    		PayloadTypeRegistry.playC2S().register(${keybind.getModElement().getName()}Message.TYPE, ${keybind.getModElement().getName()}Message.CODEC);
-    		ServerPlayNetworking.registerGlobalReceiver(${keybind.getModElement().getName()}Message.TYPE, ${keybind.getModElement().getName()}Message::apply);
-    	</#list>
-    }
+	public static void load() {
+		<#list javamodels as model>
+		EntityModelLayerRegistry.registerModelLayer(${model.getReadableName()}.LAYER_LOCATION, ${model.getReadableName()}::createBodyLayer);
+		</#list>
+	}
 }
-
 <#-- @formatter:on -->

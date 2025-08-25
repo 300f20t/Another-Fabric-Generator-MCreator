@@ -13,7 +13,7 @@
  # GNU Lesser General Public License for more details.
  #
  # You should have received a copy of the GNU Lesser General Public License
- # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <#-- @formatter:off -->
@@ -28,8 +28,6 @@
  */
 
 package ${package}.init;
-
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 
 <#compress>
 public class ${JavaModName}Tabs {

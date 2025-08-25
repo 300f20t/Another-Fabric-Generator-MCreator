@@ -13,7 +13,7 @@
  # GNU Lesser General Public License for more details.
  #
  # You should have received a copy of the GNU Lesser General Public License
- # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <#-- @formatter:off -->
@@ -32,7 +32,8 @@ import net.fabricmc.api.Environment;
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.load();</#if>
 		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.load();</#if>
 		<#if w.hasElementsOfType("gui")>${JavaModName}Screens.load();</#if>
-		
+		<#if w.hasJavaModels()>${JavaModName}Models.load();</#if>
+
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
 		</#if>

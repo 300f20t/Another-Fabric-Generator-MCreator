@@ -13,7 +13,7 @@
  # GNU Lesser General Public License for more details.
  #
  # You should have received a copy of the GNU Lesser General Public License
- # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <#-- @formatter:off -->
@@ -42,14 +42,15 @@ public class ${name}Feature extends ${generator.map(featuretype, "features")} {
 	}
 
 	public static final Predicate<BiomeSelectionContext> GENERATE_BIOMES =
+	BiomeSelectors.
 	<#if data.restrictionBiomes?has_content>
-	BiomeSelectors.${biomeSelector}(
+    ${biomeSelector}(
 		<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
 			${resourceKey}.create(Registries.BIOME, ResourceLocation.tryParse("${restrictionBiome?replace("#", "")}"))<#sep>,
         </#list>
 	)
 	<#else>
-	BiomeSelectors.all()
+	all()
 	</#if>;
 
     <#if hasProcedure(data.generateCondition)>

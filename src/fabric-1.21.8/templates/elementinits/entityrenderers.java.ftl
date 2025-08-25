@@ -24,26 +24,23 @@
 
 package ${package}.init;
 
-public class ${JavaModName}Potions {
+@Environment(EnvType.CLIENT) public class ${JavaModName}EntityRenderers {
 
-	<#list potions as potion>
-	public static Potion ${potion.getModElement().getRegistryNameUpper()};
-	</#list>
-
-    public static void load() {
-        <#list potions as potion>
-            ${potion.getModElement().getRegistryNameUpper()} = register("${potion.getModElement().getRegistryName()}",
-                new Potion("${potion.getModElement().getRegistryName()}"
-                    <#list potion.effects as effect>,
-                    new MobEffectInstance(${effect.effect}, ${effect.getDuration()}, ${effect.amplifier}, ${effect.ambient}, ${effect.showParticles})
-                    </#list>
-                )
-            );
-        </#list>
-    }
-
-	private static Potion register(String registryname, Potion element) {
-		return Registry.register(BuiltInRegistries.POTION, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+	public static void load() {
+		<#list entities as entity>
+			<#if entity.getModElement().getTypeString() == "projectile">
+				<#if entity.isCustomModel()>
+				EntityRendererRegistry.register(${JavaModName}Entities.${entity.getModElement().getRegistryNameUpper()}, ${entity.getModElement().getName()}Renderer::new);
+				<#else>
+				EntityRendererRegistry.register(${JavaModName}Entities.${entity.getModElement().getRegistryNameUpper()}, ThrownItemRenderer::new);
+				</#if>
+			<#else>
+				EntityRendererRegistry.register(${JavaModName}Entities.${entity.getModElement().getRegistryNameUpper()}, ${entity.getModElement().getName()}Renderer::new);
+				<#if entity.hasCustomProjectile()>
+				EntityRendererRegistry.register(${JavaModName}Entities.${entity.getModElement().getRegistryNameUpper()}_PROJECTILE, ThrownItemRenderer::new);
+				</#if>
+			</#if>
+		</#list>
 	}
 }
 <#-- @formatter:on -->
