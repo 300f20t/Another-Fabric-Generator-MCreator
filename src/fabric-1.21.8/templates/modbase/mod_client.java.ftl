@@ -33,6 +33,7 @@ import net.fabricmc.api.Environment;
 		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.load();</#if>
 		<#if w.hasElementsOfType("gui")>${JavaModName}Screens.load();</#if>
 		<#if w.hasJavaModels()>${JavaModName}Models.load();</#if>
+		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.load();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);

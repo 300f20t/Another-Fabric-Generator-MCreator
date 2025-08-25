@@ -1,6 +1,7 @@
 {
   "id": "generator-fabric-1.21.8",
   "supportedversions": [
+    2025003,
     202500333716
   ],
   "info": {
@@ -9,7 +10,7 @@
     "description": "A Fabric generator",
     "author": "Goldorion",
     "credits": "Thank you to all contributors and supporters on Ko-fi",
-    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Fabric-Generator-MCreator/1.21.8/update.json",
+    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Fabric-Generator-MCreator/2.0-1.21.8/update.json",
     "pluginPageID": 64512
   }
 }
