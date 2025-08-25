@@ -28,6 +28,8 @@ import net.fabricmc.api.Environment;
 		// Start of user code block mod constructor
 		// End of user code block mod constructor
 
+		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.loadClient();</#if>
+
 		// Start of user code block mod init
 		// End of user code block mod init
 	}

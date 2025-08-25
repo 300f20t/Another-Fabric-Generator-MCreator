@@ -10,4 +10,4 @@ localizationkeys:
   - key: effect.@modid.@registryname
     mapto: effectName
 
-field_exclusions: [renderStatusInInventory, renderStatusInHUD, isCuredbyHoney ]
+field_exclusions: [renderStatusInInventory, renderStatusInHUD, isCuredbyHoney]

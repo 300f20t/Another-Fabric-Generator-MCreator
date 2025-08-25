@@ -21,8 +21,6 @@
 <#-- @formatter:off -->
 package ${package}.procedures;
 
-import javax.annotation.Nullable;
-
 <#assign nullableDependencies = []/>
 <#if !(data.skipDependencyNullCheck)>
 	<#list dependencies as dependency>
@@ -68,7 +66,5 @@ public class ${name}Procedure {
 
 	${extra_templates_code}
 }
-
 </#compress>
-
 <#-- @formatter:on -->

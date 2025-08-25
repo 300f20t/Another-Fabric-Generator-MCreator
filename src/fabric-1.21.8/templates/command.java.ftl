@@ -23,17 +23,17 @@
 
 package ${package}.command;
 
+<#if data.type == "CLIENTSIDE">@Environment(EnvType.CLIENT)</#if>
 public class ${name}Command {
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandBuildContext, Commands.CommandSelection environment) {
 	    <#if data.type = "MULTIPLAYER_ONLY" || data.type = "SINGLEPLAYER_ONLY">
-		if (environment.include${data.type?replace("MULTIPLAYER_ONLY", "Dedicated")?replace("SINGLEPLAYER_ONLY", "Integrated")?replace("STANDARD", "")?replace("CLIENTSIDE", "")})
+		if (environment.include${data.type?replace("MULTIPLAYER_ONLY", "Dedicated")?replace("SINGLEPLAYER_ONLY", "Integrated")})
 		</#if>
-			dispatcher.register(Commands.literal("${data.commandName}")
-				<#if data.permissionLevel != "No requirement">.requires(s -> s.hasPermission(${data.permissionLevel}))</#if>
-				${argscode}
-			);
+		dispatcher.register(Commands.literal("${data.commandName}")
+			<#if data.permissionLevel != "No requirement">.requires(s -> s.hasPermission(${data.permissionLevel}))</#if>
+			${argscode}
+		);
 	}
-
 }
 <#-- @formatter:on -->

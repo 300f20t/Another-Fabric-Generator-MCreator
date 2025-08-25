@@ -36,9 +36,8 @@ public class ${JavaModName}MobEffects {
 		</#list>
 	}
 
-	private static MobEffect register(String registryName, MobEffect element) {
-		return Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryName), element);
+	private static MobEffect register(String registryname, MobEffect element) {
+		return Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
 	}
 }
-
 <#-- @formatter:on -->
