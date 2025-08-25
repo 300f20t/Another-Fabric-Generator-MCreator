@@ -46,6 +46,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
 		<#if w.getGElementsOfType("command")?filter(e -> e.type != "CLIENTSIDE")?size != 0>${JavaModName}Commands.load();</#if>
 		<#if w.hasElementsOfType("potioneffect")>${JavaModName}MobEffects.load();</#if>
+		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappingsServer.serverLoad();</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init

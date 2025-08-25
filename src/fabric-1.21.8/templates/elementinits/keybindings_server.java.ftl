@@ -17,25 +17,23 @@
 -->
 
 <#-- @formatter:off -->
-package ${package};
 
-import net.fabricmc.api.Environment;
+<#include "../procedures.java.ftl">
 
-@Environment(EnvType.CLIENT) public class ${JavaModName}Client implements ClientModInitializer {
+/*
+ *	MCreator note: This file will be REGENERATED on each build.
+ */
 
-	@Override
-	public void onInitializeClient() {
-		// Start of user code block mod constructor
-		// End of user code block mod constructor
+package ${package}.init;
 
-		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.loadClient();</#if>
-		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.load();</#if>
+public class ${JavaModName}KeyMappingsServer {
 
-		// Start of user code block mod init
-		// End of user code block mod init
-	}
-
-	// Start of user code block mod methods
-	// End of user code block mod methods
+	public static void serverLoad() {
+    	<#list keybinds as keybind>
+    		PayloadTypeRegistry.playC2S().register(${keybind.getModElement().getName()}Message.TYPE, ${keybind.getModElement().getName()}Message.CODEC);
+    		ServerPlayNetworking.registerGlobalReceiver(${keybind.getModElement().getName()}Message.TYPE, ${keybind.getModElement().getName()}Message::apply);
+    	</#list>
+    }
 }
+
 <#-- @formatter:on -->

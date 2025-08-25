@@ -29,4 +29,3 @@ Licensed under the GNU Lesser General Public License, version 3.0
 - Forked versions of this software must be distributed under the same license as this with attribution if distributed.
 - Changes must be stated if any modified works are to be distributed.
 - Under no circumstances can you state that modified works are endorsed by the original creator.
-
