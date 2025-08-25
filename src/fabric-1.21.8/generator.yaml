@@ -8,7 +8,6 @@ import:
   - neoforge-1.21.8:
     exclude:
       - procedures
-      - aitasks
       - triggers
 
 # gradle task definitions
