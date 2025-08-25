@@ -19,8 +19,6 @@
 <#-- @formatter:off -->
 package ${package};
 
-import net.fabricmc.api.Environment;
-
 @Environment(EnvType.CLIENT) public class ${JavaModName}Client implements ClientModInitializer {
 
 	@Override
@@ -29,11 +27,11 @@ import net.fabricmc.api.Environment;
 		// End of user code block mod constructor
 
 		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.clientLoad();</#if>
-		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.load();</#if>
-		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.load();</#if>
-		<#if w.hasElementsOfType("gui")>${JavaModName}Screens.load();</#if>
-		<#if w.hasJavaModels()>${JavaModName}Models.load();</#if>
-		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.load();</#if>
+		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.clientLoad();</#if>
+		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.clientLoad();</#if>
+		<#if w.hasElementsOfType("gui")>${JavaModName}Screens.clientLoad();</#if>
+		<#if w.hasJavaModels()>${JavaModName}Models.clientLoad();</#if>
+		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>

@@ -69,7 +69,7 @@ public class ${JavaModName}KeyMappings {
 		</#if>
 	</#list>
 
-	public static void load() {
+	public static void clientLoad() {
 		<#list keybinds as keybind>
 			KeyBindingHelper.registerKeyBinding(${keybind.getModElement().getRegistryNameUpper()});
 		</#list>

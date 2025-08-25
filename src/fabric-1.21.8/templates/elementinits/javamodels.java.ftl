@@ -26,7 +26,7 @@ package ${package}.init;
 
 @Environment(EnvType.CLIENT) public class ${JavaModName}Models {
 
-	public static void load() {
+	public static void clientLoad() {
 		<#list javamodels as model>
 		EntityModelLayerRegistry.registerModelLayer(${model.getReadableName()}.LAYER_LOCATION, ${model.getReadableName()}::createBodyLayer);
 		</#list>

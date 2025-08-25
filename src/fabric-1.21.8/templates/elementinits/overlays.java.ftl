@@ -25,7 +25,7 @@ package ${package}.init;
 
 @Environment(EnvType.CLIENT) public class ${JavaModName}Overlays {
 
-	public static void load() {
+	public static void clientLoad() {
 		<#list overlays as overlay>
 			HudElementRegistry.attachElementAfter(VanillaHudElements.MISC_OVERLAYS, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, 
 				"${overlay.getModElement().getRegistryName()}"), ${overlay.getModElement().getName()}Overlay::render);

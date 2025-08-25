@@ -28,7 +28,7 @@ package ${package}.init;
 
 @Environment(EnvType.CLIENT) public class ${JavaModName}EntityRenderers {
 
-	public static void load() {
+	public static void clientLoad() {
 		<#list entities as entity>
 			<#if entity.getModElement().getTypeString() == "projectile">
 				<#if entity.isCustomModel()>

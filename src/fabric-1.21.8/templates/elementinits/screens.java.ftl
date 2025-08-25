@@ -26,7 +26,7 @@ package ${package}.init;
 
 public class ${JavaModName}Screens {
 
-	public static void load() {
+	public static void clientLoad() {
 		<#list guis as gui>
 			MenuScreens.register(${JavaModName}Menus.${gui.getModElement().getRegistryNameUpper()}, ${gui.getModElement().getName()}Screen::new);
 		</#list>
@@ -35,7 +35,5 @@ public class ${JavaModName}Screens {
 	public interface ${JavaModName}ScreenAccessor {
 		void updateMenuState(int elementType, String name, Object elementState);
 	}
-
 }
-
 <#-- @formatter:on -->
