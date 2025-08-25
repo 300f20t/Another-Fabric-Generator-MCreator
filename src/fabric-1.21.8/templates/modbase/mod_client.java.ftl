@@ -30,6 +30,10 @@ import net.fabricmc.api.Environment;
 
 		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.loadClient();</#if>
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.load();</#if>
+		
+		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
+			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
+		</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init

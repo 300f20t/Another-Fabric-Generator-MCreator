@@ -23,8 +23,6 @@ import ${package}.${JavaModName};
 
 import net.minecraft.nbt.Tag;
 
-// TODO: Finish implementing GLOBAL_WORLD and GLOBAL_MAP variables
-
 public class ${JavaModName}Variables {
 
 	<#if w.hasVariablesOfScope("GLOBAL_SESSION")>
@@ -100,7 +98,7 @@ public class ${JavaModName}Variables {
 			this.setDirty();
 
 			if (world instanceof ServerLevel level)
-				PacketDistributor.sendToPlayersInDimension(level, new SavedDataSyncMessage(1, this));
+				level.players().forEach(player -> ServerPlayNetworking.send(player, new SavedDataSyncMessage(1, this)));
 		}
 
 		static WorldVariables clientSide = new WorldVariables();
@@ -154,8 +152,8 @@ public class ${JavaModName}Variables {
 		public void syncData(LevelAccessor world) {
 			this.setDirty();
 
-			if (world instanceof Level && !world.isClientSide())
-				PacketDistributor.sendToAllPlayers(new SavedDataSyncMessage(0, this));
+			if (world instanceof ServerLevel level && !world.isClientSide())
+				PlayerLookup.world(level).forEach(player -> ServerPlayNetworking.send(player, new SavedDataSyncMessage(0, this)));
 		}
 
 		static MapVariables clientSide = new MapVariables();
@@ -201,20 +199,14 @@ public class ${JavaModName}Variables {
 			return TYPE;
 		}
 
-		public static void handleData(final SavedDataSyncMessage message, final IPayloadContext context) {
-			if (context.flow() == PacketFlow.CLIENTBOUND && message.data != null) {
-				context.enqueueWork(() -> {
-					if (message.dataType == 0)
-						MapVariables.clientSide.read(((MapVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
-					else
-						WorldVariables.clientSide.read(((WorldVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
-				}).exceptionally(e -> {
-					context.connection().disconnect(Component.literal(e.getMessage()));
-					return null;
-				});
-			}
+		public static void handleData(final SavedDataSyncMessage message, final ClientPlayNetworking.Context context) {
+			context.client().execute(() -> {
+				if (message.dataType == 0)
+					MapVariables.clientSide.read(((MapVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
+				else
+					WorldVariables.clientSide.read(((WorldVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
+			});
 		}
-
 	}
 	</#if>
 }

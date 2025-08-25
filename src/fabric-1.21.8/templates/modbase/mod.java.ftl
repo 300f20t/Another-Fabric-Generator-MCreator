@@ -49,6 +49,12 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType('biome')?filter(e -> e.hasVines() || e.hasFruits())?size != 0>${JavaModName}Biomes.load();</#if>
 		<#if w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>ServerLifecycleEvents.SERVER_STARTING.register(${JavaModName}Biomes::load);</#if>
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappingsServer.serverLoad();</#if>
+		
+		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
+			PayloadTypeRegistry.playS2C().register(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage.STREAM_CODEC);
+			${JavaModName}Variables.SyncJoin();
+			${JavaModName}Variables.SyncChangeWorld();
+		</#if>
 
 		// Start of user code block mod init
 		// End of user code block mod init
