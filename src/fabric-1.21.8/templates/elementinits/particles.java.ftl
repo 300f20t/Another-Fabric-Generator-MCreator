@@ -26,20 +26,12 @@
 
 package ${package}.init;
 
-public class ${JavaModName}Sounds {
+@Environment(EnvType.CLIENT) public class ${JavaModName}Particles {
 
-	<#list sounds as sound>
-	public static SoundEvent ${sound.getJavaName()};
-	</#list>
-
-	public static void load() {
-		<#list sounds as sound>
-		    ${sound.getJavaName()} = register("${sound.getName()}", SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("${modid}", "${sound}")));
+	public static void clientLoad() {
+		<#list particles as particle>
+		ParticleFactoryRegistry.getInstance().register(${JavaModName}ParticleTypes.${particle.getModElement().getRegistryNameUpper()}, ${particle.getModElement().getName()}Particle::provider);
 		</#list>
-	}
-
-	private static SoundEvent register(String registryname, SoundEvent element) {
-		return Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
 	}
 }
 <#-- @formatter:on -->

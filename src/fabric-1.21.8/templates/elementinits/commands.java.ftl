@@ -40,7 +40,7 @@ public class ${JavaModName}Commands {
     </#if>
 
     <#if clientCommands?has_content>
-	public static void loadClient() {
+	public static void clientLoad() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
 		<#list clientCommands as command>
 		    ${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);

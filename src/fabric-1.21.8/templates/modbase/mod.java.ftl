@@ -54,6 +54,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("villagertrade")>${JavaModName}Trades.registerTrades();</#if>
 		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.load();</#if>
 		<#if w.hasSounds()>${JavaModName}Sounds.load();</#if>
+		<#if w.hasElementsOfType("particle")>${JavaModName}ParticleTypes.load();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			PayloadTypeRegistry.playS2C().register(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage.STREAM_CODEC);

@@ -26,20 +26,20 @@
 
 package ${package}.init;
 
-public class ${JavaModName}Sounds {
+public class ${JavaModName}ParticleTypes {
 
-	<#list sounds as sound>
-	public static SoundEvent ${sound.getJavaName()};
+	<#list particles as particle>
+	public static SimpleParticleType ${particle.getModElement().getRegistryNameUpper()};
 	</#list>
 
 	public static void load() {
-		<#list sounds as sound>
-		    ${sound.getJavaName()} = register("${sound.getName()}", SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("${modid}", "${sound}")));
+		<#list particles as particle>
+		register("${particle.getModElement().getRegistryName()}", FabricParticleTypes.simple(<#if particle.alwaysShow>true</#if>));
 		</#list>
 	}
 
-	private static SoundEvent register(String registryname, SoundEvent element) {
-		return Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+	private static SimpleParticleType register(String registryname, SimpleParticleType element) {
+		return Registry.register(BuiltInRegistries.PARTICLE_TYPE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
 	}
 }
 <#-- @formatter:on -->
