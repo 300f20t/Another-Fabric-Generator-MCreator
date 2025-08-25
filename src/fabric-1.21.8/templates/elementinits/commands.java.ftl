@@ -24,16 +24,29 @@
 
 package ${package}.init;
 
+<#assign clientCommands = commands?filter(e -> e.type == "CLIENTSIDE")>
+<#assign nonClientCommands = commands?filter(e -> e.type != "CLIENTSIDE")>
+
 public class ${JavaModName}Commands {
 
+    <#if nonClientCommands?has_content>
 	public static void load() {
-		<#list commands as command>
-			CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
-					${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
-			});
+		CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
+		<#list nonClientCommands as command>
+		    ${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
 		</#list>
+		});
 	}
+    </#if>
 
+    <#if clientCommands?has_content>
+	public static void loadClient() {
+		CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
+		<#list clientCommands as command>
+		    ${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
+		</#list>
+		});
+	}
+    </#if>
 }
-
 <#-- @formatter:on -->

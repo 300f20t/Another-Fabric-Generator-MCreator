@@ -32,7 +32,5 @@ public class ${JavaModName}Procedures {
 			new ${procedure.getModElement().getName()}Procedure();
 		</#list>
 	}
-
-
 }
 <#-- @formatter:on -->

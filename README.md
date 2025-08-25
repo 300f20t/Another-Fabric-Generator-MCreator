@@ -11,14 +11,14 @@ This project is not official. It is not affiliated with the respective owners an
 ### **This plugin is currently being recoded entirely for a better plugin. Please be patient and consider this matter when developing a mod using this plugin.**
 
 ## Important Information
-- Make sure you use MCreator 2025.2
+- Make sure you use MCreator 2025.3 first snapshot
 - Back up your workspace before updating to a newer version of the plugin.
 - Mods will also require [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) to function properly, so when you want to play your mod, make sure you have Fabric API.
 - **In order to decompile your code, a recent change in MCreator no longer allow us to do it automatically. You have to go in Build & info -> Run Gradle task and paste this task `genSourcesWithCfr`**
 
 ## Credits/License
-Dev - [Goldorion](https://github.com/Goldorion) and contributors
-This generator re-uses code used from the official Forge generators.
+Dev - [Goldorion](https://github.com/Goldorion), [Spectrall](https://github.com/Spectrall368) and [contributors](https://github.com/Goldorion/Fabric-Generator-MCreator/graphs/contributors)
+This generator re-uses code from the official MCreator's Forge and NeoForge generators.
 
 The plugin's MCreator page is [here](https://mcreator.net/plugin/64512/mcreator-fabric-generator).
 The plugin's MCreator forum page is [here](https://mcreator.net/forum/60201/fabric-generator-plugin).
@@ -29,3 +29,4 @@ Licensed under the GNU Lesser General Public License, version 3.0
 - Forked versions of this software must be distributed under the same license as this with attribution if distributed.
 - Changes must be stated if any modified works are to be distributed.
 - Under no circumstances can you state that modified works are endorsed by the original creator.
+
