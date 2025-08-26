@@ -26,16 +26,20 @@ package ${package}.init;
 @Environment(EnvType.CLIENT) public class ${JavaModName}BlocksRenderers {
 
 	public static void clientLoad() {
-        <#list blocks as block>
-            render();
-        </#list>
+	    <#list blocks as block>
+	        <#if block.getModElement().getTypeString() == "block">
+	            <#if block.transparencyType != "SOLID" || block.hasTransparency>
+	                ${block.getModElement().getName()}Block.registerRenderLayer();
+	            </#if>
+	        <#elseif block.getModElement().getTypeString() == "plant">
+	            ${block.getModElement().getName()}Block.registerRenderLayer();
+	        <#elseif block.getModElement().getTypeString() == "dimension">
+	            ${block.getModElement().getName()}PortalBlock.registerRenderLayer();
+	        </#if>
+	    </#list>
     }
 
 	// Start of user code block custom block renderers
 	// End of user code block custom block renderers
-
-	private static void render(Block block, ChunkSectionLayer chunkSectionLayer) {
-		BlockRenderLayerMap.putBlock(block, chunkSectionLayer);
-	}
 }
 <#-- @formatter:on -->
