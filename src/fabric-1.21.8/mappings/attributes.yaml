@@ -1,1 +1,3 @@
 _mcreator_map_template: "@JavaModNameAttributes.@REGISTRYNAME.value()"
+SWIM_SPEED: Attributes.ARMOR
+NAMETAG_RENDER_DISTANCE: Attributes.ARMOR
