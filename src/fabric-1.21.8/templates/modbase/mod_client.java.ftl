@@ -33,6 +33,7 @@ package ${package};
 		<#if w.hasJavaModels()>${JavaModName}Models.clientLoad();</#if>
 		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
+		<#if w.hasElementsOfBaseType("block")>${JavaModName}BlocksRenderers.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);

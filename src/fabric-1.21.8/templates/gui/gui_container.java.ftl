@@ -113,7 +113,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 							@Override public boolean mayPlace(ItemStack stack) {
 								<#if component.inputLimit.getUnmappedValue().startsWith("TAG:")>
 									<#assign tag = "\"" + component.inputLimit.getUnmappedValue().replace("TAG:", "") + "\"">
-									return stack.is(TagKey.create(Registries.ITEM, new ResourceLocation(${tag})));
+									return stack.is(TagKey.create(Registries.ITEM, ResourceLocation.parse(${tag})));
 								<#else>
 									return ${mappedMCItemToItem(component.inputLimit)} == stack.getItem();
 								</#if>
