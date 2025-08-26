@@ -1,0 +1,73 @@
+templates:
+  - template: tool.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
+  - template: json/tool.json.ftl
+    writer: json
+    condition: "renderType #= 0"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: json/handheld_rod.json.ftl
+    writer: json
+    condition:
+      - "renderType #= 0"
+      - "toolType %= Fishing rod"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: json/item_cmodel.json.ftl
+    writer: json
+    condition: "renderType #= 1"
+    name: "@MODASSETSROOT/models/item/@registryname.json"
+  - template: json/item_model_blocking.json.ftl
+    writer: json
+    condition: "toolType %= Shield"
+    name: "@MODASSETSROOT/models/item/@registryname_blocking.json"
+  - template: json/item_gui.json.ftl
+    writer: json
+    condition: hasGUITexture()
+    name: "@MODASSETSROOT/models/item/@registryname_gui.json"
+  - template: json/model_item.json.ftl
+    writer: json
+    name: "@MODASSETSROOT/items/@registryname.json"
+  - template: json/model_item_shield.json.ftl
+    writer: json
+    condition: "toolType %= Shield"
+    name: "@MODASSETSROOT/items/@registryname.json"
+
+global_templates:
+  - template: mixins/fishhookmixin.java.ftl
+    writer: java
+    condition: "${w.getGElementsOfType('tool')?filter(e -> e.toolType = 'Fishing rod')?size != 0}"
+    deleteWhenConditionFalse: true
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixins/@JavaModNameFishingHookMixin.java"
+  - template: mixins/fishhookrenderermixin.java.ftl
+    writer: java
+    condition: "${w.getGElementsOfType('tool')?filter(e -> e.toolType = 'Fishing rod')?size != 0}"
+    deleteWhenConditionFalse: true
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixins/@JavaModNameFishingHookRendererMixin.java"
+  - template: mixins/entitymixin.java.ftl
+    writer: java
+    condition: "${w.getGElementsOfType('tool')?filter(e -> e.toolType = 'Fishing rod')?size != 0}"
+    deleteWhenConditionFalse: true
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixins/EntityMixin.java"
+
+tags:
+  - tag: ITEMS:minecraft:pickaxes
+    condition: ${data.toolType == "Pickaxe" || data.toolType == "Special" || data.toolType == "MultiTool"}
+  - tag: ITEMS:minecraft:axes
+    condition: ${data.toolType == "Axe" || data.toolType == "MultiTool"}
+  - tag: ITEMS:minecraft:swords
+    condition: ${data.toolType == "Sword" || data.toolType == "MultiTool"}
+  - tag: ITEMS:minecraft:shovels
+    condition: ${data.toolType == "Spade"}
+  - tag: ITEMS:minecraft:hoes
+    condition: ${data.toolType == "Hoe"}
+  - tag: ITEMS:minecraft:enchantable/fishing
+    condition: ${data.toolType == "Fishing rod"}
+  - tag: ITEMS:@modid:@registryname_repair_items
+    entryprovider: data.getRepairItemsAsStringList()
+
+localizationkeys:
+  - key: item.@modid.@registryname
+    mapto: name
+  - fromlist: data.getFixedSpecialInformation()
+    key: item.@modid.@registryname.description_@item_index
+
+field_exclusions: [ onEntitySwing ]

@@ -43,7 +43,6 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfBaseType("entity")>${JavaModName}Entities.load();</#if>
 		<#if w.hasElementsOfBaseType("feature")>${JavaModName}Features.load();</#if>
 		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
-		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
 		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
 		<#if w.getGElementsOfType("command")?filter(e -> e.type != "CLIENTSIDE")?size != 0>${JavaModName}Commands.load();</#if>
@@ -56,6 +55,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.load();</#if>
 		<#if w.hasSounds()>${JavaModName}Sounds.load();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}ParticleTypes.load();</#if>
+		<#if w.hasElementsOfBaseType("item")>${JavaModName}Items.load();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			PayloadTypeRegistry.playS2C().register(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage.STREAM_CODEC);
