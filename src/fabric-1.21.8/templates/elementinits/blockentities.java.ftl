@@ -42,8 +42,8 @@ public class ${JavaModName}BlockEntities {
 	// Start of user code block custom block entities
 	// End of user code block custom block entities
 
-	private static <T extends BlockEntity> BlockEntityType<T> register(String registryname, Block block, BlockEntityType.BlockEntitySupplier<T> supplier) {
-		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), new BlockEntityType(supplier, block.get()));
+	private static <T extends BlockEntity> BlockEntityType<T> register(String registryname, Block block, FabricBlockEntityTypeBuilder.Factory<? extends T> supplier) {
+		return Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), FabricBlockEntityTypeBuilder.<T>create(supplier, block).build());
 	}
 }
 <#-- @formatter:on -->
