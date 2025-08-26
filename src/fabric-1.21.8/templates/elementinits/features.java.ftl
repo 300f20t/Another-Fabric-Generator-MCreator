@@ -37,14 +37,14 @@ public class ${JavaModName}Features {
         </#list>
 
         <#list w.getGElementsOfType("block")?filter(e -> e.generateFeature) as feature>
-            register("${feature.getModElement().getRegistryName()}", new ${feature.getModElement().getName()}Feature(),
-                ${feature.getModElement().getName()}Feature.GENERATE_BIOMES, GenerationStep.Decoration.UNDERGROUND_ORES);
+            register("${feature.getModElement().getRegistryName()}", new OreFeature(OreConfiguration.CODEC),
+                ${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.UNDERGROUND_ORES);
 
         </#list>
 
         <#list w.getGElementsOfType("plant")?filter(e -> e.generateFeature) as feature>
-            register("${feature.getModElement().getRegistryName()}", new ${feature.getModElement().getName()}Feature()),
-                ${feature.getModElement().getName()}Feature.GENERATE_BIOMES, GenerationStep.Decoration.VEGETAL_DECORATION);
+            register("${feature.getModElement().getRegistryName()}", new RandomPatchFeature(RandomPatchConfiguration.CODEC),
+                ${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.VEGETAL_DECORATION);
         </#list>
 
         <#if hasStructureFeatureClass>
