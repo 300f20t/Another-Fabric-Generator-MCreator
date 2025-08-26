@@ -15,7 +15,7 @@
  # GNU Lesser General Public License for more details.
  #
  # You should have received a copy of the GNU Lesser General Public License
- # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <#-- @formatter:off -->
@@ -222,22 +222,47 @@ public class ${name}Item extends FishingRodItem {
 
 	<@onEntityHitWith data.onEntityHitWith/>
 
-	<#if hasProcedure(data.onRightClickedInAir)>
 	@Override public InteractionResult use(Level world, Player entity, InteractionHand hand) {
-		super.use(world, entity, hand);
-		ItemStack itemstack = entity.getItemInHand(hand);
-		<@procedureCode data.onRightClickedInAir, {
-			"x": "entity.getX()",
-			"y": "entity.getY()",
-			"z": "entity.getZ()",
-			"world": "world",
-			"entity": "entity",
-			"itemstack": "itemstack"
-		}/>
+		ItemStack itemStack = entity.getItemInHand(hand);
+		if (entity.fishing != null) {
+			if (!world.isClientSide) {
+				itemStack.hurtAndBreak(entity.fishing.retrieve(itemStack), (LivingEntity) entity, LivingEntity.getSlotForHand(hand));
+			}
+			world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+			entity.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
+		} else {
+			world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+			if (world instanceof ServerLevel serverLevel) {
+				int j = (int) (EnchantmentHelper.getFishingTimeReduction(serverLevel, itemStack, entity) * 20.0f);
+				int k = EnchantmentHelper.getFishingLuckBonus(serverLevel, itemStack, entity);
+				Projectile.spawnProjectile(new FishingHook(entity, world, k, j) {
+					@Override protected boolean shouldStopFishing(Player entity) {
+						if (entity.isRemoved() || !entity.isAlive() || !entity.getMainHandItem().is(${JavaModName}Items.${REGISTRYNAME}) && !entity.getOffhandItem().is(${JavaModName}Items.${REGISTRYNAME}) && this.distanceToSqr(entity) > 1024.0) {
+							this.discard();
+							return true;
+						}
+
+						return false;
+					}
+				}, serverLevel, itemStack);
+			}
+			entity.awardStat(Stats.ITEM_USED.get(this));
+			entity.gameEvent(GameEvent.ITEM_INTERACT_START);
+		}
+
+		<#if hasProcedure(data.onRightClickedInAir)>
+			<@procedureCode data.onRightClickedInAir, {
+				"x": "entity.getX()",
+				"y": "entity.getY()",
+				"z": "entity.getZ()",
+				"world": "world",
+				"entity": "entity",
+				"itemstack": "itemstack"
+			}/>
+		</#if>
 
 		return InteractionResult.SUCCESS;
 	}
-	</#if>
 
 	<@commonMethods/>
 }
@@ -266,8 +291,6 @@ public class ${name}Item extends FishingRodItem {
 	<@onItemUsedOnBlock data.onRightClickedOnBlock/>
 
 	<@onCrafted data.onCrafted/>
-
-	<@onEntitySwing data.onEntitySwing/>
 
 	<@onItemTick data.onItemInUseTick, data.onItemInInventoryTick/>
 

@@ -22,5 +22,9 @@ accessible method net/minecraft/world/level/levelgen/feature/ScatteredOreFeature
 extendable method net/minecraft/world/level/levelgen/feature/TreeFeature place (Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z
 </#if>
 
+<#if w.getGElementsOfType('tool')?filter(e -> e.toolType.equals('Fishing rod'))?size != 0>
+extendable method net/minecraft/world/entity/projectile/FishingHook shouldStopFishing (Lnet/minecraft/world/entity/player/Player;)Z
+</#if>
+
 # Start of user code block custom AWs
 # End of user code block custom AWs
