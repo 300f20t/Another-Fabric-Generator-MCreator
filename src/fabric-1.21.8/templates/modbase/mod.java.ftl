@@ -36,7 +36,10 @@ public class ${JavaModName} implements ModInitializer {
 
 		LOGGER.info("Initializing ${JavaModName}");
 
-		<#if w.hasElementsOfType("tab")>${JavaModName}Tabs.load();</#if>
+		<#if w.hasItemsInTabs()>${JavaModName}Tabs.load();</#if>
+		<#if w.hasElementsOfBaseType("block")>${JavaModName}Blocks.load();</#if>
+		<#if w.hasElementsOfBaseType("blockentity")>${JavaModName}BlockEntities.load();</#if>
+		<#if w.hasElementsOfBaseType("item")>${JavaModName}Items.load();</#if>
 		<#if w.hasElementsOfType("gamerule")>${JavaModName}GameRules.load();</#if>
 		<#if w.hasElementsOfType("potion")>${JavaModName}Potions.load();</#if>
 		<#if w.hasElementsOfType("attribute")>${JavaModName}Attributes.load();</#if>
