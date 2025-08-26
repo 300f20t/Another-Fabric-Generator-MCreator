@@ -20,6 +20,10 @@
 </#if>
 </#macro>
 
+<#macro piglinNeutral procedure="">
+<#-- Fabric don't support this -->
+</#macro>
+
 <#-- Item-related triggers -->
 <#macro addSpecialInformation procedure="" translationKeyHeader="" isBlock=false>
 	<#if procedure?has_content && (hasProcedure(procedure) || !procedure.getFixedValue().isEmpty())>
@@ -51,6 +55,10 @@
 		</#if>
 		}
 	</#if>
+</#macro>
+
+<#macro onEntitySwing procedure="">
+<#-- Fabric don't support this -->
 </#macro>
 
 <#macro onCrafted procedure="">
@@ -138,6 +146,10 @@
 	</#if>
 }
 </#if>
+</#macro>
+
+<#macro onDroppedByPlayer procedure="">
+<#-- Fabric don't support this -->
 </#macro>
 
 <#macro onItemUsedOnBlock procedure="">
@@ -312,6 +324,10 @@
 	}/>
 }
 </#if>
+</#macro>
+
+<#macro onDestroyedByPlayer procedure="">
+<#-- Fabric don't support this -->
 </#macro>
 
 <#macro onEntityWalksOn procedure="">
