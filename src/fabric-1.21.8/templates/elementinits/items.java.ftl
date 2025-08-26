@@ -1,5 +1,7 @@
 <#--
  # This file is part of Fabric-Generator-MCreator.
+ # Copyright (C) 2012-2020, Pylo
+ # Copyright (C) 2020-2025, Pylo, opensource contributors
  # Copyright (C) 2020-2025, Goldorion, opensource contributors
  #
  # Fabric-Generator-MCreator is free software: you can redistribute it and/or modify
@@ -13,86 +15,190 @@
  # GNU Lesser General Public License for more details.
  #
  # You should have received a copy of the GNU Lesser General Public License
- # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <#-- @formatter:off -->
+<#include "../procedures.java.ftl">
+
 /*
- *	MCreator note: This file will be REGENERATED on each build.
+ *    MCreator note: This file will be REGENERATED on each build.
  */
 
-<#compress>
 package ${package}.init;
 
 <#assign hasBlocks = false>
-<#assign hasItemsWithProperties = w.getGElementsOfType("item")?filter(e -> e.customProperties?has_content)?size != 0
-	|| w.getGElementsOfType("tool")?filter(e -> e.toolType == "Shield")?size != 0>
+<#assign hasDoubleBlocks = false>
+<#assign hasItemsWithCustomProperties = w.getGElementsOfType("item")?filter(e -> e.customProperties?has_content)?size != 0>
+<#assign hasItemsWithLeftHandedProperty = w.getGElementsOfType("item")?filter(e -> e.states
+	?filter(e -> e.stateMap.keySet()?filter(e -> e.getName() == "lefthanded")?size != 0)?size != 0)?size != 0>
 
 public class ${JavaModName}Items {
 
 	<#list items as item>
 		<#if item.getModElement().getTypeString() == "armor">
 			<#if item.enableHelmet>
-				public static Item ${item.getModElement().getRegistryNameUpper()}_HELMET;
+			public static Item ${item.getModElement().getRegistryNameUpper()}_HELMET;
 			</#if>
 			<#if item.enableBody>
-				public static Item ${item.getModElement().getRegistryNameUpper()}_CHESTPLATE;
+			public static Item ${item.getModElement().getRegistryNameUpper()}_CHESTPLATE;
 			</#if>
 			<#if item.enableLeggings>
-				public static Item ${item.getModElement().getRegistryNameUpper()}_LEGGINGS;
+			public static Item ${item.getModElement().getRegistryNameUpper()}_LEGGINGS;
 			</#if>
 			<#if item.enableBoots>
-				public static Item ${item.getModElement().getRegistryNameUpper()}_BOOTS;
+			public static Item ${item.getModElement().getRegistryNameUpper()}_BOOTS;
 			</#if>
 		<#elseif item.getModElement().getTypeString() == "livingentity">
 			public static Item ${item.getModElement().getRegistryNameUpper()}_SPAWN_EGG;
-		<#elseif item.getModElement().getTypeString() != "dimension">
+		<#elseif item.getModElement().getTypeString() == "dimension" && item.hasIgniter()>
+			public static Item ${item.getModElement().getRegistryNameUpper()};
+		<#elseif item.getModElement().getTypeString() == "fluid" && item.generateBucket>
+			public static Item ${item.getModElement().getRegistryNameUpper()}_BUCKET;
+		<#elseif item.getModElement().getTypeString() == "block" || item.getModElement().getTypeString() == "plant">
+			<#if item.hasSpecialInformation(w)>
+				public static Item ${item.getModElement().getRegistryNameUpper()};
+			<#else>
+				<#if item.isDoubleBlock()>
+					<#assign hasDoubleBlocks = true>
+					public static Item ${item.getModElement().getRegistryNameUpper()};
+				<#else>
+					<#assign hasBlocks = true>
+					public static Item ${item.getModElement().getRegistryNameUpper()};
+				</#if>
+			</#if>
+		<#else>
 			public static Item ${item.getModElement().getRegistryNameUpper()};
 		</#if>
 	</#list>
 
 	public static void load() {
-		<#list items as item>
-			<#if item.getModElement().getTypeString() == "armor">
-				<#if item.enableHelmet>
-					${item.getModElement().getRegistryNameUpper()}_HELMET = register("${item.getModElement().getRegistryName()}_helmet", new ${item.getModElement().getName()}Item.Helmet());
-				</#if>
-				<#if item.enableBody>
-					${item.getModElement().getRegistryNameUpper()}_CHESTPLATE = register("${item.getModElement().getRegistryName()}_chestplate", new ${item.getModElement().getName()}Item.Chestplate());
-				</#if>
-				<#if item.enableLeggings>
-					${item.getModElement().getRegistryNameUpper()}_LEGGINGS = register("${item.getModElement().getRegistryName()}_leggings", new ${item.getModElement().getName()}Item.Leggings());
-				</#if>
-				<#if item.enableBoots>
-					${item.getModElement().getRegistryNameUpper()}_BOOTS = register("${item.getModElement().getRegistryName()}_boots", new ${item.getModElement().getName()}Item.Boots());
-				</#if>
-			<#elseif item.getModElement().getTypeString() == "livingentity">
-				${item.getModElement().getRegistryNameUpper()}_SPAWN_EGG = register("${item.getModElement().getRegistryName()}_spawn_egg", new SpawnEggItem(${JavaModName}Entities.${item.getModElement().getRegistryNameUpper()},
-						${item.spawnEggBaseColor.getRGB()}, ${item.spawnEggDotColor.getRGB()}, new Item.Properties()));
-				<#if item.creativeTab.getUnmappedValue() != "No creative tab entry">
-					ItemGroupEvents.modifyEntriesEvent(${item.creativeTab}).register(content -> content.accept(${item.getModElement().getRegistryNameUpper()}_SPAWN_EGG));
-				<#else>
-					ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(${item.getModElement().getRegistryNameUpper()}_SPAWN_EGG));
-				</#if>
-			<#elseif item.getModElement().getTypeString() == "block" || item.getModElement().getTypeString() == "plant">
-				${item.getModElement().getRegistryNameUpper()} = register("${item.getModElement().getRegistryName()}", new BlockItem(${JavaModName}Blocks.${item.getModElement().getRegistryNameUpper()}, new Item.Properties()));
-					<#if item.creativeTab.getUnmappedValue() != "No creative tab entry">
-						ItemGroupEvents.modifyEntriesEvent(${item.creativeTab}).register(content -> content.accept(${item.getModElement().getRegistryNameUpper()}));
-					</#if>
+	<#list items as item>
+		<#if item.getModElement().getTypeString() == "armor">
+			<#if item.enableHelmet>
+			${item.getModElement().getRegistryNameUpper()}_HELMET =
+				register("${item.getModElement().getRegistryName()}_helmet", ${item.getModElement().getName()}Item.Helmet::new);
+			</#if>
+			<#if item.enableBody>
+			${item.getModElement().getRegistryNameUpper()}_CHESTPLATE =
+				register("${item.getModElement().getRegistryName()}_chestplate", ${item.getModElement().getName()}Item.Chestplate::new);
+			</#if>
+			<#if item.enableLeggings>
+			${item.getModElement().getRegistryNameUpper()}_LEGGINGS =
+				register("${item.getModElement().getRegistryName()}_leggings", ${item.getModElement().getName()}Item.Leggings::new);
+			</#if>
+			<#if item.enableBoots>
+			${item.getModElement().getRegistryNameUpper()}_BOOTS =
+				register("${item.getModElement().getRegistryName()}_boots", ${item.getModElement().getName()}Item.Boots::new);
+			</#if>
+		<#elseif item.getModElement().getTypeString() == "livingentity">
+			${item.getModElement().getRegistryNameUpper()}_SPAWN_EGG =
+				register("${item.getModElement().getRegistryName()}_spawn_egg",
+					properties -> new SpawnEggItem(${JavaModName}Entities.${item.getModElement().getRegistryNameUpper()}.get(), properties));
+		<#elseif item.getModElement().getTypeString() == "dimension" && item.hasIgniter()>
+			${item.getModElement().getRegistryNameUpper()} =
+				register("${item.getModElement().getRegistryName()}", ${item.getModElement().getName()}Item::new);
+		<#elseif item.getModElement().getTypeString() == "fluid" && item.generateBucket>
+			${item.getModElement().getRegistryNameUpper()}_BUCKET =
+				register("${item.getModElement().getRegistryName()}_bucket", ${item.getModElement().getName()}Item::new);
+		<#elseif item.getModElement().getTypeString() == "block" || item.getModElement().getTypeString() == "plant">
+			<#if item.hasSpecialInformation(w)>
+				${item.getModElement().getRegistryNameUpper()} =
+					register("${item.getModElement().getRegistryName()}",
+						<#if item.hasCustomItemProperties()>
+							properties -> new ${item.getModElement().getName()}Block.Item(<@blockItemProperties item false/>)
+						<#else>
+							${item.getModElement().getName()}Block.Item::new
+						</#if>
+					);
 			<#else>
-				<#if item.getModElement().getTypeString() != "dimension">
-					${item.getModElement().getRegistryNameUpper()} = register("${item.getModElement().getRegistryName()}", ${item.getModElement().getName()}Item::new);
+				<#if item.isDoubleBlock()>
+					<#assign hasDoubleBlocks = true>
+					${item.getModElement().getRegistryNameUpper()} =
+						doubleBlock(${JavaModName}Blocks.${item.getModElement().getRegistryNameUpper()}, "${item.getModElement().getRegistryName()}"
+						<#if item.hasCustomItemProperties()>, <@blockItemProperties item/></#if>);
+				<#else>
+					<#assign hasBlocks = true>
+					${item.getModElement().getRegistryNameUpper()} =
+						block(${JavaModName}Blocks.${item.getModElement().getRegistryNameUpper()}, "${item.getModElement().getRegistryName()}"
+						<#if item.hasCustomItemProperties()>, <@blockItemProperties item/></#if>);
 				</#if>
 			</#if>
-		</#list>
+		<#else>
+			${item.getModElement().getRegistryNameUpper()} =
+				register("${item.getModElement().getRegistryName()}", ${item.getModElement().getName()}Item::new);
+		</#if>
+	</#list>
+    }
+
+	// Start of user code block custom items
+	// End of user code block custom items
+
+	private static <I extends Item> I register(String name, Function<Item.Properties, ? extends I> supplier) {
+		return (I) Items.registerItem(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, name)), (Function<Item.Properties, Item>) supplier);
 	}
 
-	private static Item register(String registryName, Function<Item.Properties, Item> item) {
-		ResourceKey<Item> rk = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryName));
-		return Registry.register(BuiltInRegistries.ITEM, rk, item.apply(new Item.Properties().setId(rk)));
+	<#if hasBlocks>
+	private static Item block(Block block, String name) {
+		return block(block, name, new Item.Properties());
 	}
+
+	private static Item block(Block block, String name, Item.Properties properties) {
+		return Items.registerItem(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, name)), prop -> new BlockItem(block, prop), properties);
+	}
+	</#if>
+
+	<#if hasDoubleBlocks>
+	private static Item doubleBlock(Block block, String name) {
+		return doubleBlock(block, name, new Item.Properties());
+	}
+
+	private static Item doubleBlock(Block block, String name, Item.Properties properties) {
+		return Items.registerItem(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, name)), prop -> new DoubleHighBlockItem(block, prop), properties);
+	}
+	</#if>
+
+	<#if hasItemsWithCustomProperties || hasItemsWithLeftHandedProperty>
+	@EventBusSubscriber(Dist.CLIENT) public static class ItemsClientSideHandler {
+
+		<#if hasItemsWithCustomProperties>
+		@SubscribeEvent public static void registerItemModelProperties(RegisterRangeSelectItemModelPropertyEvent event) {
+			<#compress>
+			<#list items as item>
+				<#if item.getModElement().getTypeString() == "item">
+					<#list item.customProperties.entrySet() as property>
+					event.register(ResourceLocation.parse("${modid}:${item.getModElement().getRegistryName()}/${property.getKey()}"),
+						${item.getModElement().getName()}Item.${StringUtils.snakeToCamel(property.getKey())}Property.MAP_CODEC);
+					</#list>
+				</#if>
+			</#list>
+			</#compress>
+		}
+		</#if>
+
+		<#if hasItemsWithLeftHandedProperty>
+		@SubscribeEvent public static void registerItemModelProperties(RegisterConditionalItemModelPropertyEvent event) {
+			event.register(ResourceLocation.parse("${modid}:lefthanded"), LegacyLeftHandedProperty.MAP_CODEC);
+		}
+
+		public record LegacyLeftHandedProperty() implements ConditionalItemModelProperty {
+
+			public static final MapCodec<LegacyLeftHandedProperty> MAP_CODEC = MapCodec.unit(new LegacyLeftHandedProperty());
+
+			@Override
+			public boolean get(ItemStack itemStackToRender, @Nullable ClientLevel clientWorld, @Nullable LivingEntity entity, int seed, ItemDisplayContext displayContext) {
+				return entity != null && entity.getMainArm() == HumanoidArm.LEFT;
+			}
+
+			@Override
+			public MapCodec<LegacyLeftHandedProperty> type() {
+				return MAP_CODEC;
+			}
+		}
+		</#if>
+	}
+	</#if>
 }
-
 <#macro blockItemProperties block newProperties=true>
 <#if newProperties>new Item.Properties()<#else>properties</#if>
 <#if block.maxStackSize != 64>
@@ -105,5 +211,4 @@ public class ${JavaModName}Items {
 	.fireResistant()
 </#if>
 </#macro>
-</#compress>
 <#-- @formatter:on -->
