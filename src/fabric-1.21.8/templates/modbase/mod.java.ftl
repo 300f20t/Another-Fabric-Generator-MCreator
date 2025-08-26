@@ -52,6 +52,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>ServerLifecycleEvents.SERVER_STARTING.register(${JavaModName}Biomes::load);</#if>
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappingsServer.serverLoad();</#if>
 		<#if w.hasElementsOfType("villagertrade")>${JavaModName}Trades.registerTrades();</#if>
+		<#if w.hasElementsOfType("villagerprofession")>${JavaModName}VillagerProfessions.load();</#if>
 		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.load();</#if>
 		<#if w.hasSounds()>${JavaModName}Sounds.load();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}ParticleTypes.load();</#if>
