@@ -44,8 +44,7 @@ public class ${JavaModName}Attributes {
 			<#if attribute.addToAllEntities>
 			    BuiltInRegistries.ENTITY_TYPE.stream().map((entityType) -> (EntityType<? extends LivingEntity>) entityType).filter(DefaultAttributes::hasSupplier)
 			        .forEach(entityType -> {
-            					FabricDefaultAttributeRegistry.register(entityType, DefaultAttributes.getSupplier(entityType).add(${attribute.getModElement().getRegistryNameUpper()})
-            					);
+            					FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
             			});
 			<#else>
 				<#if attribute.entities?has_content>
@@ -56,14 +55,25 @@ public class ${JavaModName}Attributes {
 					).stream()
 					.filter(DefaultAttributes::hasSupplier)
 					.map(entityType -> (EntityType<? extends LivingEntity>) entityType)
-					.collect(Collectors.toList()).forEach(entity -> event.add(entity, ${attribute.getModElement().getRegistryNameUpper()}));
+					.collect(Collectors.toList()).forEach(entityType -> {
+					    FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
+					});
 				</#if>
 				<#if attribute.addToPlayers>
-					FabricDefaultAttributeRegistry.register(EntityType.PLAYER, (builder) -> builder.add(${attribute.getModElement().getRegistryNameUpper()}));
+					FabricDefaultAttributeRegistry.register(EntityType.PLAYER, addAttributeToEntity(DefaultAttributes.getSupplier(EntityType.PLAYER), EntityType.PLAYER, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
 				</#if>
 			</#if>
 		</#list>
 	}
+
+    private static AttributeSupplier addAttributeToEntity(AttributeSupplier existingSupplier, EntityType<? extends LivingEntity> entityType, Holder<Attribute> newAttribute) {
+        AttributeSupplier.Builder builder = AttributeSupplier.builder();
+        AttributeSupplierAccessor accessor = (AttributeSupplierAccessor) existingSupplier;
+        accessor.getInstances().forEach((attribute, instance) -> {
+            builder.add(attribute, instance.getBaseValue());
+        });
+        return builder.add(newAttribute).build();
+    }
 
 	private static Holder<Attribute> register(String registryname, Attribute element) {
 		return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
