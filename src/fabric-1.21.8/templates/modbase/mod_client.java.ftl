@@ -34,6 +34,7 @@ package ${package};
 		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
 		<#if w.hasElementsOfBaseType("block")>${JavaModName}BlocksRenderers.clientLoad();</#if>
+		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);

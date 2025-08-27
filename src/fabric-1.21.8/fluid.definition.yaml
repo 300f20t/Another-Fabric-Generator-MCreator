@@ -1,0 +1,52 @@
+templates:
+  - template: fluid/fluid.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/fluid/@NAMEFluid.java"
+  - template: fluid/fluidblock.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/block/@NAMEBlock.java"
+  - template: fluid/fluidbucket.java.ftl
+    condition: generateBucket
+    name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
+  - template: json/bucket.json.ftl
+    writer: json
+    name: "@MODASSETSROOT/models/item/@registryname_bucket.json"
+    condition: hasCustomBucketTexture()
+  - template: json/model_item_bucket.json.ftl
+    writer: json
+    name: "@MODASSETSROOT/items/@registryname_bucket.json"
+    condition: generateBucket
+  - template: json/fluid_states.json.ftl
+    writer: json
+    name: "@MODASSETSROOT/blockstates/@registryname.json"
+  - template: json/fluid.json.ftl
+    writer: json
+    name: "@MODASSETSROOT/models/block/@registryname.json"
+
+global_templates:
+  - template: elementinits/fluids.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameFluids.java"
+  - template: json/fluidtag.json.ftl
+    writer: json
+    variables: "type=water"
+    condition: "${w.getGElementsOfType('fluid')?filter(e -> e.type.equals('WATER'))?size != 0}"
+    name: "@RESROOT/data/minecraft/tags/fluid/water.json"
+  - template: json/fluidtag.json.ftl
+    writer: json
+    variables: "type=lava"
+    condition: "${w.getGElementsOfType('fluid')?filter(e -> e.type.equals('LAVA'))?size != 0}"
+    name: "@RESROOT/data/minecraft/tags/fluid/lava.json"
+
+localizationkeys:
+  - key: fluid.@modid.@registryname
+    mapto: name
+  - key: block.@modid.@registryname
+    mapto: name
+  - key: item.@modid.@registryname_bucket
+    mapto: bucketName
+    condition: generateBucket
+  - fromlist: data.getFixedSpecialInformation()
+    key: item.@modid.@registryname_bucket.description_@item_index
+
+tags:
+  - tag: BLOCKS:minecraft:replaceable
+
+field_exclusions: [hasFog, fogColor, fogStartDistance, fogEndDistance]

@@ -35,6 +35,8 @@ package ${package}.init;
 	            ${block.getModElement().getName()}Block.registerRenderLayer();
 	        <#elseif block.getModElement().getTypeString() == "dimension">
 	            ${block.getModElement().getName()}PortalBlock.registerRenderLayer();
+	        <#elseif block.getModElement().getTypeString() == "fluid">
+	            ${block.getModElement().getName()}Fluid.registerRenderLayer();
 	        </#if>
 	    </#list>
     }
