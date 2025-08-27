@@ -34,11 +34,9 @@
   <#if (w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether || e.hasVines() || e.hasFruits())?size != 0) || w.hasElementsOfType('feature')>
   "accessWidener" : "META-INF/${modid}.accesswidener",
   </#if>
-  <#if w.getGElementsOfType("biome")?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
   "mixins": [
     "${modid}.mixins.json"
   ],
-  </#if>
   "depends": {
 	"fabricloader": ">=0.17.2",
 	"minecraft": "~${generator.getGeneratorMinecraftVersion()}",

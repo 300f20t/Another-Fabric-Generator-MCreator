@@ -5,6 +5,9 @@
 <#if w.hasElementsOfBaseType('item')>
 	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
 </#if>
+<#if w.hasElementsOfType('attribute')>
+    <#assign mixins = mixins + ['AttributeSupplierAccessor']>
+</#if>
 
 {
   "required": true,
