@@ -1,5 +1,5 @@
 global_templates:
   - template: elementinits/items.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameItems.java"
-  - template: mixins/repairitemrecipemixin.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/mixins/@JavaModNameRepairItemRecipeMixin.java"
+  - template: mixin/repairitemrecipemixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/@JavaModNameRepairItemRecipeMixin.java"

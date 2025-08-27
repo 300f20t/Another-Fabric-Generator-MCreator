@@ -25,29 +25,26 @@
 
 package ${package}.item;
 
-import com.google.common.collect.Multimap;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-
 <#compress>
 <#if data.toolType == "Pickaxe" || data.toolType == "Axe" || data.toolType == "Sword" || data.toolType == "Spade"
 		|| data.toolType == "Hoe" || data.toolType == "Shears" || data.toolType == "Shield" || data.toolType == "MultiTool">
 public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?replace("MultiTool|Pickaxe|Sword", "", "r")}Item {
 
 	<#if data.toolType == "Pickaxe" || data.toolType == "Axe" || data.toolType == "Sword" || data.toolType == "Spade" || data.toolType == "Hoe" || data.toolType == "MultiTool">
-        private static final ToolMaterial TOOL_MATERIAL = new ToolMaterial(
-            <#if data.blockDropsTier == "WOOD">BlockTags.INCORRECT_FOR_WOODEN_TOOL
-            <#elseif data.blockDropsTier == "STONE">BlockTags.INCORRECT_FOR_STONE_TOOL
-            <#elseif data.blockDropsTier == "IRON">BlockTags.INCORRECT_FOR_IRON_TOOL
-            <#elseif data.blockDropsTier == "DIAMOND">BlockTags.INCORRECT_FOR_DIAMOND_TOOL
-            <#elseif data.blockDropsTier == "GOLD">BlockTags.INCORRECT_FOR_GOLD_TOOL
-            <#else>BlockTags.INCORRECT_FOR_NETHERITE_TOOL
-            </#if>,
-            ${data.usageCount},
-            ${data.efficiency}f,
-            0,
-            ${data.enchantability},
-            TagKey.create(Registries.ITEM, ResourceLocation.parse("${modid}:${registryname}_repair_items")) <#-- data.repairItems are put into a tag -->
-        );
+	private static final ToolMaterial TOOL_MATERIAL = new ToolMaterial(
+		<#if data.blockDropsTier == "WOOD">BlockTags.INCORRECT_FOR_WOODEN_TOOL
+		<#elseif data.blockDropsTier == "STONE">BlockTags.INCORRECT_FOR_STONE_TOOL
+		<#elseif data.blockDropsTier == "IRON">BlockTags.INCORRECT_FOR_IRON_TOOL
+		<#elseif data.blockDropsTier == "DIAMOND">BlockTags.INCORRECT_FOR_DIAMOND_TOOL
+		<#elseif data.blockDropsTier == "GOLD">BlockTags.INCORRECT_FOR_GOLD_TOOL
+		<#else>BlockTags.INCORRECT_FOR_NETHERITE_TOOL
+		</#if>,
+		${data.usageCount},
+		${data.efficiency}f,
+		0,
+		${data.enchantability},
+		TagKey.create(Registries.ITEM, ResourceLocation.parse("${modid}:${registryname}_repair_items")) <#-- data.repairItems are put into a tag -->
+	);
 	</#if>
 
 	public ${name}Item (Item.Properties properties) {
@@ -95,6 +92,9 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 				</#if>
 				<#if data.enchantability != 0 && data.toolType=="Shears">
 				.enchantable(${data.enchantability})
+				</#if>
+				<#if (data.usageCount == 0) && (data.toolType == "Pickaxe" || data.toolType == "Axe" || data.toolType == "Sword" || data.toolType == "Spade" || data.toolType == "Hoe" || data.toolType == "MultiTool")>
+				.component(DataComponents.MAX_DAMAGE, null)
 				</#if>
 		);
 	}
@@ -267,6 +267,7 @@ public class ${name}Item extends FishingRodItem {
 	<@commonMethods/>
 }
 </#if>
+</#compress>
 
 <#macro commonMethods>
 	<#if data.stayInGridWhenCrafting>
@@ -297,5 +298,4 @@ public class ${name}Item extends FishingRodItem {
 	<@hasGlow data.glowCondition/>
 
 </#macro>
-</#compress>
 <#-- @formatter:on -->

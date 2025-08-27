@@ -98,6 +98,7 @@ base_templates:
     writer: json
     condition_any:
       - "${w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0}"
+      - "${w.hasElementsOfBaseType('item')}"
     name: "@RESROOT/@modid.mixins.json"
   - template: elementinits/features.java.ftl
     writer: java

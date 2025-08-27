@@ -15,7 +15,7 @@
  # You should have received a copy of the GNU Lesser General Public License
  # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
 -->
-package ${package}.mixins;
+package ${package}.mixin;
 
 import com.google.common.collect.Lists;
 import org.spongepowered.asm.mixin.injection.Constant;
@@ -35,7 +35,7 @@ public abstract class ${JavaModName}RepairItemRecipeMixin {
 			list.add(itemStack);
 		}
 		<#list items as item>
-		<#if item.getModElement().getTypeString() = "item" || item.getModElement().getTypeString() = "tool">
+		<#if item.getModElement().getTypeString() == "item" || item.getModElement().getTypeString() == "tool">
 			<#if item.stayInGridWhenCrafting>
 				if ((itemStack3 = (ItemStack) list.get(0)).is((${JavaModName}Items.${item.getModElement().getRegistryNameUpper()}))) {
 					cir.setReturnValue(ItemStack.EMPTY);
