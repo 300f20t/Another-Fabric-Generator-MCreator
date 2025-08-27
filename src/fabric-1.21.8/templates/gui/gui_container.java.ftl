@@ -49,6 +49,13 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 
 	private final Map<Integer, Slot> customSlots = new HashMap<>();
 
+	public ${name}Menu(int id, Inventory inv) {
+	    this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
+		this.x = (int) inv.player.getX();
+		this.y = (int) inv.player.getY();
+		this.z = (int) inv.player.getZ();
+	}
+
 	public ${name}Menu(int id, Inventory inv, FriendlyByteBuf extraData) {
 		this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
 		BlockPos pos = null;
@@ -231,6 +238,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 		<#list data.components as component>
 			<#if component.getClass().getSimpleName() == "Button" ||  component.getClass().getSimpleName() == "ImageButton">
 				<#if hasProcedure(component.onClick)>
+					PayloadTypeRegistry.playC2S().register(${name}ButtonMessage.TYPE, ${name}ButtonMessage.STREAM_CODEC);
 					ServerPlayNetworking.registerGlobalReceiver(${name}ButtonMessage.TYPE, ${name}ButtonMessage::apply);
 				</#if>
 				<#assign btid +=1>

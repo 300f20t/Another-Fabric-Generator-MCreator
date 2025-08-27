@@ -38,7 +38,7 @@ public class ${JavaModName}Menus {
 		<#list guis as gui>
 			${gui.getModElement().getRegistryNameUpper()} = Registry.register(BuiltInRegistries.MENU, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID,
 					"${gui.getModElement().getRegistryName()}"),
-			 new ExtendedScreenHandlerType<>(${gui.getModElement().getName()}Menu::new));
+			 new MenuType<>(${gui.getModElement().getName()}Menu::new, FeatureFlags.DEFAULT_FLAGS));
 			${gui.getModElement().getName()}Menu.screenInit();
 		</#list>
 		PayloadTypeRegistry.playC2S().register(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage.STREAM_CODEC);
