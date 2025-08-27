@@ -52,7 +52,7 @@ public class ${name}Procedure {
 		<#if nullableDependencies?has_content>
 			if(
 			<#list nullableDependencies as dependency>
-			${dependency} == null }<#sep>||
+			${dependency} == null <#sep>||
 			</#list>
 			) return <#if return_type??>${return_type.getDefaultValue(generator.getWorkspace())}</#if>;
 		</#if>

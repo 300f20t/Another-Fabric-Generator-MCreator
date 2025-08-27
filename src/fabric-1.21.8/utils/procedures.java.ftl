@@ -10,7 +10,7 @@
         </#list>
     </#list>
 
-    <#list deps_filtered as value>${value}<#if value?has_next>,</#if></#list>
+    <#list deps_filtered as value>${value}<#sep>,</#list>
 </#compress>
 </#macro>
 
