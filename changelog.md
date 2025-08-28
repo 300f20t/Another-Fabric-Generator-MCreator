@@ -1,5 +1,29 @@
 # Changelogs:
 
+## 2.0
+- Updated to MCreator 2025.3 first snapshot
+- Updated to Minecraft 1.21.8
+- Unsupported procedure blocks and global triggers are (finally) marked back as unsupported
+- Added support for the Attribute mod element
+- Added support for the Banner mod element
+- Added support for the Fluid mod element
+- Added support for the Villager profession mod element
+- Added support for built-in portal in custom dimensions (full dimension ME support)
+- Added support for the custom tree vines and tree fruits in custom biomes
+- Added support for the creative pick item parameter in custom plants
+- Added is allowed on books support enchantment parameter support
+- Added pressedms dependency support for custom key bindings
+- Added support for the new parameters in mod elements since the last version
+- Added support for 2 new global triggers: Minecraft loads and unloads a world
+- [Bugfix] Potion effects and potion items tried to be registered as an item causing an error
+- [Bugfix] When entity dies global trigger caused a FTL error
+- [Bugfix] Feature mod element didn't work
+- [Bugfix] Some built-in entity models were missing
+- [Bugfix] Custom Java model for projectiles caused a build error
+- [Bugfix] GUIs could not be opened on servers
+- [Bugfix] Random number in range procedure blocks crashed the game
+- [Bugfix] And surely much more :D
+
 ## 1.10
 (Thank you NerdyPuzzle)
 * [#520] Removed support for TerraBlender API (biome generation is now done similarly to Forge generators)
