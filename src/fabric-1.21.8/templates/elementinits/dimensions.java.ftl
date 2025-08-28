@@ -31,19 +31,12 @@ public class ${JavaModName}Dimensions {
 		<#compress>
 		<#list dimensions as dimension>
 			<#if dimension.enablePortal>
-			    registerPOI("${dimension.getModElement().getRegistryName()}", ${JavaModName}Blocks.${dimension.getModElement().getRegistryNameUpper()}_PORTAL, ${dimension.getModElement().getName()}Teleporter.poi);
 				<#if hasProcedure(dimension.onPlayerLeavesDimension) || hasProcedure(dimension.onPlayerEntersDimension) || dimension.useCustomEffects>
             		${dimension.getModElement().getName()}Dimension.load();
             	</#if>
 			</#if>
 		</#list>
 		</#compress>
-	}
-	
-	private static void registerPOI(String registryName, Block portalBlock, Holder<PoiType> poi) {
-		PoiType poiType = new PoiType(ImmutableSet.copyOf(portalBlock.getStateDefinition().getPossibleStates()), 0, 1);
-		Registry.register(BuiltInRegistries.POINT_OF_INTEREST_TYPE, ResourceLocation.parse("${modid}:" + registryName +  "_portal"), poiType);
-		poi = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
 	}
 }
 <#-- @formatter:on -->
