@@ -123,7 +123,7 @@ public class ${name}PortalBlock extends NetherPortalBlock {
 	</#if>
 
 	@Environment(EnvType.CLIENT) public static void registerRenderLayer() {
-	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}, ChunkSectionLayer.TRANSLUCENT);
+	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL, ChunkSectionLayer.TRANSLUCENT);
 	}
 }
 <#-- @formatter:on -->
