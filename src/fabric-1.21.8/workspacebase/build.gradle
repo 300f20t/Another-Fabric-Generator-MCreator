@@ -8,15 +8,8 @@ base.archivesName = 'modid'
 actualmodid = '${modid}'
 
 loom {
-
     if (file("src/main/resources/META-INF/${modid}.accesswidener").exists())
         accessWidenerPath = file("src/main/resources/META-INF/${modid}.accesswidener")
-
-    mods {
-        "modid" {
-            sourceSet sourceSets.main
-        }
-    }
 }
 
 dependencies {
