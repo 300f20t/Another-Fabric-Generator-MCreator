@@ -10,7 +10,7 @@ public ${name}Procedure() {
 				"world": "entity.level()",
 				"entity": "entity",
 				"damagesource": "damageSource",
-				"sourceentity": "damageSource.getEntity()",
+				"sourceentity": "damageSource.getEntity()"
 				}/>
 			</#compress></#assign>
 			execute(${dependenciesCode});
