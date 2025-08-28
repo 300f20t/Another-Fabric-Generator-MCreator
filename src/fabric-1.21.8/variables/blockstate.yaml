@@ -26,3 +26,27 @@ scopes:
       <#include "mcitems.ftl">
       ${JavaModName}Variables.MapVariables.get(world).${name} = ${mappedBlockToBlockStateCode(value)};
       ${JavaModName}Variables.MapVariables.get(world).syncData(world);
+#  player_lifetime:
+#    init: public BlockState ${var.getName()} = ${generator.map(var.getValue(), "blocksitems")}.defaultBlockState();
+#    read: ${var.getName()} = input.read("${var.getName()}", BlockState.CODEC).orElse(Blocks.AIR.defaultBlockState());
+#    write: output.store("${var.getName()}", BlockState.CODEC, ${var.getName()});
+#    get: /*@BlockState*/${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get()).${name}
+#    set: |
+#      <#include "mcitems.ftl">
+#      {
+#        ${JavaModName}Variables.PlayerVariables _vars = ${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get());
+#        _vars.${name} = ${mappedBlockToBlockStateCode(value)};
+#        _vars.syncPlayerVariables(${entity});
+#      }
+#  player_persistent:
+#    init: public BlockState ${var.getName()} = ${generator.map(var.getValue(), "blocksitems")}.defaultBlockState();
+#    read: ${var.getName()} = input.read("${var.getName()}", BlockState.CODEC).orElse(Blocks.AIR.defaultBlockState());
+#    write: output.store("${var.getName()}", BlockState.CODEC, ${var.getName()});
+#    get: /*@BlockState*/${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get()).${name}
+#    set: |
+#      <#include "mcitems.ftl">
+#      {
+#        ${JavaModName}Variables.PlayerVariables _vars = ${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get());
+#        _vars.${name} = ${mappedBlockToBlockStateCode(value)};
+#        _vars.syncPlayerVariables(${entity});
+#      }

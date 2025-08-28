@@ -26,3 +26,27 @@ scopes:
       <#include "mcitems.ftl">
       ${JavaModName}Variables.MapVariables.get(world).${name} = ${mappedMCItemToItemStackCode(value, 1)}.copy();
       ${JavaModName}Variables.MapVariables.get(world).syncData(world);
+#  player_lifetime:
+#    init: public ItemStack ${var.getName()} = ItemStack.EMPTY;
+#    read: ${var.getName()} = input.read("${var.getName()}", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+#    write: output.store("${var.getName()}", ItemStack.OPTIONAL_CODEC, ${var.getName()});
+#    get: /*@ItemStack*/${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get()).${name}
+#    set: |
+#      <#include "mcitems.ftl">
+#      {
+#        ${JavaModName}Variables.PlayerVariables _vars = ${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get());
+#        _vars.${name} = ${mappedMCItemToItemStackCode(value, 1)}.copy();
+#        _vars.syncPlayerVariables(${entity});
+#      }
+#  player_persistent:
+#    init: public ItemStack ${var.getName()} = ItemStack.EMPTY;
+#    read: ${var.getName()} = input.read("${var.getName()}", ItemStack.OPTIONAL_CODEC).orElse(ItemStack.EMPTY);
+#    write: output.store("${var.getName()}", ItemStack.OPTIONAL_CODEC, ${var.getName()});
+#    get: /*@ItemStack*/${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get()).${name}
+#    set: |
+#      <#include "mcitems.ftl">
+#      {
+#        ${JavaModName}Variables.PlayerVariables _vars = ${entity}.getAttachedOrCreate(${JavaModName}Variables.PLAYER_VARIABLES.get());
+#        _vars.${name} = ${mappedMCItemToItemStackCode(value, 1)}.copy();
+#        _vars.syncPlayerVariables(${entity});
+#      }
