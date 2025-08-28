@@ -27,40 +27,41 @@
 
 package ${package}.init;
 
-public class ${JavaModName}KeyMappings {
+@Environment(EnvType.CLIENT) public class ${JavaModName}KeyMappings {
 
 	<#list keybinds as keybind>
-		public static final KeyMapping ${keybind.getModElement().getRegistryNameUpper()} = new KeyMapping(
-				"key.${modid}.${keybind.getModElement().getRegistryName()}", GLFW.GLFW_KEY_${generator.map(keybind.triggerKey, "keybuttons")},
-				"key.categories.${keybind.keyBindingCategoryKey}")
-					<#if hasProcedure(keybind.onKeyReleased) || hasProcedure(keybind.onKeyPressed)>
-					{
-						private boolean isDownOld = false;
-	
-						@Override public void setDown(boolean isDown) {
-							super.setDown(isDown);
-	
-							if (isDownOld != isDown && isDown) {
-								<#if hasProcedure(keybind.onKeyPressed)>
-									ClientPlayNetworking.send(new ${keybind.getModElement().getName()}Message(0, 0));
-								</#if>
-	
-								<#if hasProcedure(keybind.onKeyReleased)>
-									${keybind.getModElement().getRegistryNameUpper()}_LASTPRESS = System.currentTimeMillis();
-								</#if>
-							}
-							<#if hasProcedure(keybind.onKeyReleased)>
-							else if (isDownOld != isDown && !isDown) {
-								int dt = (int) (System.currentTimeMillis() - ${keybind.getModElement().getRegistryNameUpper()}_LASTPRESS);
-								ClientPlayNetworking.send(new ${keybind.getModElement().getName()}Message(1, dt));
-							}
+	public static final KeyMapping ${keybind.getModElement().getRegistryNameUpper()} = new KeyMapping(
+			"key.${modid}.${keybind.getModElement().getRegistryName()}", GLFW.GLFW_KEY_${generator.map(keybind.triggerKey, "keybuttons")},
+			"key.categories.${keybind.keyBindingCategoryKey}")
+				<#if hasProcedure(keybind.onKeyReleased) || hasProcedure(keybind.onKeyPressed)>
+				{
+					private boolean isDownOld = false;
+
+					@Override public void setDown(boolean isDown) {
+						super.setDown(isDown);
+
+						if (isDownOld != isDown && isDown) {
+							<#if hasProcedure(keybind.onKeyPressed)>
+								ClientPlayNetworking.send(new ${keybind.getModElement().getName()}Message(0, 0));
+								${keybind.getModElement().getName()}Message.pressAction(Minecraft.getInstance().player, 0, 0);
 							</#if>
-	
-							isDownOld = isDown;
+
+							<#if hasProcedure(keybind.onKeyReleased)>
+								${keybind.getModElement().getRegistryNameUpper()}_LASTPRESS = System.currentTimeMillis();
+							</#if>
 						}
+						<#if hasProcedure(keybind.onKeyReleased)>
+						else if (isDownOld != isDown && !isDown) {
+							int dt = (int) (System.currentTimeMillis() - ${keybind.getModElement().getRegistryNameUpper()}_LASTPRESS);
+							ClientPlayNetworking.send(new ${keybind.getModElement().getName()}Message(1, dt));
+							${keybind.getModElement().getName()}Message.pressAction(Minecraft.getInstance().player, 1, dt);
+						}
+						</#if>
+
+						isDownOld = isDown;
 					}
-					</#if>
-				;
+				}
+				</#if>;
 	</#list>
 
 	<#list keybinds as keybind>
@@ -73,6 +74,16 @@ public class ${JavaModName}KeyMappings {
 		<#list keybinds as keybind>
 			KeyBindingHelper.registerKeyBinding(${keybind.getModElement().getRegistryNameUpper()});
 		</#list>
+
+		ClientTickEvents.END_CLIENT_TICK.register((client) -> {
+		    if (client.screen == null) {
+		    <#list keybinds as keybind>
+		        <#if hasProcedure(keybind.onKeyPressed) || hasProcedure(keybind.onKeyReleased)>
+		            ${keybind.getModElement().getRegistryNameUpper()}.consumeClick();
+		        </#if>
+		    </#list>
+		    }
+		});
 	}
 }
 </#compress>
