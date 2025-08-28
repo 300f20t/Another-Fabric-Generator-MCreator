@@ -24,8 +24,6 @@
  *	MCreator note: This file will be REGENERATED on each build.
  */
 
-// TODO: Finish ExtendedScreenHandlerType
-
 package ${package}.init;
 
 public class ${JavaModName}Menus {

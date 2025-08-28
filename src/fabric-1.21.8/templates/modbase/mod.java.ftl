@@ -38,13 +38,13 @@ public class ${JavaModName} implements ModInitializer {
 
 		<#if w.hasItemsInTabs()>${JavaModName}Tabs.load();</#if>
 		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.load();</#if>
+		<#if w.hasElementsOfBaseType("entity")>${JavaModName}Entities.load();</#if>
 		<#if w.hasElementsOfBaseType("block")>${JavaModName}Blocks.load();</#if>
 		<#if w.hasElementsOfBaseType("blockentity")>${JavaModName}BlockEntities.load();</#if>
 		<#if w.hasElementsOfBaseType("item")>${JavaModName}Items.load();</#if>
 		<#if w.hasElementsOfType("gamerule")>${JavaModName}GameRules.load();</#if>
 		<#if w.hasElementsOfType("potion")>${JavaModName}Potions.load();</#if>
 		<#if w.hasElementsOfType("attribute")>${JavaModName}Attributes.load();</#if>
-		<#if w.hasElementsOfBaseType("entity")>${JavaModName}Entities.load();</#if>
 		<#if w.hasElementsOfBaseType("feature")>${JavaModName}Features.load();</#if>
 		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
