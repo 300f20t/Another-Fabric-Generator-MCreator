@@ -61,7 +61,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfType("particle")>${JavaModName}ParticleTypes.load();</#if>
 		<#if w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers() || e.enablePortal)?size != 0>${JavaModName}Dimensions.load();</#if>
 
-		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
+		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP") || w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
 			${JavaModName}Variables.variablesLoad();
 		</#if>
 
