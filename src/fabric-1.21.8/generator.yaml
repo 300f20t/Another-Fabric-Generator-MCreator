@@ -1,7 +1,7 @@
 name: Minecraft Fabric for @minecraft (@buildfileversion)
 status: dev
 buildfileversion: 0.132.0
-subversion: 2
+subversion: 3
 
 import:
   - datapack-1.21.8
@@ -12,6 +12,7 @@ import:
 
 # gradle task definitions
 gradle:
+  sync_task: genSourcesWithCfr
   run_client: runClient
   run_server: runServer
   export_file: "build/libs/modid-1.0.jar"
