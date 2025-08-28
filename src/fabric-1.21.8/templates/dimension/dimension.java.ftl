@@ -29,6 +29,10 @@ public class ${name}Dimension {
 
 	<#if hasProcedure(data.onPlayerLeavesDimension) || hasProcedure(data.onPlayerEntersDimension) || data.useCustomEffects>
 		public static void load() {
+            PoiType poiType = new PoiType(ImmutableSet.copyOf(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL.getStateDefinition().getPossibleStates()), 0, 1);
+            Registry.register(BuiltInRegistries.POINT_OF_INTEREST_TYPE, ResourceLocation.parse("${modid}:${registryname}_portal"), poiType);
+            ${name}Teleporter.poi = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
+
 		    <#if data.useCustomEffects>
                 DimensionSpecialEffects customEffect = new DimensionSpecialEffects(
                     DimensionSpecialEffects.SkyType.${data.skyType?replace("NORMAL", "OVERWORLD")},
