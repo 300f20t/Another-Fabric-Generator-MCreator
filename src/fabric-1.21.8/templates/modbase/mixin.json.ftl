@@ -2,7 +2,9 @@
 <#if w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
 	<#assign mixins = mixins + ['NoiseGeneratorSettingsMixin']>
 </#if>
-
+<#if w.hasElementsOfBaseType('item') && false>
+	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
+</#if>
 <#if w.hasElementsOfType('attribute')>
     <#assign mixins = mixins + ['AttributeSupplierAccessor']>
 </#if>
