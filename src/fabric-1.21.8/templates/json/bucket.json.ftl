@@ -1,13 +1,6 @@
-<#if data.textureBucket?has_content>
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "${data.textureBucket.format("%s:item/%s")}"
+    "layer0": "<#if data.textureBucket?has_content>${data.textureBucket.format("%s:item/%s")}<#else>minecraft:item/bucket</#if>"
   }
 }
-<#else>
-{
-  "parent": "neoforge:items/fluid_container",
-  "fluid": "${modid}:${registryname}"
-}
-</#if>
