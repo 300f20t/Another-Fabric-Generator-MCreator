@@ -36,20 +36,20 @@ public class ${JavaModName}Variables {
 	<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT") || w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 		<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
 		ServerPlayerEvents.JOIN.register((player) -> {
-			player.getData(PLAYER_VARIABLES).syncPlayerVariables(player);
+			player.getAttachedOrCreate(PLAYER_VARIABLES.get()).syncPlayerVariables(player);
 		});
 
 		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
-				newPlayer.getData(PLAYER_VARIABLES).syncPlayerVariables(newPlayer);
+				newPlayer.getAttachedOrCreate(PLAYER_VARIABLES.get()).syncPlayerVariables(newPlayer);
 		});
 
 		ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
 			if (!destination.isClientSide())
-				player.getData(PLAYER_VARIABLES).syncPlayerVariables(player);
+				player.getAttachedOrCreate(PLAYER_VARIABLES.get()).syncPlayerVariables(player);
 		});
 
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
-			PlayerVariables original = oldPlayer.getData(PLAYER_VARIABLES);
+			PlayerVariables original = oldPlayer.getAttachedOrCreate(PLAYER_VARIABLES.get());
 			PlayerVariables clone = new PlayerVariables();
 			<#list variables as var>
 				<#if var.getScope().name() == "PLAYER_PERSISTENT">
@@ -63,7 +63,7 @@ public class ${JavaModName}Variables {
 					</#if>
 				</#list>
 			}
-			newPlayer.setData(PLAYER_VARIABLES, clone);
+			newPlayer.setAttached(PLAYER_VARIABLES.get(), clone);
 		});
 		</#if>
 
@@ -309,7 +309,7 @@ public class ${JavaModName}Variables {
 					<#-- If we use setData here, we may get unwanted references to old data instance -->
 					TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, context.player().registryAccess());
 					message.data.serialize(output);
-					context.player().getData(PLAYER_VARIABLES).deserialize(TagValueInput.create(ProblemReporter.DISCARDING, context.player().registryAccess(), output.buildResult()));
+					context.player().getAttachedOrCreate(PLAYER_VARIABLES.get()).deserialize(TagValueInput.create(ProblemReporter.DISCARDING, context.player().registryAccess(), output.buildResult()));
 				});
 			}
 		}
