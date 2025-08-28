@@ -8,6 +8,9 @@
 <#if w.hasElementsOfType('attribute')>
     <#assign mixins = mixins + ['AttributeSupplierAccessor']>
 </#if>
+<#if w.hasElementsOfType('armor')>
+    <#assign mixins = mixins + ['ArmorMixin']>
+</#if>
 
 {
   "required": true,
