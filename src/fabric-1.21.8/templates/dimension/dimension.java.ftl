@@ -27,33 +27,31 @@ package ${package}.world.dimension;
 <#compress>
 public class ${name}Dimension {
 
-	<#if hasProcedure(data.onPlayerLeavesDimension) || hasProcedure(data.onPlayerEntersDimension) || data.useCustomEffects>
+	<#if data.hasEffectsOrDimensionTriggers()>
 		public static void load() {
-            PoiType poiType = PointOfInterestHelper.register(ResourceLocation.parse("${modid}:${registryname}_portal"), 0, 1, ImmutableSet.copyOf(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL.getStateDefinition().getPossibleStates()));
-            ${name}Teleporter.poi = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
-
 		    <#if data.useCustomEffects>
-                DimensionSpecialEffects customEffect = new DimensionSpecialEffects(
-                    DimensionSpecialEffects.SkyType.${data.skyType?replace("NORMAL", "OVERWORLD")},
-                    false,
-                    false
-                ) {
-                    @Override public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
-                        <#if data.airColor?has_content>
-                            return new Vec3(${data.airColor.getRed()/255},${data.airColor.getGreen()/255},${data.airColor.getBlue()/255})
-                        <#else>
-                            return color
-                        </#if>
-                        <#if data.sunHeightAffectsFog>
-                            .multiply(sunHeight * 0.94 + 0.06, sunHeight * 0.94 + 0.06, sunHeight * 0.91 + 0.09)
-                        </#if>;
-                    }
+			DimensionSpecialEffects customEffect = new DimensionSpecialEffects(
+				DimensionSpecialEffects.SkyType.${data.skyType?replace("NORMAL", "OVERWORLD")},
+				false,
+				false
+			) {
+				@Override public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
+					<#if data.airColor?has_content>
+						return new Vec3(${data.airColor.getRed()/255},${data.airColor.getGreen()/255},${data.airColor.getBlue()/255})
+					<#else>
+						return color
+					</#if>
+					<#if data.sunHeightAffectsFog>
+						.multiply(sunHeight * 0.94 + 0.06, sunHeight * 0.94 + 0.06, sunHeight * 0.91 + 0.09)
+					</#if>;
+				}
 
-                    @Override public boolean isFoggyAt(int x, int y) {
-                        return ${data.hasFog};
-                    }
-                };
-		        DimensionRenderingRegistry.registerDimensionEffects(ResourceLocation.parse("${modid}:${registryname}"), customEffect);
+				@Override public boolean isFoggyAt(int x, int y) {
+					return ${data.hasFog};
+				}
+			};
+
+			DimensionRenderingRegistry.registerDimensionEffects(ResourceLocation.parse("${modid}:${registryname}"), customEffect);
 		    </#if>
 
 		    <#if hasProcedure(data.onPlayerLeavesDimension) || hasProcedure(data.onPlayerEntersDimension)>
@@ -74,3 +72,4 @@ public class ${name}Dimension {
     </#if>
 }
 </#compress>
+<#-- @formatter:on -->

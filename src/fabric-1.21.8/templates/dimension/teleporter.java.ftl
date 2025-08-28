@@ -25,6 +25,11 @@ package ${package}.world.teleporter;
 public class ${name}Teleporter {
 	public static Holder<PoiType> poi = null;
 
+	public static void registerPointOfInterest() {
+	    PoiType poiType = PointOfInterestHelper.register(ResourceLocation.parse("${modid}:${registryname}_portal"), 0, 1, ImmutableSet.copyOf(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL.getStateDefinition().getPossibleStates()));
+	    poi = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
+	}
+
 	private final ServerLevel level;
 
 	public ${name}Teleporter(ServerLevel level) {

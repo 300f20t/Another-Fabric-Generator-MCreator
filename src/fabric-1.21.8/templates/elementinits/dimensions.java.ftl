@@ -25,18 +25,18 @@
 
 package ${package}.init;
 
+<#compress>
 public class ${JavaModName}Dimensions {
 
 	public static void load() {
-		<#compress>
-		<#list dimensions as dimension>
-			<#if dimension.enablePortal>
-				<#if hasProcedure(dimension.onPlayerLeavesDimension) || hasProcedure(dimension.onPlayerEntersDimension) || dimension.useCustomEffects>
-            		${dimension.getModElement().getName()}Dimension.load();
-            	</#if>
-			</#if>
-		</#list>
-		</#compress>
+	    <#list dimensions as dimension>
+	        <#if dimension.hasEffectsOrDimensionTriggers()>
+	            ${dimension.getModElement().getName()}Dimension.load();
+	        </#if>
+	        <#if dimension.enablePortal>
+	            ${dimension.getModElement().getName()}Teleporter.registerPointOfInterest();
+	        </#if>
+	    </#list>
 	}
-}
+}</#compress>
 <#-- @formatter:on -->

@@ -54,7 +54,8 @@ templates:
 
 global_templates:
   - template: elementinits/dimensions.java.ftl
-    condition: "${w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers())?size != 0}"
+    writer: java
+    condition: "${w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers() || e.enablePortal)?size != 0}"
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameDimensions.java"
 
 tags:
