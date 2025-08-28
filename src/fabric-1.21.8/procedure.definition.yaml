@@ -6,3 +6,4 @@ global_templates:
   - template: elementinits/procedures.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameProcedures.java"
+    condition: "${w.getGElementsOfType('procedure')?filter(e -> e.trigger_code?has_content)?size != 0}"

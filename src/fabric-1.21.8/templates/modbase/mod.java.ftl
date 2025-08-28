@@ -48,7 +48,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.hasElementsOfBaseType("feature")>${JavaModName}Features.load();</#if>
 		<#if w.getGElementsOfType("recipe")?filter(e -> e.recipeType == "Brewing")?size != 0>${JavaModName}BrewingRecipes.load();</#if>
 		<#if w.hasElementsOfType("itemextension")>${JavaModName}ItemExtensions.load();</#if>
-		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.load();</#if>
+		<#if w.getGElementsOfType('procedure')?filter(e -> e.trigger_code?has_content)?size != 0>${JavaModName}Procedures.load();</#if>
 		<#if w.getGElementsOfType("command")?filter(e -> e.type != "CLIENTSIDE")?size != 0>${JavaModName}Commands.load();</#if>
 		<#if w.hasElementsOfType("potioneffect")>${JavaModName}MobEffects.load();</#if>
 		<#if w.getGElementsOfType('biome')?filter(e -> e.hasVines() || e.hasFruits())?size != 0>${JavaModName}Biomes.load();</#if>

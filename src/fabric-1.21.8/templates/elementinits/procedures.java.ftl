@@ -24,11 +24,13 @@
 
 package ${package}.init;
 
+<#assign proceduresTrigger = procedure?filter(e -> e.trigger_code?has_content)>
+
 @SuppressWarnings("InstantiationOfUtilityClass")
 public class ${JavaModName}Procedures {
 
 	public static void load() {
-		<#list procedures as procedure>
+		<#list proceduresTrigger as procedure>
 			new ${procedure.getModElement().getName()}Procedure();
 		</#list>
 	}
