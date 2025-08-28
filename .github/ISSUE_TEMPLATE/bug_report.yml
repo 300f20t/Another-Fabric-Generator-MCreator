@@ -4,11 +4,13 @@ labels: bug
 body:
   - type: checkboxes
     attributes:
-      label: Issue tracker rule checks (please read carefully)
+      label: Issue tracker rule checks (read carefully)
       options:
         - label: "I have checked that my problem <a href='https://github.com/MCreator/MCreator/issues?q=is%3Aissue' target='_blank'>is not already reported</a>"
           required: true
         - label: "I have checked that my problem is not covered on <a href='https://mcreator.net/support/knowledgebase' target='_blank'>Knowledge Base</a> or on <a href='https://mcreator.net/wiki' target='_blank'>MCreator's Wiki</a>"
+          required: true
+        - label: "I have checked that I am using the latest plugin version"
           required: true
         - label: "I have checked that my written content does not violate the <a href='https://mcreator.net/wiki/general-publishing-guidelines' target='_blank'>publishing guidelines</a>"
           required: true
@@ -71,4 +73,3 @@ body:
       placeholder: https://gist.github.com/...
     validations:
       required: false
-      
