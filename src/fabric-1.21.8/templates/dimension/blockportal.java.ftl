@@ -19,9 +19,7 @@
 -->
 
 <#-- @formatter:off -->
-
 <#include "../procedures.java.ftl">
-
 package ${package}.block;
 
 import org.slf4j.Logger;
@@ -123,7 +121,5 @@ public class ${name}PortalBlock extends NetherPortalBlock {
 			super.entityInside(state, world, pos, entity, insideBlockEffectApplier);
 	}
 	</#if>
-
 }
-
 <#-- @formatter:on -->

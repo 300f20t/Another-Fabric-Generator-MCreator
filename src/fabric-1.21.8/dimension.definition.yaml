@@ -1,8 +1,3 @@
-global_templates:
-  - template: elementinits/dimensions.java.ftl
-    condition: "${w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers())?size != 0}"
-    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameDimensions.java"
-
 templates:
   - template: dimension/dimension.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/world/dimension/@NAMEDimension.java"
@@ -56,6 +51,11 @@ templates:
     writer: json
     name: "@MODASSETSROOT/items/@registryname.json"
     condition: hasIgniter()
+
+global_templates:
+  - template: elementinits/dimensions.java.ftl
+    condition: "${w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers())?size != 0}"
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameDimensions.java"
 
 tags:
   - tag: BLOCKS:minecraft:overworld_carver_replaceables

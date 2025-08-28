@@ -24,123 +24,104 @@ package ${package}.fluid;
 
 <#compress>
 public abstract class ${name}Fluid extends FlowingFluid {
-    @Environment(EnvType.CLIENT) public static final FluidVariantAttributeHandler fluidAttributes = new FluidVariantAttributeHandler() {
+	@Environment(EnvType.CLIENT) public static final FluidVariantAttributeHandler fluidAttributes = new FluidVariantAttributeHandler() {
+	    @Override public Optional<SoundEvent> getFillSound(FluidVariant variant) {
+	        return Optional.of(SoundEvents.BUCKET_FILL);
+	    }
 
-    	@Override public Optional<SoundEvent> getFillSound(FluidVariant variant) {
-    		return Optional.of(SoundEvents.BUCKET_FILL);
-    	}
+	    @Override public  Optional<SoundEvent> getEmptySound(FluidVariant variant) {
+	        return Optional.of(<#if data.emptySound?has_content && data.emptySound.getMappedValue()?has_content>BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.parse("${data.emptySound}"))<#else>SoundEvents.BUCKET_EMPTY</#if>);
+	    }
 
-    	@Override public  Optional<SoundEvent> getEmptySound(FluidVariant variant) {
-    		return Optional.of(<#if data.emptySound?has_content && data.emptySound.getMappedValue()?has_content>BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.parse("${data.emptySound}"))<#else>SoundEvents.BUCKET_EMPTY</#if>);
-    	}
+	    <#if data.luminosity != 0>
+	    @Override public  int getLuminance(FluidVariant variant) {
+	        return ${(data.luminosity lt 15)?then(data.luminosity, 15)};
+	    }
+	    </#if>
 
-        <#if data.luminosity != 0>
-    	@Override public  int getLuminance(FluidVariant variant) {
-    		return ${(data.luminosity lt 15)?then(data.luminosity, 15)};
-    	}
-        </#if>
+	    <#if data.temperature != 300>
+	    @Override public int getTemperature(FluidVariant variant) {
+	        return ${data.temperature};
+	    }
+	    </#if>
 
-        <#if data.temperature != 300>
-    	@Override public int getTemperature(FluidVariant variant) {
-    		return ${data.temperature};
-    	}
-    	</#if>
+	    <#if data.viscosity != 1000>
+	    @Override public int getViscosity(FluidVariant variant, @Nullable Level world) {
+	        return ${data.viscosity};
+	    }
+	    </#if>
 
-        <#if data.viscosity != 1000>
-    	@Override public int getViscosity(FluidVariant variant, @Nullable Level world) {
-    		return ${data.viscosity};
-    	}
-    	</#if>
+	    <#if (data.density < 0)>
+	    @Override public boolean isLighterThanAir(FluidVariant variant) {
+	        return true;
+	    }
+	    </#if>
+	};
 
-    	<#if data.density < -1 >
-    	@Override public boolean isLighterThanAir(FluidVariant variant) {
-    		return true;
-    	}
-    	</#if>
-    };
-
-    <#if data.type == "WATER">
-    @Override protected void entityInside(Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        insideBlockEffectApplier.apply(InsideBlockEffectType.EXTINGUISH);
-    }
+	<#if data.type == "WATER">
+	@Override ${mcc.getMethod("net.minecraft.world.level.material.WaterFluid", "entityInside", "Level", "BlockPos", "Entity", "InsideBlockEffectApplier")}
     <#else>
-    @Override protected void entityInside(Level level, BlockPos blockPos, Entity entity, InsideBlockEffectApplier insideBlockEffectApplier) {
-        insideBlockEffectApplier.apply(InsideBlockEffectType.LAVA_IGNITE);
-        insideBlockEffectApplier.runAfter(InsideBlockEffectType.LAVA_IGNITE, Entity::lavaHurt);
-    }
-    </#if>
+	@Override ${mcc.getMethod("net.minecraft.world.level.material.LavaFluid", "entityInside", "Level", "BlockPos", "Entity", "InsideBlockEffectApplier")}
+	</#if>
 
 	private ${name}Fluid() {
 		super();
 	}
 
-	@Override
-	protected boolean canConvertToSource(ServerLevel level) {
+	@Override protected boolean canConvertToSource(ServerLevel level) {
 	    return ${data.canMultiply};
 	}
 
-    @Override
-    protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state) {
-        BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
-        Block.dropResources(state, level, pos, blockEntity);
-    }
+	@Override protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state) {
+	    BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
+	    Block.dropResources(state, level, pos, blockEntity);
+	}
 
-    @Override
-    protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluid, Direction direction) {
-        return direction == Direction.DOWN && !isSame(fluid);
-    }
+	@Override protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluid, Direction direction) {
+	    return direction == Direction.DOWN && !isSame(fluid);
+	}
 
-	@Override
-	public Fluid getFlowing() {
+	@Override public Fluid getFlowing() {
 	    return ${JavaModName}Fluids.FLOWING_${REGISTRYNAME};
 	}
 
-	@Override
-	public Fluid getSource() {
+	@Override public Fluid getSource() {
 	    return ${JavaModName}Fluids.${REGISTRYNAME};
 	}
 
-	@Override
-	public float getExplosionResistance() {
+	@Override public float getExplosionResistance() {
 	    return ${data.resistance}f;
 	}
 
-	@Override
-	public int getTickDelay(LevelReader level) {
+	@Override public int getTickDelay(LevelReader level) {
 	    return ${data.flowRate};
 	}
 
-	@Override
-	protected int getDropOff(LevelReader level) {
+	@Override protected int getDropOff(LevelReader level) {
 	    return ${data.levelDecrease};
 	}
 
-	@Override
-	protected int getSlopeFindDistance(LevelReader level) {
+	@Override protected int getSlopeFindDistance(LevelReader level) {
 	    return ${data.slopeFindDistance};
 	}
 
-    @Override
-    public Item getBucket() {
-        return <#if data.generateBucket>${JavaModName}Items.${REGISTRYNAME}_BUCKET<#else>Items.AIR</#if>;
-    }
+	@Override public Item getBucket() {
+	    return <#if data.generateBucket>${JavaModName}Items.${REGISTRYNAME}_BUCKET<#else>Items.AIR</#if>;
+	}
 
-    @Override
-    protected BlockState createLegacyBlock(FluidState state) {
-        if (${JavaModName}Blocks.${REGISTRYNAME} != null)
-            return ((LiquidBlock) ${JavaModName}Blocks.${REGISTRYNAME}).defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
-        return Blocks.AIR.defaultBlockState();
-    }
+	@Override protected BlockState createLegacyBlock(FluidState state) {
+	    if (${JavaModName}Blocks.${REGISTRYNAME} != null)
+	        return ((LiquidBlock) ${JavaModName}Blocks.${REGISTRYNAME}).defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
+	    return Blocks.AIR.defaultBlockState();
+	}
 
-    @Override
-    public boolean isSame(Fluid fluid) {
-        return fluid == getSource() || fluid == getFlowing();
-    }
+	@Override public boolean isSame(Fluid fluid) {
+	    return fluid == getSource() || fluid == getFlowing();
+	}
 
-    @Override
-    public Optional<SoundEvent> getPickupSound() {
-        return Optional.ofNullable(SoundEvents.BUCKET_FILL);
-    }
+	@Override public Optional<SoundEvent> getPickupSound() {
+	    return Optional.ofNullable(SoundEvents.BUCKET_FILL);
+	}
 
 	<#if data.spawnParticles>
 	@Override public ParticleOptions getDripParticle() {
