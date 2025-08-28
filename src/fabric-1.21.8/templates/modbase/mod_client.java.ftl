@@ -35,6 +35,8 @@ package ${package};
 		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
 		<#if w.hasElementsOfType("block") || w.hasElementsOfType("plant")>${JavaModName}BlocksRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.clientLoad();</#if>
+		<#if w.getGElementsOfType('item')?filter(e -> e.getModels()?filter(a -> a.hasCustomJAVAModel())?has_content || e.hasCustomJAVAModel())?size != 0>${JavaModName}ItemRenderers.clientLoad();</#if>
+		<#if w.getGElementsOfType('item')?filter(e -> e.getModels()?has_content)?size != 0>LegacyOverrideSelectItemModel.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
