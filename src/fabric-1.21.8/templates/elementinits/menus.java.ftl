@@ -69,5 +69,4 @@ public class ${JavaModName}Menus {
 		}
 	}
 }
-
 <#-- @formatter:on -->

@@ -32,12 +32,12 @@ public class ${JavaModName}MobEffects {
 
 	public static void load() {
 		<#list potioneffects as effect>
-			${effect.getModElement().getRegistryNameUpper()} = register("${effect.getModElement().getRegistryName()}", new ${effect.getModElement().getName()}MobEffect());
+			${effect.getModElement().getRegistryNameUpper()} = register("${effect.getModElement().getRegistryName()}", ${effect.getModElement().getName()}MobEffect::new);
 		</#list>
 	}
 
-	private static MobEffect register(String registryname, MobEffect element) {
-		return Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+	private static MobEffect register(String registryname, Supplier<MobEffect> element) {
+		return Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element.get());
 	}
 }
 <#-- @formatter:on -->

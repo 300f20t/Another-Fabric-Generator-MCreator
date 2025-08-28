@@ -121,5 +121,9 @@ public class ${name}PortalBlock extends NetherPortalBlock {
 			super.entityInside(state, world, pos, entity, insideBlockEffectApplier);
 	}
 	</#if>
+
+	@Environment(EnvType.CLIENT) public static void registerRenderLayer() {
+	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}, ChunkSectionLayer.TRANSLUCENT);
+	}
 }
 <#-- @formatter:on -->

@@ -35,5 +35,4 @@ public class ${JavaModName}KeyMappingsServer {
     	</#list>
     }
 }
-
 <#-- @formatter:on -->

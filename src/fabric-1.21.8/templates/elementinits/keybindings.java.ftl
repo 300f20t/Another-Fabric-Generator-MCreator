@@ -74,7 +74,6 @@ public class ${JavaModName}KeyMappings {
 			KeyBindingHelper.registerKeyBinding(${keybind.getModElement().getRegistryNameUpper()});
 		</#list>
 	}
-
 }
 </#compress>
 <#-- @formatter:on -->

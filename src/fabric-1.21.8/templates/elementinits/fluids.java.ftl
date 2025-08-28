@@ -36,9 +36,9 @@ public class ${JavaModName}Fluids {
     public static void load() {
         <#list fluids as fluid>
         ${fluid.getModElement().getRegistryNameUpper()} =
-            register("${fluid.getModElement().getRegistryName()}", new ${fluid.getModElement().getName()}Fluid.Source());
+            register("${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Source::new);
         FLOWING_${fluid.getModElement().getRegistryNameUpper()} =
-            register("flowing_${fluid.getModElement().getRegistryName()}", new ${fluid.getModElement().getName()}Fluid.Flowing());
+            register("flowing_${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Flowing::new);
         </#list>
     }
 
@@ -48,8 +48,8 @@ public class ${JavaModName}Fluids {
 		</#list>
 	}
 
-	private static <F extends Fluid> F register(String registryname, F element) {
-		return (F) Registry.register(BuiltInRegistries.FLUID, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+	private static <F extends Fluid> F register(String registryname, Supplier<F> element) {
+		return (F) Registry.register(BuiltInRegistries.FLUID, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element.get());
 	}
 }
 <#-- @formatter:on -->

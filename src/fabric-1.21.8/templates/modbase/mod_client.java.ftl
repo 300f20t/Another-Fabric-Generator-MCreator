@@ -33,7 +33,7 @@ package ${package};
 		<#if w.hasJavaModels()>${JavaModName}Models.clientLoad();</#if>
 		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
-		<#if w.hasElementsOfType("block") || w.hasElementsOfType("plant")>${JavaModName}BlocksRenderers.clientLoad();</#if>
+		<#if w.hasElementsOfBaseType("block")>${JavaModName}BlocksRenderers.clientLoad();</#if>
 		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.clientLoad();</#if>
 		<#if w.getGElementsOfType('item')?filter(e -> e.getModels()?filter(a -> a.hasCustomJAVAModel())?has_content || e.hasCustomJAVAModel())?size != 0>${JavaModName}ItemRenderers.clientLoad();</#if>
 		<#if w.getGElementsOfType('item')?filter(e -> e.getModels()?has_content)?size != 0>LegacyOverrideSelectItemModel.clientLoad();</#if>

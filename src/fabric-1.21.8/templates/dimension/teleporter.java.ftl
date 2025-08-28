@@ -23,7 +23,6 @@
 package ${package}.world.teleporter;
 
 public class ${name}Teleporter {
-
 	public static Holder<PoiType> poi = null;
 
 	private final ServerLevel level;

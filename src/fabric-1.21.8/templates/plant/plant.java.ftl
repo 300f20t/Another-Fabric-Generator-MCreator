@@ -136,7 +136,7 @@ public class ${name}Block extends ${getPlantClass(data.plantType)}Block
 	}
 
 	@Environment(EnvType.CLIENT) public static void registerRenderLayer() {
-	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${data.getModElement().getRegistryNameUpper()}, ChunkSectionLayer.CUTOUT);
+	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}, ChunkSectionLayer.CUTOUT);
 	}
 
 	<#if data.generateFeature>
@@ -145,7 +145,7 @@ public class ${name}Block extends ${getPlantClass(data.plantType)}Block
         <#if data.restrictionBiomes?has_content>
         ${biomeSelector}(
             <#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
-                ${resourceKey}.create(Registries.BIOME, ResourceLocation.tryParse("${restrictionBiome?replace("#", "")}"))<#sep>,
+                ${resourceKey}.create(Registries.BIOME, ResourceLocation.parse("${restrictionBiome?replace("#", "")}"))<#sep>,
             </#list>
         )
         <#else>

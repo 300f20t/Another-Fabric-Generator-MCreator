@@ -907,7 +907,7 @@ public class ${name}Entity extends ${extendsClass} <#if interfaces?size gt 0>imp
 	BiomeSelectors.<#if data.restrictionBiomes?has_content>
 	${biomeSelector}(
 		<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
-			${resourceKey}.create(Registries.BIOME, ResourceLocation.tryParse("${restrictionBiome?replace("#", "")}"))<#sep>,
+			${resourceKey}.create(Registries.BIOME, ResourceLocation.parse("${restrictionBiome?replace("#", "")}"))<#sep>,
         </#list>
 	)
 	<#else>
@@ -919,7 +919,7 @@ public class ${name}Entity extends ${extendsClass} <#if interfaces?size gt 0>imp
 		<#if hasProcedure(data.spawningCondition)>
 		.and(context -> <@procedureOBJToConditionCode data.spawningCondition/>);
 		</#if>
-		, ${generator.map(data.mobSpawningType, "mobspawntypes")}, ${JavaModName}Entities.${data.getModElement().getRegistryNameUpper()}, ${data.spawningProbability}, ${data.minNumberOfMobsPerGroup}, ${data.maxNumberOfMobsPerGroup});
+		, ${generator.map(data.mobSpawningType, "mobspawntypes")}, ${JavaModName}Entities.${REGISTRYNAME}, ${data.spawningProbability}, ${data.minNumberOfMobsPerGroup}, ${data.maxNumberOfMobsPerGroup});
 	}
 	</#if>
 
