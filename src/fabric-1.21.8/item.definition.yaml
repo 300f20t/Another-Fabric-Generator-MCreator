@@ -1,9 +1,6 @@
 templates:
   - template: item/item.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
-  - template: item/item_container.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/item/inventory/@NAMEInventoryCapability.java"
-    condition: hasInventory()
   - template: item/item_renderer.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/client/renderer/item/@NAMEItemRenderer.java"
     condition_any:
@@ -54,6 +51,9 @@ global_templates:
   - template: elementinits/itemrenderers.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameItemRenderers.java"
     condition: "${w.getGElementsOfType('item')?filter(e -> e.getModels()?filter(a -> a.hasCustomJAVAModel())?has_content || e.hasCustomJAVAModel())?size != 0}"
+  - template: elementinits/itemproperties.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameItemProperties.java"
+    condition: "${w.getGElementsOfType('item')?filter(e -> e.customProperties?has_content)?size != 0}"
 
 list_templates:
   - name: "Item states"

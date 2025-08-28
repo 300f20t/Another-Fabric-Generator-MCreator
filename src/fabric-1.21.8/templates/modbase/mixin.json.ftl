@@ -4,6 +4,8 @@
 </#if>
 <#if w.hasElementsOfBaseType('item')>
 	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
+	<#assign mixins = mixins + ['EntitySwingMixin']>
+	<#assign mixins = mixins + ['OnItemDroppedMixin']>
 </#if>
 <#if w.hasElementsOfType('attribute')>
     <#assign mixins = mixins + ['AttributeSupplierAccessor']>

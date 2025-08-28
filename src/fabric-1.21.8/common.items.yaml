@@ -3,4 +3,7 @@ global_templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameItems.java"
   - template: mixin/repairitemrecipemixin.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/mixin/@JavaModNameRepairItemRecipeMixin.java"
-# uncomment when fixed
+  - template: mixin/entityswingmixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/EntitySwingMixin.java"
+  - template: mixin/onitemdroppedmixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/OnItemDroppedMixin.java"

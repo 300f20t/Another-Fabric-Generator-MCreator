@@ -58,7 +58,18 @@
 </#macro>
 
 <#macro onEntitySwing procedure="">
-<#-- Fabric don't support this -->
+<#if hasProcedure(procedure)>
+public void onEntitySwing(ItemStack itemstack, LivingEntity entity, InteractionHand hand) {
+	<@procedureCode procedure, {
+		"x": "entity.getX()",
+		"y": "entity.getY()",
+		"z": "entity.getZ()",
+		"world": "entity.level()",
+		"entity": "entity",
+		"itemstack": "itemstack"
+	}/>
+}
+</#if>
 </#macro>
 
 <#macro onCrafted procedure="">
@@ -149,7 +160,18 @@
 </#macro>
 
 <#macro onDroppedByPlayer procedure="">
-<#-- Fabric don't support this -->
+<#if hasProcedure(procedure)>
+public void onDroppedByPlayer(ItemStack itemstack, Player entity) {
+	<@procedureCode procedure, {
+		"x": "entity.getX()",
+		"y": "entity.getY()",
+		"z": "entity.getZ()",
+		"world": "entity.level()",
+		"entity": "entity",
+		"itemstack": "itemstack"
+	}/>
+}
+</#if>
 </#macro>
 
 <#macro onItemUsedOnBlock procedure="">

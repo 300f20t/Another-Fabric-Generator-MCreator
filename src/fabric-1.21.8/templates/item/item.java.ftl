@@ -103,11 +103,63 @@ public class ${name}Item extends Item {
 				<#if data.enchantability != 0>
 				.enchantable(${data.enchantability})
 				</#if>
-				<#if data.stayInGridWhenCrafting && (!data.recipeRemainder?? || data.recipeRemainder.isEmpty()) && data.damageCount != 0>
-				.setNoCombineRepair()
-				</#if>
 		);
 	}
+	<#if data.guiBoundTo?has_content>
+    private MenuProvider createMenuProvider(ItemStack stack, Player entity, InteractionHand hand) {
+        return new MenuProvider() {
+            @Override
+            public Component getDisplayName() {
+                return Component.literal("${data.name}");
+            }
+
+            @Override
+            public AbstractContainerMenu createMenu(int id, Inventory invIgnored, Player player) {
+                FriendlyByteBuf packetBuffer = new FriendlyByteBuf(Unpooled.buffer());
+                packetBuffer.writeBlockPos(entity.blockPosition());
+                packetBuffer.writeByte(hand == InteractionHand.MAIN_HAND ? 0 : 1);
+
+                SimpleContainer inventory = new SimpleContainer(${data.inventorySize}) {
+                    <#if data.inventoryStackSize != 99>
+                    @Override
+                    public int getMaxStackSize() {
+                    	return ${data.inventoryStackSize};
+                   	}
+                    </#if>
+                };
+                CustomData nbtComponent = stack.get(DataComponents.CUSTOM_DATA);
+                if (nbtComponent != null) {
+                    CompoundTag rootTag = nbtComponent.copyTag();
+                    rootTag.getList("inventory_${registryname}").ifPresent(itemsTag -> {
+                        for (int i = 0; i < Math.min(itemsTag.size(), ${data.inventorySize}); i++) {
+                            Tag itemTag = itemsTag.get(i);
+                            if (itemTag instanceof CompoundTag compound) {
+                                final int slot = i;
+                                ItemStack.CODEC.parse(NbtOps.INSTANCE, compound).result()
+                                    .ifPresent(itemStack -> inventory.setItem(slot, itemStack));
+                            }
+                        }
+                    });
+                }
+                inventory.addListener(inv -> {
+                    ListTag itemsTag = new ListTag();
+                    for (ItemStack itemStack : inventory) {
+                        if (!itemStack.isEmpty()) {
+                            DataResult<Tag> result = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, itemStack);
+                            result.result().ifPresent(itemsTag::add);
+                        } else {
+                            itemsTag.add(new CompoundTag());
+                        }
+                    }
+                    CompoundTag rootTag = new CompoundTag();
+                    rootTag.put("inventory_${registryname}", itemsTag);
+                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(rootTag));
+                });
+                return new ${data.guiBoundTo}Menu(id, invIgnored, inventory, packetBuffer);
+            }
+        };
+    }
+	</#if>
 
 	<#if data.hasCustomEatResultItem()>
 	@SubscribeEvent public static void modifyItemComponents(ModifyDefaultComponentsEvent event) {
@@ -124,11 +176,11 @@ public class ${name}Item extends Item {
 
 	<#if data.stayInGridWhenCrafting>
 		<#if data.recipeRemainder?? && !data.recipeRemainder.isEmpty()>
-			@Override public ItemStack getCraftingRemainder(ItemStack itemstack) {
+			@Override public ItemStack getRecipeRemainder(ItemStack itemstack) {
 				return ${mappedMCItemToItemStackCode(data.recipeRemainder, 1)};
 			}
 		<#elseif data.damageOnCrafting && data.damageCount != 0>
-			@Override public ItemStack getCraftingRemainder(ItemStack itemstack) {
+			@Override public ItemStack getRecipeRemainder(ItemStack itemstack) {
 				ItemStack retval = new ItemStack(this);
 				retval.setDamageValue(itemstack.getDamageValue() + 1);
 				if(retval.getDamageValue() >= retval.getMaxDamage()) {
@@ -137,7 +189,7 @@ public class ${name}Item extends Item {
 				return retval;
 			}
 		<#else>
-			@Override public ItemStack getCraftingRemainder(ItemStack itemstack) {
+			@Override public ItemStack getRecipeRemainder(ItemStack itemstack) {
 				return new ItemStack(this);
 			}
 		</#if>
@@ -195,21 +247,7 @@ public class ${name}Item extends Item {
 
 		<#if data.hasInventory()>
 		if (entity instanceof ServerPlayer serverPlayer) {
-			serverPlayer.openMenu(new MenuProvider() {
-				@Override public Component getDisplayName() {
-					return Component.literal("${data.name}");
-				}
-
-				@Override public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					FriendlyByteBuf packetBuffer = new FriendlyByteBuf(Unpooled.buffer());
-					packetBuffer.writeBlockPos(entity.blockPosition());
-					packetBuffer.writeByte(hand == InteractionHand.MAIN_HAND ? 0 : 1);
-					return new ${data.guiBoundTo}Menu(id, inventory, packetBuffer);
-				}
-			}, buf -> {
-				buf.writeBlockPos(entity.blockPosition());
-				buf.writeByte(hand == InteractionHand.MAIN_HAND ? 0 : 1);
-			});
+			serverPlayer.openMenu(createMenuProvider(serverPlayer.getItemInHand(hand), entity, hand));
 		}
 		</#if>
 

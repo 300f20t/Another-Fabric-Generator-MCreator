@@ -49,6 +49,9 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 
 	private final Map<Integer, Slot> customSlots = new HashMap<>();
 
+	private boolean bound = false;
+	private Supplier<Boolean> boundItemMatcher = null;
+
 	public ${name}Menu(int id, Inventory inv) {
 	    this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
 		this.x = (int) inv.player.getX();
@@ -69,6 +72,17 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			this.y = pos.getY();
 			this.z = pos.getZ();
 		}
+
+		<#if data.type == 1>
+        	if (pos != null) {
+        	    if (extraData.readableBytes() == 1) { // bound to item
+        			byte hand = extraData.readByte();
+        			ItemStack itemstack = hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem();
+        			this.boundItemMatcher = () -> itemstack == (hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem());
+        			this.bound = true;
+        		}
+	        }
+	    </#if>
 	}
 
 	public ${name}Menu(int id, Inventory inv, Container container) {
@@ -156,6 +170,10 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 	}
 
 	@Override public boolean stillValid(Player player) {
+		if (this.bound) {
+			if (this.boundItemMatcher != null)
+				return this.boundItemMatcher.get();
+		}
 		return this.inventory.stillValid(player);
 	}
 
