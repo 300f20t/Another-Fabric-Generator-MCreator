@@ -29,7 +29,7 @@ public record ${name}Message(int eventType, int pressedms) implements CustomPack
 
 	public static final Type<${name}Message> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, "key_${registryname}"));
 
-	public static final StreamCodec<RegistryFriendlyByteBuf, ${name}Message> CODEC = StreamCodec.of(
+	public static final StreamCodec<RegistryFriendlyByteBuf, ${name}Message> STREAM_CODEC = StreamCodec.of(
 			(RegistryFriendlyByteBuf buffer, ${name}Message message) -> {
 				buffer.writeInt(message.eventType);
 				buffer.writeInt(message.pressedms);
@@ -41,33 +41,37 @@ public record ${name}Message(int eventType, int pressedms) implements CustomPack
 		return TYPE;
 	}
 
-	public static void apply(${name}Message payload, ServerPlayNetworking.Context context) {
-		int type = payload.eventType();
-		int pressedms = payload.pressedms();
-
+	public static void handleData(final ${name}Message message, final ServerPlayNetworking.Context context) {
 		context.server().execute(() -> {
-			Entity entity = context.player();
-			Level world = entity.level();
-			double x = entity.getX();
-			double y = entity.getY();
-			double z = entity.getZ();
-
-			// security measure to prevent arbitrary chunk generation
-			if (!world.hasChunkAt(entity.blockPosition()))
-				return;
-
-			<#if hasProcedure(data.onKeyPressed)>
-				if(type == 0) {
-					<@procedureOBJToCode data.onKeyPressed/>
-				}
-			</#if>
-	
-			<#if hasProcedure(data.onKeyReleased)>
-				if(type == 1) {
-					<@procedureOBJToCode data.onKeyReleased/>
-				}
+			<#if hasProcedure(data.onKeyPressed) || hasProcedure(data.onKeyReleased)>
+			pressAction(context.player(), message.eventType, message.pressedms);
 			</#if>
 		});
 	}
+
+	<#if hasProcedure(data.onKeyPressed) || hasProcedure(data.onKeyReleased)>
+	public static void pressAction(Player entity, int type, int pressedms) {
+		Level world = entity.level();
+		double x = entity.getX();
+		double y = entity.getY();
+		double z = entity.getZ();
+
+		// security measure to prevent arbitrary chunk generation
+		if (!world.hasChunkAt(entity.blockPosition()))
+			return;
+
+		<#if hasProcedure(data.onKeyPressed)>
+		if(type == 0) {
+			<@procedureOBJToCode data.onKeyPressed/>
+		}
+		</#if>
+
+		<#if hasProcedure(data.onKeyReleased)>
+		if(type == 1) {
+			<@procedureOBJToCode data.onKeyReleased/>
+		}
+		</#if>
+	}
+	</#if>
 }
 <#-- @formatter:on -->
