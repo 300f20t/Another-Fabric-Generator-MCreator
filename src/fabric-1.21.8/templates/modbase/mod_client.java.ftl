@@ -39,7 +39,11 @@ package ${package};
 		<#if w.getGElementsOfType('item')?filter(e -> e.getModels()?has_content)?size != 0>LegacyOverrideSelectItemModel.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
-			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
+    		ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
+		</#if>
+
+		<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
+    		ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.PlayerVariablesSyncMessage.TYPE, ${JavaModName}Variables.PlayerVariablesSyncMessage::handleData);
 		</#if>
 
 		// Start of user code block mod init

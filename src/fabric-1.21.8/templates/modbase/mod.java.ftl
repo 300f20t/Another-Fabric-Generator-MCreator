@@ -62,9 +62,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType('dimension')?filter(e -> e.hasEffectsOrDimensionTriggers() || e.enablePortal)?size != 0>${JavaModName}Dimensions.load();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
-			PayloadTypeRegistry.playS2C().register(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage.STREAM_CODEC);
-			${JavaModName}Variables.SyncJoin();
-			${JavaModName}Variables.SyncChangeWorld();
+			${JavaModName}Variables.variablesLoad();
 		</#if>
 
 		// Start of user code block mod init
