@@ -324,7 +324,7 @@ public class ${JavaModName}Variables {
 		public static void handleData(final PlayerVariablesSyncMessage message, final ClientPlayNetworking.Context context) {
 			if (message.data != null) {
 				context.client().execute(() -> {
-					<#-- If we use setData here, we may get unwanted references to old data instance -->
+					<#-- If we use setAttached here, we may get unwanted references to old data instance -->
 					TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, context.player().registryAccess());
 					message.data.serialize(output);
 					context.player().getAttachedOrCreate(PLAYER_VARIABLES.get()).deserialize(TagValueInput.create(ProblemReporter.DISCARDING, context.player().registryAccess(), output.buildResult()));
