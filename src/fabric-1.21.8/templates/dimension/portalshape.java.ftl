@@ -39,4 +39,3 @@ public class ${name}PortalShape ${mcc.getClassBody("net.minecraft.world.level.po
         .replace("Blocks.OBSIDIAN", mappedBlockToBlock(data.portalFrame)?string)}
 
 <#-- @formatter:on -->
-

@@ -20,7 +20,6 @@
 
 <#-- @formatter:off -->
 <#include "../mcitems.ftl">
-
 package ${package}.world.teleporter;
 
 public class ${name}Teleporter {
@@ -48,7 +47,5 @@ public class ${name}Teleporter {
 		BlockState blockstate = this.level.getBlockState(pos);
 		return blockstate.canBeReplaced() && blockstate.getFluidState().isEmpty();
 	}
-
 }
-
 <#-- @formatter:on -->
