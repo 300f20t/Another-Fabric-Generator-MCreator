@@ -26,8 +26,6 @@
 
 package ${package}.init;
 
-// TODO
-
 public class ${JavaModName}Attributes {
 	<#list attributes as attribute>
 	public static Holder<Attribute> ${attribute.getModElement().getRegistryNameUpper()};
