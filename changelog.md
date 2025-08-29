@@ -15,6 +15,7 @@
 - Added pressedms dependency support for custom key bindings
 - Added support for the new parameters in mod elements since the last version
 - Added support for 6 new global triggers: Minecraft loads and unloads a world, On player tick, Player starts using item, Player XP amount changes, Player XP level change
+- Added custom Java models support for custom armors
 - [#216] Added On Entity swings trigger support
 - [Bugfix] Potion effects and potion items tried to be registered as an item causing an error
 - [Bugfix] When entity dies global trigger caused a FTL error
@@ -23,6 +24,10 @@
 - [Bugfix] Custom Java model for projectiles caused a build error
 - [Bugfix] GUIs could not be opened on servers
 - [Bugfix] Random number in range procedure blocks crashed the game
+- [Bugfix] The usage of tags for the spawning entity parameter crashed the game
+- [Bugfix] Custom stairs crashed the game
+- [Bugfix] Enabling the bone meal properties caused a build error
+- [Bugfix] Custom item GUIs did not work
 - [Bugfix] And surely much more :D
 
 ## 1.10
