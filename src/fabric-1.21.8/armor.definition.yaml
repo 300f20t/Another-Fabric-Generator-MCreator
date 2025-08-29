@@ -1,8 +1,8 @@
 templates:
   - template: armor/armor.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/item/@NAMEItem.java"
-  - template: mixin/armor_mixin.java.ftl
-    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/ArmorMixin.java"
+  - template: armor/armor_client.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/client/renderer/item/@NAMEArmor.java"
 
   - template: armor/armor_equipment.json.ftl
     writer: json
@@ -145,6 +145,14 @@ templates:
     variables: "item=boots"
     name: "@MODASSETSROOT/models/item/@registryname_boots.json"
 
+global_templates:
+  - template: mixin/piglinaimixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/PiglinAiMixin.java"
+  - template: mixin/equipmentlayermixin.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/EquipmentLayerRendererMixin.java"
+  - template: elementinits/armormodels.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameArmorModels.java"
+
 tags:
   - tag: ITEMS:minecraft:head_armor
     condition: enableHelmet
@@ -182,7 +190,3 @@ localizationkeys:
     key: item.@modid.@registryname_leggings.description_@item_index
   - fromlist: data.getBootsFixedSpecialInformation()
     key: item.@modid.@registryname_boots.description_@item_index
-
-field_exclusions: [helmetModel, helmetModelPart, helmetModelTexture, bodyModel, bodyModelPart, bodyModelTexture, armsModelPartL,
-                    armsModelPartR, leggingsModel, leggingsModelPartL, leggingsModelPartR, leggingsModelTexture, bootsModel,
-                    bootsModelPartL, bootsModelPartR, bootsModelTexture, helmetPiglinNeutral, bodyPiglinNeutral, leggingsPiglinNeutral, bootsPiglinNeutral]

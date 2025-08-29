@@ -1,4 +1,5 @@
 <#assign mixins = []>
+<#assign client_mixins = []>
 <#if w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
 	<#assign mixins = mixins + ['NoiseGeneratorSettingsMixin']>
 </#if>
@@ -10,7 +11,8 @@
     <#assign mixins = mixins + ['AttributeSupplierAccessor']>
 </#if>
 <#if w.hasElementsOfType('armor')>
-    <#assign mixins = mixins + ['ArmorMixin']>
+    <#assign mixins = mixins + ['PiglinAiMixin']>
+    <#assign client_mixins = client_mixins + ['EquipmentLayerRendererMixin']>
 </#if>
 <#assign mixins = mixins + ['LivingEntityMixin']>
 <#assign mixins = mixins + ['PlayerMixin']>
@@ -22,6 +24,7 @@
 	<#list mixins as mixin>"${mixin}"<#sep>,</#list>
   ],
   "client": [
+    <#list client_mixins as mixin>"${mixin}"<#sep>,</#list>
   ],
   "injectors": {
     "defaultRequire": 1

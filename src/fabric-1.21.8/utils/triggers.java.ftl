@@ -21,7 +21,22 @@
 </#macro>
 
 <#macro piglinNeutral procedure="">
-<#-- Fabric don't support this -->
+<#if procedure?has_content && (hasProcedure(procedure) || procedure.getFixedValue())>
+public boolean makesPiglinsNeutral(ItemStack itemstack, LivingEntity entity) {
+	<#if hasProcedure(procedure)>
+		return <@procedureCode procedure, {
+			"x": "entity.getX()",
+			"y": "entity.getY()",
+			"z": "entity.getZ()",
+			"world": "entity.level()",
+			"entity": "entity",
+			"itemstack": "itemstack"
+		}/>
+	<#else>
+		return true;
+	</#if>
+}
+</#if>
 </#macro>
 
 <#-- Item-related triggers -->
