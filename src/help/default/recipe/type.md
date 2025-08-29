@@ -7,7 +7,7 @@ This parameter controls in which crafting system your recipe will be available.
 * Stone cutting is a Stone Cutter recipe.
 * Campfire cooking is a recipe for when we right-click on a Campfire.
 * Smithing is a recipe inside the Smithing Table.
-* Brewing is a recipe insite a Brewing Stand.  
+* Brewing is a recipe inside a Brewing Stand.
 
-**Fabric**: 
-The brewing stand recipes are not yet implemented.
+**Fabric**:
+The brewing stand recipes allow only potions as input and output.

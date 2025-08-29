@@ -31,9 +31,9 @@ public class ${JavaModName}BrewingRecipes {
 
 	public static void load() {
 	    FabricBrewingRecipeRegistryBuilder.BUILD.register((builder) -> {
+	        <#-- Fabric allows only potions as input and output -->
 	        <#list brewingRecipes as recipe>
 	            <#if recipe.brewingInputStack?starts_with("POTION:") && recipe.brewingReturnStack?starts_with("POTION:")>
-	                <#-- Fabric allows only potions as input and output -->
 	                builder.registerPotionRecipe(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")},
                             ${mappedMCItemToIngredient(recipe.brewingIngredientStack)},
                             ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
