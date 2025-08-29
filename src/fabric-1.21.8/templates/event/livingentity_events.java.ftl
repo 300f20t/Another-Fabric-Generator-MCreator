@@ -16,24 +16,16 @@
  # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <#-- @formatter:off -->
-package ${package}.mixin;
+package ${package}.event;
 
-@Mixin(Player.class)
-public abstract class PlayerMixin {
+public class LivingEntityEvents {
 
-	@Inject(method = {"tick"}, at = @At("TAIL"))
-	private void tick(CallbackInfo ci) {
-		PlayerEvents.END_PLAYER_TICK.invoker().onEndTick((Player) (Object) this);
+	public static final Event<StartUseItem> START_USE_ITEM = EventFactory.createArrayBacked(StartUseItem.class, (callbacks) -> (entity, itemstack) -> Arrays.stream(callbacks).forEach(callback -> callback.onStartUseItem(entity, itemstack)));
+
+	@FunctionalInterface
+	public interface StartUseItem {
+		void onStartUseItem(Entity entity, ItemStack itemstack);
 	}
-
-	@Inject(method = {"giveExperiencePoints(I)V"}, at = @At("HEAD"))
-	private void giveExperiencePoints(int amount, CallbackInfo ci) {
-		PlayerEvents.XP_CHANGE.invoker().onXpChange((Player) (Object) this, amount);
-	}
-
-	@Inject(method = {"giveExperienceLevels(I)V"}, at = @At("HEAD"))
-	private void giveExperienceLevels(int amount, CallbackInfo ci) {
-		PlayerEvents.LEVEL_CHANGE.invoker().onLevelChange((Player) (Object) this, amount);
-	}
+		
 }
 <#-- @formatter:on -->

@@ -4,7 +4,6 @@
 </#if>
 <#if w.hasElementsOfBaseType('item')>
 	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
-	<#assign mixins = mixins + ['EntitySwingMixin']>
 	<#assign mixins = mixins + ['OnItemDroppedMixin']>
 </#if>
 <#if w.hasElementsOfType('attribute')>
@@ -13,6 +12,7 @@
 <#if w.hasElementsOfType('armor')>
     <#assign mixins = mixins + ['ArmorMixin']>
 </#if>
+<#assign mixins = mixins + ['LivingEntityMixin']>
 <#assign mixins = mixins + ['PlayerMixin']>
 {
   "required": true,

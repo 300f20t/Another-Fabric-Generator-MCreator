@@ -14,7 +14,7 @@
 - Added is allowed on books support enchantment parameter support
 - Added pressedms dependency support for custom key bindings
 - Added support for the new parameters in mod elements since the last version
-- Added support for 2 new global triggers: Minecraft loads and unloads a world
+- Added support for 6 new global triggers: Minecraft loads and unloads a world, On player tick, Player starts using item, Player XP amount changes, Player XP level change
 - [#216] Added On Entity swings trigger support
 - [Bugfix] Potion effects and potion items tried to be registered as an item causing an error
 - [Bugfix] When entity dies global trigger caused a FTL error

@@ -107,11 +107,17 @@ base_templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameFeatures.java"
 
 # Mixins
+  - template: mixin/livingentity_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/LivingEntityMixin.java"
   - template: mixin/player_mixin.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/mixin/PlayerMixin.java"
 
-# Events
+# Custom events
+  - template: event/livingentity_events.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/event/LivingEntityEvents.java"
   - template: event/player_events.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/event/PlayerEvents.java"
