@@ -21,8 +21,6 @@
 <#-- @formatter:off -->
 package ${package}.client.renderer.item;
 
-import org.jetbrains.annotations.Nullable;
-
 @Environment(EnvType.CLIENT)
 public class LegacyOverrideSelectItemModel implements ItemModel {
     private final ModelOverride[] overrides;
