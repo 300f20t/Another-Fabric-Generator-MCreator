@@ -22,9 +22,11 @@ package ${package}.mixin;
 public abstract class BoneMealItemMixin {
     @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
     private void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        boolean result = ItemEvents.BONEMEAL_USED.invoker().onBonemealUsed(context.getClickedPos(), (Entity) context.getPlayer(), context.getItemInHand(), context.getLevel().getBlockState(context.getClickedPos()));
-        if (!result)
-            cir.setReturnValue(InteractionResult.FAIL);
+        if (context.getLevel() instanceof ServerLevel) {
+            boolean result = ItemEvents.BONEMEAL_USED.invoker().onBonemealUsed(context.getClickedPos(), (Entity) context.getPlayer(), context.getItemInHand(), context.getLevel().getBlockState(context.getClickedPos()));
+            if (!result)
+                cir.setReturnValue(InteractionResult.FAIL);
+        }
     }
 }
 <#-- @formatter:on -->

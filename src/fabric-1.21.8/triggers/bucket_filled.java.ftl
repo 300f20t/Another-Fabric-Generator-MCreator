@@ -8,11 +8,13 @@ public ${name}Procedure() {
 			"y": "player.getY()",
 			"z": "player.getZ()",
 			"world": "level",
-			"entity": "player"
+			"entity": "player",
+			"itemstack": "player.getItemInHand(player.getUsedItemHand())"
 			}/>
 		</#compress></#assign>
 		if (hand == player.getUsedItemHand())
-		    execute(${dependenciesCode});
+		    if (player.getItemInHand(hand).getItem() == Items.BUCKET)
+		        execute(${dependenciesCode});
 		boolean result = eventResult;
 		eventResult = true;
 		return result ? InteractionResult.PASS : InteractionResult.FAIL;
