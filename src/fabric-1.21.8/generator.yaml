@@ -106,6 +106,17 @@ base_templates:
       - "${w.hasElementsOfType('feature')}"
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameFeatures.java"
 
+# Mixins
+  - template: mixin/player_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/PlayerMixin.java"
+
+# Events
+  - template: event/player_events.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/event/PlayerEvents.java"
+
+
 java_models:
   key: mojmap-1.21.x
   compatible: [mojmap-1.17.x, mojmap-1.18.x, mojmap-1.19.x, mojmap-1.20.x]

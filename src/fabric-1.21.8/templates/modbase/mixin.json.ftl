@@ -13,7 +13,7 @@
 <#if w.hasElementsOfType('armor')>
     <#assign mixins = mixins + ['ArmorMixin']>
 </#if>
-
+<#assign mixins = mixins + ['PlayerMixin']>
 {
   "required": true,
   "package": "${package}.mixin",

@@ -53,7 +53,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 	private Supplier<Boolean> boundItemMatcher = null;
 
 	public ${name}Menu(int id, Inventory inv) {
-	    this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
+		this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
 		this.x = (int) inv.player.getX();
 		this.y = (int) inv.player.getY();
 		this.z = (int) inv.player.getZ();
@@ -74,15 +74,15 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 		}
 
 		<#if data.type == 1>
-        	if (pos != null) {
-        	    if (extraData.readableBytes() == 1) { // bound to item
-        			byte hand = extraData.readByte();
-        			ItemStack itemstack = hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem();
-        			this.boundItemMatcher = () -> itemstack == (hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem());
-        			this.bound = true;
-        		}
-	        }
-	    </#if>
+			if (pos != null) {
+				if (extraData.readableBytes() == 1) { // bound to item
+					byte hand = extraData.readByte();
+					ItemStack itemstack = hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem();
+					this.boundItemMatcher = () -> itemstack == (hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem());
+					this.bound = true;
+				}
+			}
+		</#if>
 	}
 
 	public ${name}Menu(int id, Inventory inv, Container container) {
@@ -272,6 +272,18 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 				<#assign stid +=1>
 			</#if>
 		</#list>
+
+		<#if hasProcedure(data.onTick)>
+			PlayerEvents.END_PLAYER_TICK.register(entity -> {
+				if (entity.containerMenu instanceof ${name}Menu menu) {
+					Level world = menu.world;
+					double x = menu.x;
+					double y = menu.y;
+					double z = menu.z;
+					<@procedureOBJToCode data.onTick/>
+				}
+			});
+		</#if>
 	}
 }
 <#-- @formatter:on -->

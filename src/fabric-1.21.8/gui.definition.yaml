@@ -34,5 +34,3 @@ localizationkeys:
   - fromlist: data.getComponentsOfType('Checkbox')
     key: gui.@modid.@registryname.@[getName()]
     mapto: text
-
-field_exclusions: [onTick]
