@@ -428,14 +428,14 @@ public class ${name}Entity extends ${extendsClass} <#if interfaces?size gt 0>imp
 	</#if>
 
 	<#if data.guiBoundTo?has_content>
-	private SimpleContainer inventory = new SimpleContainer(${data.inventorySize}) {
-		<#if data.inventoryStackSize != 99>
-		@Override
-		public int getMaxStackSize() {
+	private SimpleContainer inventory = new SimpleContainer(${data.inventorySize})
+	<#if data.inventoryStackSize != 99>
+	{
+		@Override public int getMaxStackSize() {
 			return ${data.inventoryStackSize};
 		}
-		   </#if>;
-	};
+	}
+	</#if>;
 
    	@Override protected void dropEquipment(ServerLevel serverLevel) {
 		super.dropEquipment(serverLevel);
