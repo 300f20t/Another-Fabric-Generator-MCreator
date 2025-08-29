@@ -97,61 +97,61 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			<#list data.components as component>
 				<#if component.getClass().getSimpleName()?ends_with("Slot")>
 					<#assign slotnum += 1>
-	   				this.addSlot(new Slot(inventory, ${component.id}, ${(component.x - mx)?int + 1},
+					this.customSlots.put(${component.id}, new Slot(inventory, ${component.id}, ${(component.x - mx)?int + 1},
 						${(component.y - my)?int + 1}) {
 						private final int slot = ${component.id};
 
-
-	   				<#if hasProcedure(component.disablePickup) || component.disablePickup.getFixedValue()>
-						@Override public boolean mayPickup(Player entity) {
-							return <@procedureOBJToConditionCode component.disablePickup false true/>;
-						}
-					</#if>
-
-					<#if hasProcedure(component.onSlotChanged)>
-						@Override public void setChanged() {
-							super.setChanged();
-							slotChanged(${component.id}, 0, 0);
-						}
-					</#if>
-
-					<#if hasProcedure(component.onTakenFromSlot)>
-						@Override public void onTake(Player entity, ItemStack stack) {
-							super.onTake(entity, stack);
-							slotChanged(${component.id}, 1, 0);
-						}
-					</#if>
-
-					<#if hasProcedure(component.onStackTransfer)>
-						@Override public void onQuickCraft(ItemStack a, ItemStack b) {
-							super.onQuickCraft(a, b);
-							slotChanged(${component.id}, 2, b.getCount() - a.getCount());
-						}
-					</#if>
-
-					<#if component.getClass().getSimpleName() == "InputSlot">
-						<#if hasProcedure(component.disablePlacement) || component.disablePlacement.getFixedValue()>
-							@Override public boolean mayPlace(ItemStack itemstack) {
-								return <@procedureOBJToConditionCode component.disablePlacement false true/>;
-							}
-						<#elseif component.inputLimit.toString()?has_content>
-							@Override public boolean mayPlace(ItemStack stack) {
-								<#if component.inputLimit.getUnmappedValue().startsWith("TAG:")>
-									<#assign tag = "\"" + component.inputLimit.getUnmappedValue().replace("TAG:", "") + "\"">
-									return stack.is(TagKey.create(Registries.ITEM, ResourceLocation.parse(${tag})));
-								<#else>
-									return ${mappedMCItemToItem(component.inputLimit)} == stack.getItem();
-								</#if>
+						<#if hasProcedure(component.disablePickup) || component.disablePickup.getFixedValue()>
+							@Override public boolean mayPickup(Player entity) {
+								return <@procedureOBJToConditionCode component.disablePickup false true/>;
 							}
 						</#if>
-					<#elseif component.getClass().getSimpleName() == "OutputSlot">
-						@Override public boolean mayPlace(ItemStack stack) {
-							return false;
-						}
-					</#if>
-					});
+	
+						<#if hasProcedure(component.onSlotChanged)>
+							@Override public void setChanged() {
+								super.setChanged();
+								slotChanged(${component.id}, 0, 0);
+							}
+						</#if>
+	
+						<#if hasProcedure(component.onTakenFromSlot)>
+							@Override public void onTake(Player entity, ItemStack stack) {
+								super.onTake(entity, stack);
+								slotChanged(${component.id}, 1, 0);
+							}
+						</#if>
+	
+						<#if hasProcedure(component.onStackTransfer)>
+							@Override public void onQuickCraft(ItemStack a, ItemStack b) {
+								super.onQuickCraft(a, b);
+								slotChanged(${component.id}, 2, b.getCount() - a.getCount());
+							}
+						</#if>
+	
+						<#if component.getClass().getSimpleName() == "InputSlot">
+							<#if hasProcedure(component.disablePlacement) || component.disablePlacement.getFixedValue()>
+								@Override public boolean mayPlace(ItemStack itemstack) {
+									return <@procedureOBJToConditionCode component.disablePlacement false true/>;
+								}
+							<#elseif component.inputLimit.toString()?has_content>
+								@Override public boolean mayPlace(ItemStack stack) {
+									<#if component.inputLimit.getUnmappedValue().startsWith("TAG:")>
+										<#assign tag = "\"" + component.inputLimit.getUnmappedValue().replace("TAG:", "") + "\"">
+										return stack.is(TagKey.create(Registries.ITEM, ResourceLocation.parse(${tag})));
+									<#else>
+										return ${mappedMCItemToItem(component.inputLimit)} == stack.getItem();
+									</#if>
+								}
+							</#if>
+						<#elseif component.getClass().getSimpleName() == "OutputSlot">
+							@Override public boolean mayPlace(ItemStack stack) {
+								return false;
+							}
+						</#if>
+						});
 				</#if>
 			</#list>
+		    customSlots.forEach((i, slot) -> this.addSlot(slot));
 
 			<#assign coffx = ((data.width - 176) / 2 + data.inventoryOffsetX)?int>
 			<#assign coffy = ((data.height - 166) / 2 + data.inventoryOffsetY)?int>
@@ -255,23 +255,14 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 	}
 
 	public static void screenInit() {
-		<#assign btid = 0>
-		<#assign stid = 0>
-		<#list data.components as component>
-			<#if component.getClass().getSimpleName() == "Button" ||  component.getClass().getSimpleName() == "ImageButton">
-				<#if hasProcedure(component.onClick)>
-					PayloadTypeRegistry.playC2S().register(${name}ButtonMessage.TYPE, ${name}ButtonMessage.STREAM_CODEC);
-					ServerPlayNetworking.registerGlobalReceiver(${name}ButtonMessage.TYPE, ${name}ButtonMessage::apply);
-				</#if>
-				<#assign btid +=1>
-			<#elseif component.getClass().getSimpleName()?ends_with("Slot")>
-				<#if hasProcedure(component.onSlotChanged) || hasProcedure(component.onTakenFromSlot) || hasProcedure(component.onStackTransfer)>
-					PayloadTypeRegistry.playC2S().register(${name}SlotMessage.TYPE, ${name}SlotMessage.STREAM_CODEC);
-					ServerPlayNetworking.registerGlobalReceiver(${name}SlotMessage.TYPE, ${name}SlotMessage::apply);
-				</#if>
-				<#assign stid +=1>
-			</#if>
-		</#list>
+		<#if data.hasButtonEvents()>
+			PayloadTypeRegistry.playC2S().register(${name}ButtonMessage.TYPE, ${name}ButtonMessage.STREAM_CODEC);
+			ServerPlayNetworking.registerGlobalReceiver(${name}ButtonMessage.TYPE, ${name}ButtonMessage::apply);
+		</#if>
+		<#if data.hasSlotEvents()>
+			PayloadTypeRegistry.playC2S().register(${name}SlotMessage.TYPE, ${name}SlotMessage.STREAM_CODEC);
+			ServerPlayNetworking.registerGlobalReceiver(${name}SlotMessage.TYPE, ${name}SlotMessage::apply);
+		</#if>
 
 		<#if hasProcedure(data.onTick)>
 			PlayerEvents.END_PLAYER_TICK.register(entity -> {

@@ -53,7 +53,21 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 		return TYPE;
 	}
 
-	public static void apply(MenuStateUpdateMessage message, ClientPlayNetworking.Context context) {
+	public static void apply(MenuStateUpdateMessage message, ServerPlayNetworking.Context context) {
+		<#-- Security measure to prevent accepting too big strings -->
+		if (message.name.length() > 256 || message.elementState instanceof String string && string.length() > 8192)
+			return;
+
+		context.server().execute(() -> {
+			if (context.player().containerMenu instanceof ${JavaModName}Menus.MenuAccessor menu) {
+				menu.getMenuState().put(message.elementType + ":" + message.name, message.elementState);
+				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.${JavaModName}ScreenAccessor accessor)
+					accessor.updateMenuState(message.elementType, message.name, message.elementState);
+			}
+		});
+	}
+
+	public static void applyClient(MenuStateUpdateMessage message, ClientPlayNetworking.Context context) {
 		<#-- Security measure to prevent accepting too big strings -->
 		if (message.name.length() > 256 || message.elementState instanceof String string && string.length() > 8192)
 			return;
