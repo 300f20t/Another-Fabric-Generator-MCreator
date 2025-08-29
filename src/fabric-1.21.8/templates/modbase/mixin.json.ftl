@@ -16,6 +16,9 @@
 </#if>
 <#assign mixins = mixins + ['LivingEntityMixin']>
 <#assign mixins = mixins + ['PlayerMixin']>
+<#assign mixins = mixins + ['ItemStackMixin']>
+<#assign mixins = mixins + ['BlockItemMixin']>
+<#assign mixins = mixins + ['BoneMealItemMixin']>
 {
   "required": true,
   "package": "${package}.mixin",

@@ -114,6 +114,15 @@ base_templates:
   - template: mixin/player_mixin.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/mixin/PlayerMixin.java"
+  - template: mixin/itemstack_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/ItemStackMixin.java"
+  - template: mixin/blockitem_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/BlockItemMixin.java"
+  - template: mixin/bonemealitem_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/BoneMealItemMixin.java"
 
 # Custom events
   - template: event/livingentity_events.java.ftl
@@ -122,6 +131,12 @@ base_templates:
   - template: event/player_events.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/event/PlayerEvents.java"
+  - template: event/block_events.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/event/BlockEvents.java"
+  - template: event/item_events.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/event/ItemEvents.java"
 
 
 java_models:
