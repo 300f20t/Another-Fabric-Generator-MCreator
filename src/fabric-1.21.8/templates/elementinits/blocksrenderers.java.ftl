@@ -31,6 +31,9 @@ package ${package}.init;
 	            <#if block.transparencyType != "SOLID" || block.hasTransparency>
 	                ${block.getModElement().getName()}Block.registerRenderLayer();
 	            </#if>
+	            <#if block.renderType() == 4>
+	                ${block.getModElement().getName()}Renderer.registerBlockEntityRenderers();
+	            </#if>
 	        <#elseif block.getModElement().getTypeString() == "plant">
 	            ${block.getModElement().getName()}Block.registerRenderLayer();
 	        <#elseif block.getModElement().getTypeString() == "dimension">

@@ -1,0 +1,127 @@
+<#--
+ # This file is part of Fabric-Generator-MCreator.
+ # Copyright (C) 2012-2020, Pylo
+ # Copyright (C) 2020-2025, Pylo, opensource contributors
+ # Copyright (C) 2020-2025, Goldorion, opensource contributors
+ #
+ # Fabric-Generator-MCreator is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU Lesser General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+
+ # Fabric-Generator-MCreator is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ # GNU Lesser General Public License for more details.
+ #
+ # You should have received a copy of the GNU Lesser General Public License
+ # along with Fabric-Generator-MCreator. If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<#-- @formatter:off -->
+<#include "../procedures.java.ftl">
+package ${package}.client.renderer.block;
+
+@Environment(EnvType.CLIENT) public class ${name}Renderer implements BlockEntityRenderer<${name}BlockEntity> {
+	private final CustomHierarchicalModel model;
+	private final ResourceLocation texture;
+
+	private final LivingEntityRenderState renderState;
+
+	${name}Renderer(BlockEntityRendererProvider.Context context) {
+		this.model = new CustomHierarchicalModel(context.bakeLayer(${data.customModelName.split(":")[0]}.LAYER_LOCATION));
+		this.texture = ResourceLocation.parse("${data.texture.format("%s:textures/block/%s")}.png");
+		this.renderState = new LivingEntityRenderState();
+	}
+
+	private void updateRenderState(${name}BlockEntity blockEntity, float partialTick) {
+		int tickCount = (int) blockEntity.getLevel().getGameTime();
+		renderState.ageInTicks = tickCount + partialTick;
+		<#list data.animations as animation>
+			<#if hasProcedure(animation.condition)>
+				blockEntity.animationState${animation?index}.animateWhen(<@procedureCode animation.condition, {
+					"x": "blockEntity.getBlockPos().getX()",
+					"y": "blockEntity.getBlockPos().getY()",
+					"z": "blockEntity.getBlockPos().getZ()",
+					"blockstate": "blockEntity.getBlockState()",
+					"world": "blockEntity.getLevel()",
+					"entity": (JavaModName + ".clientPlayer()")
+				}, false/>, tickCount);
+			<#else>
+				blockEntity.animationState${animation?index}.animateWhen(true, tickCount);
+			</#if>
+		</#list>
+	}
+
+	@Override public void render(${name}BlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource renderer, int light, int overlayLight, Vec3 cameraPos) {
+		<#compress>
+		updateRenderState(blockEntity, partialTick);
+		poseStack.pushPose();
+		poseStack.scale(-1, -1, 1);
+		poseStack.translate(-0.5, -0.5, 0.5);
+		<#if data.rotationMode != 0>
+			BlockState state = blockEntity.getBlockState();
+			<#if data.rotationMode != 5>
+			Direction facing = state.getValue(${name}Block.FACING);
+            switch (facing) {
+				case NORTH -> {}
+				case EAST -> poseStack.mulPose(Axis.YP.rotationDegrees(90));
+				case WEST -> poseStack.mulPose(Axis.YP.rotationDegrees(-90));
+				case SOUTH -> poseStack.mulPose(Axis.YP.rotationDegrees(180));
+            	<#if data.rotationMode == 2 || data.rotationMode == 4>
+            		case UP -> poseStack.mulPose(Axis.XN.rotationDegrees(90));
+            		case DOWN -> poseStack.mulPose(Axis.XN.rotationDegrees(-90));
+				</#if>
+			}
+			<#if data.enablePitch>
+			if (facing != Direction.UP && facing != Direction.DOWN) {
+				switch (state.getValue(${name}Block.FACE)) {
+					case FLOOR -> {}
+					case WALL -> poseStack.mulPose(Axis.XP.rotationDegrees(90));
+					case CEILING -> poseStack.mulPose(Axis.XP.rotationDegrees(180));
+				};
+			}
+			</#if>
+			<#else>
+            switch (state.getValue(${name}Block.AXIS)) {
+				case X -> poseStack.mulPose(Axis.ZN.rotationDegrees(90));
+				case Y -> {}
+				case Z -> poseStack.mulPose(Axis.XP.rotationDegrees(90));
+			}
+			</#if>
+		</#if>
+		poseStack.translate(0, -1, 0);
+		VertexConsumer builder = renderer.getBuffer(RenderType.entityCutout(texture));
+		model.setupBlockEntityAnim(blockEntity, renderState);
+		model.renderToBuffer(poseStack, builder, light, overlayLight);
+		poseStack.popPose();
+		</#compress>
+	}
+
+	public static void registerBlockEntityRenderers() {
+		BlockEntityRenderers.register(${JavaModName}BlockEntities.${REGISTRYNAME}, ${name}Renderer::new);
+	}
+
+	private static final class CustomHierarchicalModel extends ${data.customModelName.split(":")[0]} {
+
+		<#list data.animations as animation>
+		private final Supplier<KeyframeAnimation> keyframeAnimation${animation?index};
+		</#list>
+
+		public CustomHierarchicalModel(ModelPart root) {
+			super(root);
+			<#list data.animations as animation>
+			this.keyframeAnimation${animation?index} = () -> ${animation.animation}.bake(root);
+			</#list>
+		}
+
+		public void setupBlockEntityAnim(${name}BlockEntity blockEntity, LivingEntityRenderState state) {
+			this.root().getAllParts().forEach(ModelPart::resetPose);
+			<#list data.animations as animation>
+			this.keyframeAnimation${animation?index}.get().apply(blockEntity.animationState${animation?index}, state.ageInTicks, ${animation.speed}f);
+			</#list>
+			super.setupAnim(state);
+		}
+	}
+}
+<#-- @formatter:on -->
