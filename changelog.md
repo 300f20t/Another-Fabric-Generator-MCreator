@@ -15,6 +15,7 @@
 - Added pressedms dependency support for custom key bindings
 - Added support for the new parameters in mod elements since the last version
 - Added support for 2 new global triggers: Minecraft loads and unloads a world
+- [#216] Added On Entity swings trigger support
 - [Bugfix] Potion effects and potion items tried to be registered as an item causing an error
 - [Bugfix] When entity dies global trigger caused a FTL error
 - [Bugfix] Feature mod element didn't work
