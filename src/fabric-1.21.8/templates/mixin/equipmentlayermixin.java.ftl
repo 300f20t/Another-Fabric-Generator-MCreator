@@ -15,24 +15,21 @@
  # You should have received a copy of the GNU Lesser General Public License
  # along with Fabric-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
 -->
+
+<#-- @formatter:off -->
 package ${package}.mixin;
 
 @Mixin(EquipmentLayerRenderer.class)
 public abstract class EquipmentLayerRendererMixin {
-    @Shadow
-    @Final
-    private EquipmentAssetManager equipmentAssets;
+    @Shadow @Final private EquipmentAssetManager equipmentAssets;
 
-    @Shadow
-    @Final
-    private Function<EquipmentLayerRenderer.LayerTextureKey, ResourceLocation> layerTextureLookup;
+    @Shadow @Final private Function<EquipmentLayerRenderer.LayerTextureKey, ResourceLocation> layerTextureLookup;
 
-    @Shadow
-    @Final
-    private Function<EquipmentLayerRenderer.TrimSpriteKey, TextureAtlasSprite> trimSpriteLookup;
+    @Shadow @Final private Function<EquipmentLayerRenderer.TrimSpriteKey, TextureAtlasSprite> trimSpriteLookup;
 
-    @Shadow
-    private static int getColorForLayer(EquipmentClientInfo.Layer layer, int i) { return 0; }
+    @Shadow private static int getColorForLayer(EquipmentClientInfo.Layer layer, int i) {
+        return 0;
+    }
 
     @Inject(method = "Lnet/minecraft/client/renderer/entity/layers/EquipmentLayerRenderer;renderLayers(Lnet/minecraft/client/resources/model/EquipmentClientInfo$LayerType;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/client/model/Model;Lnet/minecraft/world/item/ItemStack;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/resources/ResourceLocation;)V", at = @At("HEAD"), cancellable = true)
     public void renderLayers(EquipmentClientInfo.LayerType layerType, ResourceKey<EquipmentAsset> resourceKey, Model model, ItemStack itemStack, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ResourceLocation resourceLocation, CallbackInfo ci) {
@@ -65,3 +62,4 @@ public abstract class EquipmentLayerRendererMixin {
         }
     }
 }
+<#-- @formatter:on -->

@@ -83,10 +83,10 @@ templates:
     condition: "renderType() #= 2"
     writer: json
     name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block_cmodel_obj.json.ftl
-    condition: "renderType() #= 3"
-    writer: json
-    name: "@MODASSETSROOT/models/block/@registryname.json"
+#  - template: json/block_cmodel_obj.json.ftl
+#    condition: "renderType() #= 3"
+#    writer: json
+#    name: "@MODASSETSROOT/models/block/@registryname.json"
 
   # TX: Stairs templates
   - template: json/block_item.json.ftl

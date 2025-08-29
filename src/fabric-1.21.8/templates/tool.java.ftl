@@ -293,6 +293,8 @@ public class ${name}Item extends FishingRodItem {
 
 	<@onCrafted data.onCrafted/>
 
+	<@onEntitySwing data.onEntitySwing/>
+
 	<@onItemTick data.onItemInUseTick, data.onItemInInventoryTick/>
 
 	<@hasGlow data.glowCondition/>

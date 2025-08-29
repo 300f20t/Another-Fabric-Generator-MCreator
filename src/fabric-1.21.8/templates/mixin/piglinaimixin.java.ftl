@@ -50,6 +50,5 @@ public abstract class PiglinAiMixin {
 		    </#list>
 		}
 	}
-
 }
 <#-- @formatter:on -->

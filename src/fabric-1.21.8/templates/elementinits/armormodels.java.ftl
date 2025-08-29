@@ -58,7 +58,6 @@ package ${package}.init;
             }
             return original;
         }
-
     }
 
     public static void clientLoad() {
@@ -66,6 +65,5 @@ package ${package}.init;
             ${armor.getModElement().getName()}Armor.clientLoad();
         </#list>
     }
-
 }
 <#-- @formatter:on -->
