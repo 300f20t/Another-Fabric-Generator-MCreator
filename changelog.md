@@ -1,6 +1,7 @@
 # Changelogs:
 
 ## 2.0
+With the collaboration of Spectrall368 and NerdyPuzzle
 - Updated to MCreator 2025.3 first snapshot
 - Updated to Minecraft 1.21.8
 - Unsupported procedure blocks and global triggers are (finally) marked back as unsupported

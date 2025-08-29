@@ -8,8 +8,6 @@ This project is not official. It is not affiliated with the respective owners an
 
 **The current targeted Minecraft version is 1.21.8.**
 
-### **This plugin is currently being recoded entirely for a better plugin. Please be patient and consider this matter when developing a mod using this plugin.**
-
 ## Important Information
 - Make sure you use MCreator 2025.3 first snapshot
 - Back up your workspace before updating to a newer version of the plugin.
