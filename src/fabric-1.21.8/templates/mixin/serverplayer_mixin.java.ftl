@@ -22,7 +22,7 @@
 package ${package}.mixin;
 
 @Mixin(ServerPlayer.class)
-public abstract class OnItemDroppedMixin {
+public abstract class ServerPlayerMixin {
 	@Inject(method = "Lnet/minecraft/server/level/ServerPlayer;drop(Z)Z", at = @At("HEAD"), cancellable = true)
 	public void drop(boolean dropStack, CallbackInfoReturnable<Boolean> cir) {
 	    ServerPlayer self = (ServerPlayer) (Object) this;

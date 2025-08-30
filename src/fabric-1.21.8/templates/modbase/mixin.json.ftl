@@ -5,7 +5,7 @@
 </#if>
 <#if w.hasElementsOfBaseType('item')>
 	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
-	<#assign mixins = mixins + ['OnItemDroppedMixin']>
+	<#assign mixins = mixins + ['ServerPlayerMixin']>
 </#if>
 <#if w.hasElementsOfType('attribute')>
     <#assign mixins = mixins + ['AttributeSupplierAccessor']>
