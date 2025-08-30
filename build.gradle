@@ -56,7 +56,7 @@ System.setProperty("user.dir", projectDir.toString())
 
 tasks.register('exportPlugin', Zip) {
     group("mcreator_plugins")
-    from 'src'
+    from 'src/main/resources'
     archiveFileName = Globals.getArchiveName()
     destinationDirectory = file('build/')
 }
