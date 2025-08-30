@@ -1,0 +1,24 @@
+<#include "procedures.java.ftl">
+public static boolean eventResult = true;
+public ${name}Procedure() {
+	MiscEvents.COMMAND_EXECUTE.register((results) -> {
+	    Entity entity = results.getContext().getSource().getEntity();
+        if (entity != null) {
+		    <#assign dependenciesCode><#compress>
+			    <@procedureDependenciesCode dependencies, {
+				    "x": "entity.getX()",
+				    "y": "entity.getY()",
+				    "z": "entity.getZ()",
+				    "world": "entity.level()",
+				    "entity": "entity",
+				    "command": "results.getReader().getString()",
+				    "arguments": "results.getContext().build(event.getParseResults().getReader().getString())"
+			    }/>
+		    </#compress></#assign>
+		    execute(${dependenciesCode});
+		}
+		boolean result = eventResult;
+		eventResult = true;
+		return result;
+	});
+}

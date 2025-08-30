@@ -19,6 +19,7 @@
 <#assign mixins = mixins + ['ItemStackMixin']>
 <#assign mixins = mixins + ['BlockItemMixin']>
 <#assign mixins = mixins + ['BoneMealItemMixin']>
+<#assign mixins = mixins + ['CommandsMixin']>
 {
   "required": true,
   "package": "${package}.mixin",

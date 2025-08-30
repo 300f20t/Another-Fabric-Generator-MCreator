@@ -1,6 +1,7 @@
 <#include "procedures.java.ftl">
+public static boolean eventResult = true;
 public ${name}Procedure() {
-	ServerMessageEvents.CHAT_MESSAGE.register((message, sender, params) -> {
+	ServerMessageEvents.ALLOW_CHAT_MESSAGE.register((message, sender, params) -> {
 		<#assign dependenciesCode><#compress>
 			<@procedureDependenciesCode dependencies, {
 			"x": "sender.getX()",
@@ -12,6 +13,8 @@ public ${name}Procedure() {
 			}/>
 		</#compress></#assign>
 		execute(${dependenciesCode});
+		boolean result = eventResult;
+		eventResult = true;
+		return result;
 	});
 }
-
