@@ -1,6 +1,6 @@
 # Changelogs:
 
-## Next update
+## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
 - Some events are now cancellable
 - [Bugfix] Player right-clicked item trigger did not work

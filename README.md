@@ -14,7 +14,7 @@ This project is not official. It is not affiliated with the respective owners an
 - Mods will also require [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) to function properly, so when you want to play your mod, make sure you have Fabric API.
 
 ## Credits/License
-Dev - [Goldorion](https://github.com/Goldorion), [Spectrall](https://github.com/Spectrall368) and [contributors](https://github.com/Goldorion/Fabric-Generator-MCreator/graphs/contributors)
+Dev - [Goldorion](https://github.com/Goldorion), [Spectrall](https://github.com/Spectrall368), [NerdyPuzzle](https://github.com/NerdyPuzzle) and [contributors](https://github.com/Goldorion/Fabric-Generator-MCreator/graphs/contributors)
 This generator re-uses code from the official MCreator's Forge and NeoForge generators.
 
 The plugin's MCreator page is [here](https://mcreator.net/plugin/64512/mcreator-fabric-generator).
