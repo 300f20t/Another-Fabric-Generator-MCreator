@@ -20,12 +20,12 @@ package ${package}.mixin;
 
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {
-    @Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
-    private void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        BlockPlaceContext placeContext = new BlockPlaceContext(context);
-        boolean result = BlockEvents.BLOCK_PLACE.invoker().onBlockPlaced(context.getClickedPos(), (Entity) placeContext.getPlayer(), ((BlockItem) placeContext.getItemInHand().getItem()).getBlock().defaultBlockState(), placeContext.getPlayer().level().getBlockState(context.getClickedPos()));
-        if (!result)
-            cir.setReturnValue(InteractionResult.FAIL);
-    }
+	@Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
+	private void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+		BlockPlaceContext placeContext = new BlockPlaceContext(context);
+		boolean result = BlockEvents.BLOCK_PLACE.invoker().onBlockPlaced(context.getClickedPos(), (Entity) placeContext.getPlayer(), ((BlockItem) placeContext.getItemInHand().getItem()).getBlock().defaultBlockState(), placeContext.getPlayer().level().getBlockState(context.getClickedPos()));
+		if (!result)
+			cir.setReturnValue(InteractionResult.FAIL);
+	}
 }
 <#-- @formatter:on -->

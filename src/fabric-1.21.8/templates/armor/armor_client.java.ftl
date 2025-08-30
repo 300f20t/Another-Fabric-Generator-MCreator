@@ -29,7 +29,7 @@ import net.minecraft.client.model.Model;
 
 @Environment(EnvType.CLIENT) public class ${name}Armor {
 
-    public static void clientLoad() {
+	public static void clientLoad() {
 		<#if data.enableHelmet>
 		${JavaModName}ArmorModels.ARMOR_MODELS.put(${JavaModName}Items.${REGISTRYNAME}_HELMET, new ${JavaModName}ArmorModels.ArmorModel() {
 			<#if data.helmetModelName != "Default" && data.getHelmetModel()??>

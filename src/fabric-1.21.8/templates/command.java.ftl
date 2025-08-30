@@ -27,7 +27,7 @@ package ${package}.command;
 public class ${name}Command {
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext commandBuildContext, Commands.CommandSelection environment) {
-	    <#if data.type = "MULTIPLAYER_ONLY" || data.type = "SINGLEPLAYER_ONLY">
+		<#if data.type = "MULTIPLAYER_ONLY" || data.type = "SINGLEPLAYER_ONLY">
 		if (environment.include${data.type?replace("MULTIPLAYER_ONLY", "Dedicated")?replace("SINGLEPLAYER_ONLY", "Integrated")})
 		</#if>
 		dispatcher.register(Commands.literal("${data.commandName}")

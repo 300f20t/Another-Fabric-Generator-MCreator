@@ -18,7 +18,7 @@
 
 <#-- @formatter:off -->
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -26,23 +26,23 @@ package ${package}.init;
 @Environment(EnvType.CLIENT) public class ${JavaModName}BlocksRenderers {
 
 	public static void clientLoad() {
-	    <#list blocks as block>
-	        <#if block.getModElement().getTypeString() == "block">
-	            <#if block.transparencyType != "SOLID" || block.hasTransparency>
-	                ${block.getModElement().getName()}Block.registerRenderLayer();
-	            </#if>
-	            <#if block.renderType() == 4>
-	                ${block.getModElement().getName()}Renderer.registerBlockEntityRenderers();
-	            </#if>
-	        <#elseif block.getModElement().getTypeString() == "plant">
-	            ${block.getModElement().getName()}Block.registerRenderLayer();
-	        <#elseif block.getModElement().getTypeString() == "dimension">
-	            ${block.getModElement().getName()}PortalBlock.registerRenderLayer();
-	        <#elseif block.getModElement().getTypeString() == "fluid">
-	            ${block.getModElement().getName()}Fluid.registerRenderLayer();
-	        </#if>
-	    </#list>
-    }
+		<#list blocks as block>
+			<#if block.getModElement().getTypeString() == "block">
+				<#if block.transparencyType != "SOLID" || block.hasTransparency>
+					${block.getModElement().getName()}Block.registerRenderLayer();
+				</#if>
+				<#if block.renderType() == 4>
+					${block.getModElement().getName()}Renderer.registerBlockEntityRenderers();
+				</#if>
+			<#elseif block.getModElement().getTypeString() == "plant">
+				${block.getModElement().getName()}Block.registerRenderLayer();
+			<#elseif block.getModElement().getTypeString() == "dimension">
+				${block.getModElement().getName()}PortalBlock.registerRenderLayer();
+			<#elseif block.getModElement().getTypeString() == "fluid">
+				${block.getModElement().getName()}Fluid.registerRenderLayer();
+			</#if>
+		</#list>
+	}
 
 	// Start of user code block custom block renderers
 	// End of user code block custom block renderers

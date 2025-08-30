@@ -20,7 +20,7 @@ package ${package}.event;
 
 public class ItemEvents {
 
-    public static final Event<BonemealUsed> BONEMEAL_USED = EventFactory.createArrayBacked(BonemealUsed.class, (callbacks) -> (position, entity, itemstack, blockstate) -> {
+	public static final Event<BonemealUsed> BONEMEAL_USED = EventFactory.createArrayBacked(BonemealUsed.class, (callbacks) -> (position, entity, itemstack, blockstate) -> {
 		for (BonemealUsed event : callbacks) {
 			boolean result = event.onBonemealUsed(position, entity, itemstack, blockstate);
 			if (!result) {
@@ -28,7 +28,7 @@ public class ItemEvents {
 			}
 		}
 		return true;
-    });
+	});
 
 	@FunctionalInterface
 	public interface BonemealUsed {

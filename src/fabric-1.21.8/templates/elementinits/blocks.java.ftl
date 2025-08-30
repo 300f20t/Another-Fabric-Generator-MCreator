@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -43,23 +43,23 @@ public class ${JavaModName}Blocks {
 
 	<#list blocks as block>
 		<#if block.getModElement().getTypeString() == "dimension">
-            public static Block ${block.getModElement().getRegistryNameUpper()}_PORTAL;
+			public static Block ${block.getModElement().getRegistryNameUpper()}_PORTAL;
 		<#else>
 			public static Block ${block.getModElement().getRegistryNameUpper()};
 		</#if>
 	</#list>
 
 	public static void load() {
-        <#list blocks as block>
-            <#if block.getModElement().getTypeString() == "dimension">
-                ${block.getModElement().getRegistryNameUpper()}_PORTAL =
-                    register("${block.getModElement().getRegistryName()}_portal", ${block.getModElement().getName()}PortalBlock::new);
-            <#else>
-                ${block.getModElement().getRegistryNameUpper()} =
-                    register("${block.getModElement().getRegistryName()}", ${block.getModElement().getName()}Block::new);
-            </#if>
-        </#list>
-    }
+		<#list blocks as block>
+			<#if block.getModElement().getTypeString() == "dimension">
+				${block.getModElement().getRegistryNameUpper()}_PORTAL =
+					register("${block.getModElement().getRegistryName()}_portal", ${block.getModElement().getName()}PortalBlock::new);
+			<#else>
+				${block.getModElement().getRegistryNameUpper()} =
+					register("${block.getModElement().getRegistryName()}", ${block.getModElement().getName()}Block::new);
+			</#if>
+		</#list>
+	}
 
 	// Start of user code block custom blocks
 	// End of user code block custom blocks

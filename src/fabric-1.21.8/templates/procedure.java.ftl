@@ -41,7 +41,7 @@ package ${package}.procedures;
 public class ${name}Procedure {
 
 <#if trigger_code?has_content>
-    ${trigger_code}
+	${trigger_code}
 </#if>
 
 	public static <#if return_type??>${return_type.getJavaType(generator.getWorkspace())}<#else>void</#if> execute(

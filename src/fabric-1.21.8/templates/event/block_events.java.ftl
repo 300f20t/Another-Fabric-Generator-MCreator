@@ -20,7 +20,7 @@ package ${package}.event;
 
 public class BlockEvents {
 
-    public static final Event<BlockMultiplace> BLOCK_MULTIPLACE = EventFactory.createArrayBacked(BlockMultiplace.class, (callbacks) -> (position, entity, placed, placedAgainst) -> {
+	public static final Event<BlockMultiplace> BLOCK_MULTIPLACE = EventFactory.createArrayBacked(BlockMultiplace.class, (callbacks) -> (position, entity, placed, placedAgainst) -> {
 		for (BlockMultiplace event : callbacks) {
 			boolean result = event.onMultiplaced(position, entity, placed, placedAgainst);
 			if (!result) {
@@ -28,9 +28,9 @@ public class BlockEvents {
 			}
 		}
 		return true;
-    });
+	});
 
-    public static final Event<BlockPlace> BLOCK_PLACE = EventFactory.createArrayBacked(BlockPlace.class, (callbacks) -> (position, entity, placed, placedAgainst) -> {
+	public static final Event<BlockPlace> BLOCK_PLACE = EventFactory.createArrayBacked(BlockPlace.class, (callbacks) -> (position, entity, placed, placedAgainst) -> {
 		for (BlockPlace event : callbacks) {
 			boolean result = event.onBlockPlaced(position, entity, placed, placedAgainst);
 			if (!result) {
@@ -38,7 +38,7 @@ public class BlockEvents {
 			}
 		}
 		return true;
-    });
+	});
 
 	@FunctionalInterface
 	public interface BlockMultiplace {

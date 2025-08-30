@@ -26,7 +26,7 @@
 <#assign customTabs = tabMap.keySet()?filter(e -> e?starts_with('CUSTOM:'))>
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -53,14 +53,14 @@ public class ${JavaModName}Tabs {
 		);
 	</#list>
 
-        <#if vanillaTabs?has_content>
-            <#list vanillaTabs as tabName>
-                ItemGroupEvents.modifyEntriesEvent(${generator.map(tabName, "tabs")}).register(tabData -> {
-                    <#list tabMap.get(tabName) as tabElement>
-                    tabData.accept(${mappedMCItemToItem(tabElement)}<#if tabName == "OP_BLOCKS">, CreativeModeTab.TabVisibility.PARENT_TAB_ONLY</#if>);
-                    </#list>
-                });
-            </#list>
+		<#if vanillaTabs?has_content>
+			<#list vanillaTabs as tabName>
+				ItemGroupEvents.modifyEntriesEvent(${generator.map(tabName, "tabs")}).register(tabData -> {
+					<#list tabMap.get(tabName) as tabElement>
+					tabData.accept(${mappedMCItemToItem(tabElement)}<#if tabName == "OP_BLOCKS">, CreativeModeTab.TabVisibility.PARENT_TAB_ONLY</#if>);
+					</#list>
+				});
+			</#list>
 		</#if>
 	}
 }

@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -32,18 +32,18 @@ public class ${JavaModName}Attributes {
 	</#list>
 
 	public static void load() {
-        <#list attributes as attribute>
-            ${attribute.getModElement().getRegistryNameUpper()} = register("${attribute.getModElement().getRegistryName()}",
-                    new RangedAttribute("attribute.${modid}.${attribute.getModElement().getRegistryName()}", ${attribute.defaultValue}, ${attribute.minValue}, ${attribute.maxValue}).setSyncable(true)
-                    <#if attribute.sentiment != "POSITIVE">.setSentiment(Attribute.Sentiment.${attribute.sentiment})</#if>);
-        </#list>
+		<#list attributes as attribute>
+			${attribute.getModElement().getRegistryNameUpper()} = register("${attribute.getModElement().getRegistryName()}",
+					new RangedAttribute("attribute.${modid}.${attribute.getModElement().getRegistryName()}", ${attribute.defaultValue}, ${attribute.minValue}, ${attribute.maxValue}).setSyncable(true)
+					<#if attribute.sentiment != "POSITIVE">.setSentiment(Attribute.Sentiment.${attribute.sentiment})</#if>);
+		</#list>
 
 		<#list attributes as attribute>
 			<#if attribute.addToAllEntities>
-			    BuiltInRegistries.ENTITY_TYPE.stream().map((entityType) -> (EntityType<? extends LivingEntity>) entityType).filter(DefaultAttributes::hasSupplier)
-			        .forEach(entityType -> {
-            					FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
-            			});
+				BuiltInRegistries.ENTITY_TYPE.stream().map((entityType) -> (EntityType<? extends LivingEntity>) entityType).filter(DefaultAttributes::hasSupplier)
+					.forEach(entityType -> {
+								FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
+						});
 			<#else>
 				<#if attribute.entities?has_content>
 					List.of(
@@ -54,7 +54,7 @@ public class ${JavaModName}Attributes {
 					.filter(DefaultAttributes::hasSupplier)
 					.map(entityType -> (EntityType<? extends LivingEntity>) entityType)
 					.collect(Collectors.toList()).forEach(entityType -> {
-					    FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
+						FabricDefaultAttributeRegistry.register(entityType, addAttributeToEntity(DefaultAttributes.getSupplier(entityType), entityType, ${JavaModName}Attributes.${attribute.getModElement().getRegistryNameUpper()}));
 					});
 				</#if>
 				<#if attribute.addToPlayers>
@@ -64,14 +64,14 @@ public class ${JavaModName}Attributes {
 		</#list>
 	}
 
-    private static AttributeSupplier addAttributeToEntity(AttributeSupplier existingSupplier, EntityType<? extends LivingEntity> entityType, Holder<Attribute> newAttribute) {
-        AttributeSupplier.Builder builder = AttributeSupplier.builder();
-        AttributeSupplierAccessor accessor = (AttributeSupplierAccessor) existingSupplier;
-        accessor.getInstances().forEach((attribute, instance) -> {
-            builder.add(attribute, instance.getBaseValue());
-        });
-        return builder.add(newAttribute).build();
-    }
+	private static AttributeSupplier addAttributeToEntity(AttributeSupplier existingSupplier, EntityType<? extends LivingEntity> entityType, Holder<Attribute> newAttribute) {
+		AttributeSupplier.Builder builder = AttributeSupplier.builder();
+		AttributeSupplierAccessor accessor = (AttributeSupplierAccessor) existingSupplier;
+		accessor.getInstances().forEach((attribute, instance) -> {
+			builder.add(attribute, instance.getBaseValue());
+		});
+		return builder.add(newAttribute).build();
+	}
 
 	private static Holder<Attribute> register(String registryname, Attribute element) {
 		return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);

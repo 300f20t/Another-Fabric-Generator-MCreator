@@ -33,14 +33,14 @@ public class ${JavaModName}Fluids {
 	public static FlowingFluid FLOWING_${fluid.getModElement().getRegistryNameUpper()};
 	</#list>
 
-    public static void load() {
-        <#list fluids as fluid>
-        ${fluid.getModElement().getRegistryNameUpper()} =
-            register("${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Source::new);
-        FLOWING_${fluid.getModElement().getRegistryNameUpper()} =
-            register("flowing_${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Flowing::new);
-        </#list>
-    }
+	public static void load() {
+		<#list fluids as fluid>
+		${fluid.getModElement().getRegistryNameUpper()} =
+			register("${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Source::new);
+		FLOWING_${fluid.getModElement().getRegistryNameUpper()} =
+			register("flowing_${fluid.getModElement().getRegistryName()}", ${fluid.getModElement().getName()}Fluid.Flowing::new);
+		</#list>
+	}
 
 	@Environment(EnvType.CLIENT) public static void clientLoad() {
 		<#list fluids as fluid>

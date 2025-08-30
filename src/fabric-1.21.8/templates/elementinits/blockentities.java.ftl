@@ -20,7 +20,7 @@
 
 <#-- @formatter:off -->
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -32,12 +32,12 @@ public class ${JavaModName}BlockEntities {
 	</#list>
 
 	public static void load() {
-        <#list blockentities as blockentity>
-        ${blockentity.getModElement().getRegistryNameUpper()} =
-            register("${blockentity.getModElement().getRegistryName()}", ${JavaModName}Blocks.${blockentity.getModElement().getRegistryNameUpper()},
-                ${blockentity.getModElement().getName()}BlockEntity::new);
-        </#list>
-    }
+		<#list blockentities as blockentity>
+		${blockentity.getModElement().getRegistryNameUpper()} =
+			register("${blockentity.getModElement().getRegistryName()}", ${JavaModName}Blocks.${blockentity.getModElement().getRegistryNameUpper()},
+				${blockentity.getModElement().getName()}BlockEntity::new);
+		</#list>
+	}
 
 	// Start of user code block custom block entities
 	// End of user code block custom block entities

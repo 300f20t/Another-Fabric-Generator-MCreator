@@ -24,23 +24,23 @@
 package ${package}.world.features.treedecorators;
 
 public class ${name}TrunkDecorator extends TrunkVineDecorator {
-    public static MapCodec<${name}TrunkDecorator> CODEC = MapCodec.unit(${name}TrunkDecorator::new);
-    public static TreeDecoratorType<?> DECORATOR_TYPE = new TreeDecoratorType<>(CODEC);
+	public static MapCodec<${name}TrunkDecorator> CODEC = MapCodec.unit(${name}TrunkDecorator::new);
+	public static TreeDecoratorType<?> DECORATOR_TYPE = new TreeDecoratorType<>(CODEC);
 
-    @Override
-    protected TreeDecoratorType<?> type() {
-        return DECORATOR_TYPE;
-    }
+	@Override
+	protected TreeDecoratorType<?> type() {
+		return DECORATOR_TYPE;
+	}
 
-    @Override
-    public void place(TreeDecorator.Context context) {
-        context.logs().forEach(blockpos -> {
-            if (context.random().nextInt(3) > 0) {
-                BlockPos pos = blockpos.west();
-                if (context.isAir(pos)) {
+	@Override
+	public void place(TreeDecorator.Context context) {
+		context.logs().forEach(blockpos -> {
+			if (context.random().nextInt(3) > 0) {
+				BlockPos pos = blockpos.west();
+				if (context.isAir(pos)) {
 					context.setBlock(pos, oriented(${mappedBlockToBlockStateCode(data.treeVines)}, Direction.EAST));
-                }
-            }
+				}
+			}
 
 			if (context.random().nextInt(3) > 0) {
 				BlockPos pos = blockpos.east();
@@ -62,8 +62,8 @@ public class ${name}TrunkDecorator extends TrunkVineDecorator {
 					context.setBlock(pos, oriented(${mappedBlockToBlockStateCode(data.treeVines)}, Direction.NORTH));
 				}
 			}
-        });
-    }
+		});
+	}
 
 	@SuppressWarnings("deprecation") private static BlockState oriented(BlockState blockstate, Direction direction) {
 		return switch (direction) {

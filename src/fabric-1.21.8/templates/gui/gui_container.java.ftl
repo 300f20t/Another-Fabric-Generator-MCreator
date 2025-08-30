@@ -151,7 +151,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 						});
 				</#if>
 			</#list>
-		    customSlots.forEach((i, slot) -> this.addSlot(slot));
+			customSlots.forEach((i, slot) -> this.addSlot(slot));
 
 			<#assign coffx = ((data.width - 176) / 2 + data.inventoryOffsetX)?int>
 			<#assign coffy = ((data.height - 166) / 2 + data.inventoryOffsetY)?int>

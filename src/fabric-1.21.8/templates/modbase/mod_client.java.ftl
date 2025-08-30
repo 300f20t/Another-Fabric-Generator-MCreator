@@ -38,15 +38,15 @@ package ${package};
 		<#if w.getGElementsOfType("item")?filter(e -> e.getModels()?filter(a -> a.hasCustomJAVAModel())?has_content || e.hasCustomJAVAModel())?size != 0>${JavaModName}ItemRenderers.clientLoad();</#if>
 		<#if w.getGElementsOfType("item")?filter(e -> e.getModels()?has_content)?size != 0>LegacyOverrideSelectItemModel.clientLoad();</#if>
 		<#if w.getGElementsOfType("item")?filter(e -> e.customProperties?has_content)?size != 0>${JavaModName}ItemProperties.clientLoad();</#if>
-        <#if w.hasElementsOfType("armor")>${JavaModName}ArmorModels.clientLoad();</#if>
+		<#if w.hasElementsOfType("armor")>${JavaModName}ArmorModels.clientLoad();</#if>
 		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
-    		ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
+			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
 		</#if>
 
 		<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
-    		ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.PlayerVariablesSyncMessage.TYPE, ${JavaModName}Variables.PlayerVariablesSyncMessage::handleData);
+			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.PlayerVariablesSyncMessage.TYPE, ${JavaModName}Variables.PlayerVariablesSyncMessage::handleData);
 		</#if>
 
 		// Start of user code block mod init

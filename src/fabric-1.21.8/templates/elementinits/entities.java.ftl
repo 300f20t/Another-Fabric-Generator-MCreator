@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -32,9 +32,9 @@ public class ${JavaModName}Entities {
 
 	<#list entities as entity>
 		public static EntityType<${entity.getModElement().getName()}Entity> ${entity.getModElement().getRegistryNameUpper()};
-	    <#if entity.getModElement().getTypeString() == "livingentity" && entity.hasCustomProjectile()>
+		<#if entity.getModElement().getTypeString() == "livingentity" && entity.hasCustomProjectile()>
 			public static EntityType<${entity.getModElement().getName()}EntityProjectile> ${entity.getModElement().getRegistryNameUpper()}_PROJECTILE;
-	    </#if>
+		</#if>
 	</#list>
 
 	public static void load() {
@@ -62,11 +62,11 @@ public class ${JavaModName}Entities {
 		</#if>
 	</#list>
 
-	    <#if hasLivingEntities>
-	        init();
+		<#if hasLivingEntities>
+			init();
 			registerAttributes();
-	    </#if>
-    }
+		</#if>
+	}
 
 	// Start of user code block custom entities
 	// End of user code block custom entities

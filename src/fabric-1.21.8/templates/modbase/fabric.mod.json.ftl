@@ -35,7 +35,7 @@
   "accessWidener" : "META-INF/${modid}.accesswidener",
   </#if>
   "mixins": [
-    "${modid}.mixins.json"
+	"${modid}.mixins.json"
   ],
   "depends": {
 	"fabricloader": ">=0.17.2",

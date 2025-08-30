@@ -13,8 +13,8 @@ public ${name}Procedure() {
 			}/>
 		</#compress></#assign>
 		if (hand == player.getUsedItemHand())
-		    if (player.getItemInHand(hand).getItem() == Items.BUCKET)
-		        execute(${dependenciesCode});
+			if (player.getItemInHand(hand).getItem() == Items.BUCKET)
+				execute(${dependenciesCode});
 		boolean result = eventResult;
 		eventResult = true;
 		return result ? InteractionResult.PASS : InteractionResult.FAIL;

@@ -21,14 +21,14 @@
 
 <#assign itemsWithEntitySwing = []>
 <#list w.getGElementsOfType("item") as item>
-    <#if hasProcedure(item.onEntitySwing)>
-    <#assign itemsWithEntitySwing += [item]>
-    </#if>
+	<#if hasProcedure(item.onEntitySwing)>
+	<#assign itemsWithEntitySwing += [item]>
+	</#if>
 </#list>
 <#list w.getGElementsOfType("tool") as tool>
-    <#if hasProcedure(tool.onEntitySwing)>
-    <#assign itemsWithEntitySwing += [tool]>
-    </#if>
+	<#if hasProcedure(tool.onEntitySwing)>
+	<#assign itemsWithEntitySwing += [tool]>
+	</#if>
 </#list>
 
 package ${package}.mixin;
@@ -58,7 +58,7 @@ public abstract class LivingEntityMixin {
 	@Inject(method = "heal(F)V", at = @At("HEAD"), cancellable = true)
 	public void heal(float amount, CallbackInfo cir) {
 		if (!LivingEntityEvents.ENTITY_HEAL.invoker().onEntityHeal((LivingEntity) (Object) this, amount))
-            cir.cancel();
+			cir.cancel();
 	}
 }
 <#-- @formatter:on -->

@@ -25,21 +25,21 @@ package ${package}.mixin;
 public abstract class ServerPlayerMixin {
 	@Inject(method = "Lnet/minecraft/server/level/ServerPlayer;drop(Z)Z", at = @At("HEAD"), cancellable = true)
 	public void drop(boolean dropStack, CallbackInfoReturnable<Boolean> cir) {
-	    ServerPlayer self = (ServerPlayer) (Object) this;
-	    Inventory inventory = self.getInventory();
-	    ItemStack itemstack = inventory.removeFromSelected(dropStack);
-	    self.containerMenu
-            .findSlot(inventory, inventory.getSelectedSlot())
-            .ifPresent(p_401732_ -> self.containerMenu.setRemoteSlot(p_401732_, inventory.getSelectedItem()));
-        <#list items as item>
-            <#if item.getModElement().getTypeString() == "item">
-                <#if hasProcedure(item.onDroppedByPlayer)>
-                    if (itemstack.getItem() instanceof ${item.getModElement().getName()}Item)
-                        ((${item.getModElement().getName()}Item)itemstack.getItem()).onDroppedByPlayer(itemstack, self);
-                </#if>
-            </#if>
-        </#list>
-        cir.setReturnValue(self.drop(itemstack, false, true) != null);
+		ServerPlayer self = (ServerPlayer) (Object) this;
+		Inventory inventory = self.getInventory();
+		ItemStack itemstack = inventory.removeFromSelected(dropStack);
+		self.containerMenu
+			.findSlot(inventory, inventory.getSelectedSlot())
+			.ifPresent(p_401732_ -> self.containerMenu.setRemoteSlot(p_401732_, inventory.getSelectedItem()));
+		<#list items as item>
+			<#if item.getModElement().getTypeString() == "item">
+				<#if hasProcedure(item.onDroppedByPlayer)>
+					if (itemstack.getItem() instanceof ${item.getModElement().getName()}Item)
+						((${item.getModElement().getName()}Item)itemstack.getItem()).onDroppedByPlayer(itemstack, self);
+				</#if>
+			</#if>
+		</#list>
+		cir.setReturnValue(self.drop(itemstack, false, true) != null);
 	}
 }
 <#-- @formatter:on -->

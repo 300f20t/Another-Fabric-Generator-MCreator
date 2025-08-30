@@ -25,11 +25,11 @@
 <#if data.restrictionBiomes?has_content>
 	<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
 		<#if restrictionBiome?contains("#")>
-		    <#assign biomeSelector = "tag">
-		    <#assign resourceKey = "TagKey">
-		    <#break>
+			<#assign biomeSelector = "tag">
+			<#assign resourceKey = "TagKey">
+			<#break>
 		</#if>
-    </#list>
+	</#list>
 </#if>
 
 package ${package}.world.features;
@@ -46,16 +46,16 @@ public class ${name}Feature extends ${generator.map(featuretype, "features")} {
 	public static final Predicate<BiomeSelectionContext> GENERATE_BIOMES =
 	BiomeSelectors.
 	<#if data.restrictionBiomes?has_content>
-    ${biomeSelector}(
+	${biomeSelector}(
 		<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
 			${resourceKey}.create(Registries.BIOME, ResourceLocation.parse("${restrictionBiome?replace("#", "")}"))<#sep>,
-        </#list>
+		</#list>
 	)
 	<#else>
 	all()
 	</#if>;
 
-    <#if hasProcedure(data.generateCondition)>
+	<#if hasProcedure(data.generateCondition)>
 	@Override public boolean place(FeaturePlaceContext<${configuration}> context) {
 		<#-- #4781 - we need to use WorldGenLevel instead of Level, or one can run incompatible procedures in condition -->
 		WorldGenLevel world = context.level();

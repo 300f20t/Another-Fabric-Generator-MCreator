@@ -20,16 +20,16 @@ package ${package}.mixin;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    @Inject(method = "useOn", at = @At("TAIL"), cancellable = true)
-    private void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
-        Player player = context.getPlayer();
-        ItemStack copy = context.getItemInHand().copy();
-        BlockState placedAgainst = player.level().getBlockState(context.getClickedPos().relative(context.getClickedFace()));
-        if (!player.level().isEmptyBlock(context.getClickedPos().relative(context.getClickedFace()))) {
-            boolean result = BlockEvents.BLOCK_MULTIPLACE.invoker().onMultiplaced(context.getClickedPos().relative(context.getClickedFace()), (Entity) player, placedAgainst, player.level().getBlockState(context.getClickedPos()));
-            if (!result)
-                cir.setReturnValue(InteractionResult.FAIL);
-        }
-    }
+	@Inject(method = "useOn", at = @At("TAIL"), cancellable = true)
+	private void useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
+		Player player = context.getPlayer();
+		ItemStack copy = context.getItemInHand().copy();
+		BlockState placedAgainst = player.level().getBlockState(context.getClickedPos().relative(context.getClickedFace()));
+		if (!player.level().isEmptyBlock(context.getClickedPos().relative(context.getClickedFace()))) {
+			boolean result = BlockEvents.BLOCK_MULTIPLACE.invoker().onMultiplaced(context.getClickedPos().relative(context.getClickedFace()), (Entity) player, placedAgainst, player.level().getBlockState(context.getClickedPos()));
+			if (!result)
+				cir.setReturnValue(InteractionResult.FAIL);
+		}
+	}
 }
 <#-- @formatter:on -->

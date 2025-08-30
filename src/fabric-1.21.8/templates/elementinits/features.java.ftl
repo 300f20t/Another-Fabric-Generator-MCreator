@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 <#assign hasStructureFeatureClass = w.getElementsOfType("feature")?filter(e -> e.getMetadata("has_nbt_structure")??)?size != 0>
@@ -31,26 +31,26 @@ package ${package}.init;
 public class ${JavaModName}Features {
 
 	public static void load() {
-        <#list w.getGElementsOfType("feature") as feature>
-            register("${feature.getModElement().getRegistryName()}", new ${feature.getModElement().getName()}Feature()<#if feature.hasPlacedFeature()>,
-                ${feature.getModElement().getName()}Feature.GENERATE_BIOMES, GenerationStep.Decoration.${generator.map(feature.generationStep, "generationsteps")?upper_case}</#if>);
-        </#list>
+		<#list w.getGElementsOfType("feature") as feature>
+			register("${feature.getModElement().getRegistryName()}", new ${feature.getModElement().getName()}Feature()<#if feature.hasPlacedFeature()>,
+				${feature.getModElement().getName()}Feature.GENERATE_BIOMES, GenerationStep.Decoration.${generator.map(feature.generationStep, "generationsteps")?upper_case}</#if>);
+		</#list>
 
-        <#list w.getGElementsOfType("block")?filter(e -> e.generateFeature) as feature>
-            register("${feature.getModElement().getRegistryName()}", new OreFeature(OreConfiguration.CODEC),
-                ${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.UNDERGROUND_ORES);
+		<#list w.getGElementsOfType("block")?filter(e -> e.generateFeature) as feature>
+			register("${feature.getModElement().getRegistryName()}", new OreFeature(OreConfiguration.CODEC),
+				${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.UNDERGROUND_ORES);
 
-        </#list>
+		</#list>
 
-        <#list w.getGElementsOfType("plant")?filter(e -> e.generateFeature) as feature>
-            register("${feature.getModElement().getRegistryName()}", new RandomPatchFeature(RandomPatchConfiguration.CODEC),
-                ${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.VEGETAL_DECORATION);
-        </#list>
+		<#list w.getGElementsOfType("plant")?filter(e -> e.generateFeature) as feature>
+			register("${feature.getModElement().getRegistryName()}", new RandomPatchFeature(RandomPatchConfiguration.CODEC),
+				${feature.getModElement().getName()}Block.GENERATE_BIOMES, GenerationStep.Decoration.VEGETAL_DECORATION);
+		</#list>
 
-        <#if hasStructureFeatureClass>
-            register("structure_feature", new StructureFeature(StructureFeatureConfiguration.CODEC));
-        </#if>
-    }
+		<#if hasStructureFeatureClass>
+			register("structure_feature", new StructureFeature(StructureFeatureConfiguration.CODEC));
+		</#if>
+	}
 
 	private static void register(String registryname, Feature feature, Predicate<BiomeSelectionContext> biomes, GenerationStep.Decoration stage) {
 		register(registryname, feature);

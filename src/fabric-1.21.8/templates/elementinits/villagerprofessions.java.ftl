@@ -22,7 +22,7 @@
 <#include "../mcitems.ftl">
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -36,14 +36,14 @@ public class ${JavaModName}VillagerProfessions {
 	</#list>
 
 	public static void load() {
-        <#list villagerprofessions as villagerprofession>
-            ${villagerprofession.getModElement().getRegistryNameUpper()} =
-                registerProfession(
-                    "${villagerprofession.getModElement().getRegistryName()}",
-                    () -> ${mappedBlockToBlock(villagerprofession.pointOfInterest)},
-                    () -> BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.parse("${villagerprofession.actionSound}"))
-                );
-        </#list>
+		<#list villagerprofessions as villagerprofession>
+			${villagerprofession.getModElement().getRegistryNameUpper()} =
+				registerProfession(
+					"${villagerprofession.getModElement().getRegistryName()}",
+					() -> ${mappedBlockToBlock(villagerprofession.pointOfInterest)},
+					() -> BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.parse("${villagerprofession.actionSound}"))
+				);
+		</#list>
 
 		for (Map.Entry<String, ProfessionPoiType> entry : POI_TYPES.entrySet()) {
 			Block block = entry.getValue().block.get();
@@ -58,12 +58,12 @@ public class ${JavaModName}VillagerProfessions {
 			PoiType poiType = PointOfInterestHelper.register(ResourceLocation.fromNamespaceAndPath("${modid}", name), 1, 1, ImmutableSet.copyOf(block.getStateDefinition().getPossibleStates()));
 				entry.getValue().poiType = BuiltInRegistries.POINT_OF_INTEREST_TYPE.wrapAsHolder(poiType);
 		}
-    }
+	}
 
 	private static VillagerProfession registerProfession(String name, Supplier<Block> block, Supplier<SoundEvent> soundEvent) {
 		POI_TYPES.put(name, new ProfessionPoiType(block, null));
 
-        Predicate<Holder<PoiType>> poiPredicate = poiTypeHolder -> (POI_TYPES.get(name).poiType != null) && (poiTypeHolder.value() == POI_TYPES.get(name).poiType.value());
+		Predicate<Holder<PoiType>> poiPredicate = poiTypeHolder -> (POI_TYPES.get(name).poiType != null) && (poiTypeHolder.value() == POI_TYPES.get(name).poiType.value());
 
 		return Registry.register(BuiltInRegistries.VILLAGER_PROFESSION, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, name), new VillagerProfession(Component.translatable("entity.villager." + ${JavaModName}.MODID + "." + name), poiPredicate, poiPredicate, ImmutableSet.of(), ImmutableSet.of(), soundEvent.get()));
 	}

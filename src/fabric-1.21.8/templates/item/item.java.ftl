@@ -29,8 +29,8 @@ package ${package}.item;
 public class ${name}Item extends Item {
 
 	<#if data.hasBannerPatterns()>
-    public static final TagKey<BannerPattern> PROVIDED_PATTERNS = TagKey.create(Registries.BANNER_PATTERN, ResourceLocation.parse("${modid}:pattern_item/${registryname}"));
-    </#if>
+	public static final TagKey<BannerPattern> PROVIDED_PATTERNS = TagKey.create(Registries.BANNER_PATTERN, ResourceLocation.parse("${modid}:pattern_item/${registryname}"));
+	</#if>
 
 	public ${name}Item(Item.Properties properties) {
 		super(properties
@@ -92,63 +92,63 @@ public class ${name}Item extends Item {
 				</#if>
 				<#if data.hasCustomEatResultItem()>
 				.component(DataComponents.USE_REMAINDER, new UseRemainder(${mappedMCItemToItemStackCode(data.eatResultItem, 1)}))
-                </#if>
+				</#if>
 		);
 	}
 	<#if data.guiBoundTo?has_content>
-    private MenuProvider createMenuProvider(ItemStack stack, Player entity, InteractionHand hand) {
-        return new MenuProvider() {
-            @Override
-            public Component getDisplayName() {
-                return Component.literal("${data.name}");
-            }
+	private MenuProvider createMenuProvider(ItemStack stack, Player entity, InteractionHand hand) {
+		return new MenuProvider() {
+			@Override
+			public Component getDisplayName() {
+				return Component.literal("${data.name}");
+			}
 
-            @Override
-            public AbstractContainerMenu createMenu(int id, Inventory invIgnored, Player player) {
-                FriendlyByteBuf packetBuffer = new FriendlyByteBuf(Unpooled.buffer());
-                packetBuffer.writeBlockPos(entity.blockPosition());
-                packetBuffer.writeByte(hand == InteractionHand.MAIN_HAND ? 0 : 1);
+			@Override
+			public AbstractContainerMenu createMenu(int id, Inventory invIgnored, Player player) {
+				FriendlyByteBuf packetBuffer = new FriendlyByteBuf(Unpooled.buffer());
+				packetBuffer.writeBlockPos(entity.blockPosition());
+				packetBuffer.writeByte(hand == InteractionHand.MAIN_HAND ? 0 : 1);
 
-                SimpleContainer inventory = new SimpleContainer(${data.inventorySize}) {
-                    <#if data.inventoryStackSize != 99>
-                    @Override
-                    public int getMaxStackSize() {
-                    	return ${data.inventoryStackSize};
-                   	}
-                    </#if>
-                };
-                CustomData nbtComponent = stack.get(DataComponents.CUSTOM_DATA);
-                if (nbtComponent != null) {
-                    CompoundTag rootTag = nbtComponent.copyTag();
-                    rootTag.getList("inventory_${registryname}").ifPresent(itemsTag -> {
-                        for (int i = 0; i < Math.min(itemsTag.size(), ${data.inventorySize}); i++) {
-                            Tag itemTag = itemsTag.get(i);
-                            if (itemTag instanceof CompoundTag compound) {
-                                final int slot = i;
-                                ItemStack.CODEC.parse(NbtOps.INSTANCE, compound).result()
-                                    .ifPresent(itemStack -> inventory.setItem(slot, itemStack));
-                            }
-                        }
-                    });
-                }
-                inventory.addListener(inv -> {
-                    ListTag itemsTag = new ListTag();
-                    for (ItemStack itemStack : inventory) {
-                        if (!itemStack.isEmpty()) {
-                            DataResult<Tag> result = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, itemStack);
-                            result.result().ifPresent(itemsTag::add);
-                        } else {
-                            itemsTag.add(new CompoundTag());
-                        }
-                    }
-                    CompoundTag rootTag = new CompoundTag();
-                    rootTag.put("inventory_${registryname}", itemsTag);
-                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(rootTag));
-                });
-                return new ${data.guiBoundTo}Menu(id, invIgnored, inventory, packetBuffer);
-            }
-        };
-    }
+				SimpleContainer inventory = new SimpleContainer(${data.inventorySize}) {
+					<#if data.inventoryStackSize != 99>
+					@Override
+					public int getMaxStackSize() {
+						return ${data.inventoryStackSize};
+				   	}
+					</#if>
+				};
+				CustomData nbtComponent = stack.get(DataComponents.CUSTOM_DATA);
+				if (nbtComponent != null) {
+					CompoundTag rootTag = nbtComponent.copyTag();
+					rootTag.getList("inventory_${registryname}").ifPresent(itemsTag -> {
+						for (int i = 0; i < Math.min(itemsTag.size(), ${data.inventorySize}); i++) {
+							Tag itemTag = itemsTag.get(i);
+							if (itemTag instanceof CompoundTag compound) {
+								final int slot = i;
+								ItemStack.CODEC.parse(NbtOps.INSTANCE, compound).result()
+									.ifPresent(itemStack -> inventory.setItem(slot, itemStack));
+							}
+						}
+					});
+				}
+				inventory.addListener(inv -> {
+					ListTag itemsTag = new ListTag();
+					for (ItemStack itemStack : inventory) {
+						if (!itemStack.isEmpty()) {
+							DataResult<Tag> result = ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, itemStack);
+							result.result().ifPresent(itemsTag::add);
+						} else {
+							itemsTag.add(new CompoundTag());
+						}
+					}
+					CompoundTag rootTag = new CompoundTag();
+					rootTag.put("inventory_${registryname}", itemsTag);
+					stack.set(DataComponents.CUSTOM_DATA, CustomData.of(rootTag));
+				});
+				return new ${data.guiBoundTo}Menu(id, invIgnored, inventory, packetBuffer);
+			}
+		};
+	}
 	</#if>
 
 	<#if !data.isFood && data.animation != "none"> <#-- If item is food, this is handled by the consumable component -->

@@ -21,7 +21,7 @@
 <#assign brewingRecipes = recipes?filter(recipe -> recipe.recipeType == "Brewing")>
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -30,16 +30,16 @@ package ${package}.init;
 public class ${JavaModName}BrewingRecipes {
 
 	public static void load() {
-	    FabricBrewingRecipeRegistryBuilder.BUILD.register((builder) -> {
-	        <#-- Fabric allows only potions as input and output -->
-	        <#list brewingRecipes as recipe>
-	            <#if recipe.brewingInputStack?starts_with("POTION:") && recipe.brewingReturnStack?starts_with("POTION:")>
-	                builder.registerPotionRecipe(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")},
-                            ${mappedMCItemToIngredient(recipe.brewingIngredientStack)},
-                            ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
-	            </#if>
-	        </#list>
-	    });
+		FabricBrewingRecipeRegistryBuilder.BUILD.register((builder) -> {
+			<#-- Fabric allows only potions as input and output -->
+			<#list brewingRecipes as recipe>
+				<#if recipe.brewingInputStack?starts_with("POTION:") && recipe.brewingReturnStack?starts_with("POTION:")>
+					builder.registerPotionRecipe(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")},
+							${mappedMCItemToIngredient(recipe.brewingIngredientStack)},
+							${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
+				</#if>
+			</#list>
+		});
 	}
 }
 </#compress>

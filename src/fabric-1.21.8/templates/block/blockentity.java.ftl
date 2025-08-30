@@ -163,18 +163,18 @@ public class ${name}BlockEntity extends RandomizableContainerBlockEntity impleme
 	}
 	<#-- END: WorldlyContainer -->
 
-    <#if data.sensitiveToVibration>
-    @Override public VibrationSystem.Data getVibrationData() {
-    	return this.vibrationData;
-    }
+	<#if data.sensitiveToVibration>
+	@Override public VibrationSystem.Data getVibrationData() {
+		return this.vibrationData;
+	}
 
-    @Override public VibrationSystem.User getVibrationUser() {
-    	return this.vibrationUser;
-    }
+	@Override public VibrationSystem.User getVibrationUser() {
+		return this.vibrationUser;
+	}
 
-    @Override public VibrationSystem.Listener getListener() {
-    	return this.vibrationListener;
-    }
+	@Override public VibrationSystem.Listener getListener() {
+		return this.vibrationListener;
+	}
 
 	private class VibrationUser implements VibrationSystem.User {
 
@@ -253,7 +253,7 @@ public class ${name}BlockEntity extends RandomizableContainerBlockEntity impleme
 			return true;
 		}
 	}
-    </#if>
+	</#if>
 }
 </#compress>
 <#-- @formatter:on -->

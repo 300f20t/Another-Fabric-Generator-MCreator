@@ -29,8 +29,8 @@ public class ${JavaModName}Variables {
 	public static final Supplier<AttachmentType<PlayerVariables>> PLAYER_VARIABLES = register("player_variables", (builder) -> builder.initializer(PlayerVariables::new));
 
 	public static Supplier<AttachmentType<PlayerVariables>> register(String registryname, Consumer<AttachmentRegistry.Builder<PlayerVariables>> element) {
-	    AttachmentType<PlayerVariables> attachmentType = AttachmentRegistry.create(ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
-	    return () -> attachmentType;
+		AttachmentType<PlayerVariables> attachmentType = AttachmentRegistry.create(ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+		return () -> attachmentType;
 	}
 	</#if>
 
@@ -42,13 +42,13 @@ public class ${JavaModName}Variables {
 		</#list>
 	</#if>
 
-    public static void variablesLoad() {
+	public static void variablesLoad() {
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
-    		PayloadTypeRegistry.playS2C().register(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC);
+			PayloadTypeRegistry.playS2C().register(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC);
 		</#if>
 
 		<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
-    		PayloadTypeRegistry.playS2C().register(PlayerVariablesSyncMessage.TYPE, PlayerVariablesSyncMessage.STREAM_CODEC);
+			PayloadTypeRegistry.playS2C().register(PlayerVariablesSyncMessage.TYPE, PlayerVariablesSyncMessage.STREAM_CODEC);
 		</#if>
 
 	<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT") || w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>

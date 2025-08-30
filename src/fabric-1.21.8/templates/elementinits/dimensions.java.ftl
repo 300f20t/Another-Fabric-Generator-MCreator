@@ -29,14 +29,14 @@ package ${package}.init;
 public class ${JavaModName}Dimensions {
 
 	public static void load() {
-	    <#list dimensions as dimension>
-	        <#if dimension.hasEffectsOrDimensionTriggers()>
-	            ${dimension.getModElement().getName()}Dimension.load();
-	        </#if>
-	        <#if dimension.enablePortal>
-	            ${dimension.getModElement().getName()}Teleporter.registerPointOfInterest();
-	        </#if>
-	    </#list>
+		<#list dimensions as dimension>
+			<#if dimension.hasEffectsOrDimensionTriggers()>
+				${dimension.getModElement().getName()}Dimension.load();
+			</#if>
+			<#if dimension.enablePortal>
+				${dimension.getModElement().getName()}Teleporter.registerPointOfInterest();
+			</#if>
+		</#list>
 	}
 }</#compress>
 <#-- @formatter:on -->

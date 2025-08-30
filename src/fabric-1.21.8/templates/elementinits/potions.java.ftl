@@ -19,7 +19,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -30,17 +30,17 @@ public class ${JavaModName}Potions {
 	public static Potion ${potion.getModElement().getRegistryNameUpper()};
 	</#list>
 
-    public static void load() {
-        <#list potions as potion>
-            ${potion.getModElement().getRegistryNameUpper()} = register("${potion.getModElement().getRegistryName()}",
-                new Potion("${potion.getModElement().getRegistryName()}"
-                    <#list potion.effects as effect>,
-                    new MobEffectInstance(${effect.effect}, ${effect.getDuration()}, ${effect.amplifier}, ${effect.ambient}, ${effect.showParticles})
-                    </#list>
-                )
-            );
-        </#list>
-    }
+	public static void load() {
+		<#list potions as potion>
+			${potion.getModElement().getRegistryNameUpper()} = register("${potion.getModElement().getRegistryName()}",
+				new Potion("${potion.getModElement().getRegistryName()}"
+					<#list potion.effects as effect>,
+					new MobEffectInstance(${effect.effect}, ${effect.getDuration()}, ${effect.amplifier}, ${effect.ambient}, ${effect.showParticles})
+					</#list>
+				)
+			);
+		</#list>
+	}
 
 	private static Potion register(String registryname, Potion element) {
 		return Registry.register(BuiltInRegistries.POTION, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);

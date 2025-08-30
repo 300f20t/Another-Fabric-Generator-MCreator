@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -34,7 +34,7 @@ public class ${JavaModName}Sounds {
 
 	public static void load() {
 		<#list sounds as sound>
-		    ${sound.getJavaName()} = register("${sound.getName()}", SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("${modid}", "${sound}")));
+			${sound.getJavaName()} = register("${sound.getName()}", SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("${modid}", "${sound}")));
 		</#list>
 	}
 

@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -29,11 +29,11 @@ package ${package}.init;
 @Environment(EnvType.CLIENT) public class ${JavaModName}ItemRenderers {
 
 	public static void clientLoad() {
-	    <#list items as item>
-	        <#if item.hasCustomJAVAModel()>
-                SpecialModelRenderers.ID_MAPPER.put(ResourceLocation.parse("${modid}:${item.getModElement().getRegistryName()}"), ${item.getModElement().getName()}ItemRenderer.Unbaked.MAP_CODEC);
-            </#if>
-	    </#list>
+		<#list items as item>
+			<#if item.hasCustomJAVAModel()>
+				SpecialModelRenderers.ID_MAPPER.put(ResourceLocation.parse("${modid}:${item.getModElement().getRegistryName()}"), ${item.getModElement().getName()}ItemRenderer.Unbaked.MAP_CODEC);
+			</#if>
+		</#list>
 	}
 }
 <#-- @formatter:on -->

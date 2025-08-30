@@ -76,13 +76,13 @@ package ${package}.init;
 		</#list>
 
 		ClientTickEvents.END_CLIENT_TICK.register((client) -> {
-		    if (client.screen == null) {
-		    <#list keybinds as keybind>
-		        <#if hasProcedure(keybind.onKeyPressed) || hasProcedure(keybind.onKeyReleased)>
-		            ${keybind.getModElement().getRegistryNameUpper()}.consumeClick();
-		        </#if>
-		    </#list>
-		    }
+			if (client.screen == null) {
+			<#list keybinds as keybind>
+				<#if hasProcedure(keybind.onKeyPressed) || hasProcedure(keybind.onKeyReleased)>
+					${keybind.getModElement().getRegistryNameUpper()}.consumeClick();
+				</#if>
+			</#list>
+			}
 		});
 	}
 }

@@ -22,7 +22,7 @@
 <#include "../procedures.java.ftl">
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -126,7 +126,7 @@ public class ${JavaModName}Items {
 				register("${item.getModElement().getRegistryName()}", ${item.getModElement().getName()}Item::new);
 		</#if>
 	</#list>
-    }
+	}
 
 	// Start of user code block custom items
 	// End of user code block custom items

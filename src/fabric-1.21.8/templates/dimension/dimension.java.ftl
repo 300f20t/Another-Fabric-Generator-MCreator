@@ -29,7 +29,7 @@ public class ${name}Dimension {
 
 	<#if data.hasEffectsOrDimensionTriggers()>
 		public static void load() {
-		    <#if data.useCustomEffects>
+			<#if data.useCustomEffects>
 			DimensionSpecialEffects customEffect = new DimensionSpecialEffects(
 				DimensionSpecialEffects.SkyType.${data.skyType?replace("NORMAL", "OVERWORLD")},
 				false,
@@ -52,24 +52,24 @@ public class ${name}Dimension {
 			};
 
 			DimensionRenderingRegistry.registerDimensionEffects(ResourceLocation.parse("${modid}:${registryname}"), customEffect);
-		    </#if>
+			</#if>
 
-		    <#if hasProcedure(data.onPlayerLeavesDimension) || hasProcedure(data.onPlayerEntersDimension)>
-                ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((entity, origin, destination) -> {
-                    Level world = entity.level();
-                    double x = entity.getX();
-                    double y = entity.getY();
-                    double z = entity.getZ();
-                    if (origin.dimension() == ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("${modid}:${registryname}"))) {
-                        <@procedureOBJToCode data.onPlayerLeavesDimension/>
-                    }
-                    if (destination.dimension() == ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("${modid}:${registryname}"))) {
-                        <@procedureOBJToCode data.onPlayerEntersDimension/>
-                    }
-                });
-            </#if>
-    	}
-    </#if>
+			<#if hasProcedure(data.onPlayerLeavesDimension) || hasProcedure(data.onPlayerEntersDimension)>
+				ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((entity, origin, destination) -> {
+					Level world = entity.level();
+					double x = entity.getX();
+					double y = entity.getY();
+					double z = entity.getZ();
+					if (origin.dimension() == ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("${modid}:${registryname}"))) {
+						<@procedureOBJToCode data.onPlayerLeavesDimension/>
+					}
+					if (destination.dimension() == ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse("${modid}:${registryname}"))) {
+						<@procedureOBJToCode data.onPlayerEntersDimension/>
+					}
+				});
+			</#if>
+		}
+	</#if>
 }
 </#compress>
 <#-- @formatter:on -->

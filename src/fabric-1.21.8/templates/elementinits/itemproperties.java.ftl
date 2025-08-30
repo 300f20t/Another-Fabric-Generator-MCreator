@@ -21,7 +21,7 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -31,15 +31,15 @@ package ${package}.init;
 @Environment(EnvType.CLIENT) public class ${JavaModName}ItemProperties {
 
 	public static void clientLoad() {
-	    <#list items as item>
-	        <#list item.customProperties.entrySet() as property>
-                RangeSelectItemModelProperties.ID_MAPPER.put(ResourceLocation.parse("${modid}:${item.getModElement().getRegistryName()}/${property.getKey()}"),
-            	    ${item.getModElement().getName()}Item.${StringUtils.snakeToCamel(property.getKey())}Property.MAP_CODEC);
-            </#list>
-	    </#list>
-	    <#if hasItemsWithLeftHandedProperty>
-	        ConditionalItemModelProperties.ID_MAPPER.put(ResourceLocation.parse("${modid}:lefthanded"), LegacyLeftHandedProperty.MAP_CODEC);
-	    </#if>
+		<#list items as item>
+			<#list item.customProperties.entrySet() as property>
+				RangeSelectItemModelProperties.ID_MAPPER.put(ResourceLocation.parse("${modid}:${item.getModElement().getRegistryName()}/${property.getKey()}"),
+					${item.getModElement().getName()}Item.${StringUtils.snakeToCamel(property.getKey())}Property.MAP_CODEC);
+			</#list>
+		</#list>
+		<#if hasItemsWithLeftHandedProperty>
+			ConditionalItemModelProperties.ID_MAPPER.put(ResourceLocation.parse("${modid}:lefthanded"), LegacyLeftHandedProperty.MAP_CODEC);
+		</#if>
 	}
 
 	<#if hasItemsWithLeftHandedProperty>

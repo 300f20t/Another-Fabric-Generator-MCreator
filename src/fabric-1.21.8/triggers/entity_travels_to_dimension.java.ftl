@@ -12,19 +12,19 @@ public ${name}Procedure() {
 			}/>
 		</#compress></#assign>
 		if (!(newEntity instanceof Player))
-		    execute(${dependenciesCode});
+			execute(${dependenciesCode});
 	});
 	ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
 		<#assign dependenciesCode><#compress>
-        	<@procedureDependenciesCode dependencies, {
-        	"x": "player.getX()",
-        	"y": "player.getY()",
-        	"z": "player.getZ()",
-        	"world": "destination",
-        	"dimension": "destination.dimension()",
-        	"entity": "player"
-        	}/>
-        </#compress></#assign>
+			<@procedureDependenciesCode dependencies, {
+			"x": "player.getX()",
+			"y": "player.getY()",
+			"z": "player.getZ()",
+			"world": "destination",
+			"dimension": "destination.dimension()",
+			"entity": "player"
+			}/>
+		</#compress></#assign>
 		execute(${dependenciesCode});
 	});
 }

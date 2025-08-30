@@ -25,29 +25,29 @@ package ${package}.mixin;
 public abstract class PiglinAiMixin {
 	@Inject(method = "isWearingSafeArmor", at = @At("HEAD"), cancellable = true)
 	private static void isWearingSafeArmor(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
-        for (EquipmentSlot equipmentslot : EquipmentSlotGroup.ARMOR) {
-		    <#list armors as armor>
-		        <#if hasProcedure(armor.helmetPiglinNeutral) || armor.helmetPiglinNeutral.getFixedValue()>
-			        if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Helmet helmet)
-			            if (helmet.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
-                            cir.setReturnValue(true);
-			    </#if>
-		        <#if hasProcedure(armor.bodyPiglinNeutral) || armor.bodyPiglinNeutral.getFixedValue()>
-			        if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Chestplate chestplate)
-			            if (chestplate.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
-                            cir.setReturnValue(true);
-			    </#if>
-		        <#if hasProcedure(armor.leggingsPiglinNeutral) || armor.leggingsPiglinNeutral.getFixedValue()>
-			        if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Leggings leggings)
-			            if (leggings.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
-                            cir.setReturnValue(true);
-			    </#if>
-		        <#if hasProcedure(armor.bootsPiglinNeutral) || armor.bootsPiglinNeutral.getFixedValue()>
-			        if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Boots boots)
-			            if (boots.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
-                            cir.setReturnValue(true);
-			    </#if>
-		    </#list>
+		for (EquipmentSlot equipmentslot : EquipmentSlotGroup.ARMOR) {
+			<#list armors as armor>
+				<#if hasProcedure(armor.helmetPiglinNeutral) || armor.helmetPiglinNeutral.getFixedValue()>
+					if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Helmet helmet)
+						if (helmet.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
+							cir.setReturnValue(true);
+				</#if>
+				<#if hasProcedure(armor.bodyPiglinNeutral) || armor.bodyPiglinNeutral.getFixedValue()>
+					if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Chestplate chestplate)
+						if (chestplate.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
+							cir.setReturnValue(true);
+				</#if>
+				<#if hasProcedure(armor.leggingsPiglinNeutral) || armor.leggingsPiglinNeutral.getFixedValue()>
+					if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Leggings leggings)
+						if (leggings.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
+							cir.setReturnValue(true);
+				</#if>
+				<#if hasProcedure(armor.bootsPiglinNeutral) || armor.bootsPiglinNeutral.getFixedValue()>
+					if (entity.getItemBySlot(equipmentslot).getItem() instanceof ${armor.getModElement().getName()}Item.Boots boots)
+						if (boots.makesPiglinsNeutral(entity.getItemBySlot(equipmentslot), entity))
+							cir.setReturnValue(true);
+				</#if>
+			</#list>
 		}
 	}
 }

@@ -8,11 +8,11 @@
 	<#assign mixins = mixins + ['ServerPlayerMixin']>
 </#if>
 <#if w.hasElementsOfType('attribute')>
-    <#assign mixins = mixins + ['AttributeSupplierAccessor']>
+	<#assign mixins = mixins + ['AttributeSupplierAccessor']>
 </#if>
 <#if w.hasElementsOfType('armor')>
-    <#assign mixins = mixins + ['PiglinAiMixin']>
-    <#assign client_mixins = client_mixins + ['EquipmentLayerRendererMixin']>
+	<#assign mixins = mixins + ['PiglinAiMixin']>
+	<#assign client_mixins = client_mixins + ['EquipmentLayerRendererMixin']>
 </#if>
 <#assign mixins = mixins + ['LivingEntityMixin']>
 <#assign mixins = mixins + ['PlayerMixin']>
@@ -28,10 +28,10 @@
 	<#list mixins as mixin>"${mixin}"<#sep>,</#list>
   ],
   "client": [
-    <#list client_mixins as mixin>"${mixin}"<#sep>,</#list>
+	<#list client_mixins as mixin>"${mixin}"<#sep>,</#list>
   ],
   "injectors": {
-    "defaultRequire": 1
+	"defaultRequire": 1
   },
   "minVersion": "0.8.4"
 }

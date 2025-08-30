@@ -106,7 +106,7 @@ public class ${name}PortalBlock extends NetherPortalBlock {
 			world.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
 					BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.parse("${data.portalSound}")), SoundSource.BLOCKS, 0.5f,
 					random.nextFloat() * 0.4f + 0.8f, false);
-        </#if>
+		</#if>
 	}
 
 	<#if hasProcedure(data.portalUseCondition)>
@@ -123,7 +123,7 @@ public class ${name}PortalBlock extends NetherPortalBlock {
 	</#if>
 
 	@Environment(EnvType.CLIENT) public static void registerRenderLayer() {
-	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL, ChunkSectionLayer.TRANSLUCENT);
+		BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}_PORTAL, ChunkSectionLayer.TRANSLUCENT);
 	}
 }
 <#-- @formatter:on -->

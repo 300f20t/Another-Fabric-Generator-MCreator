@@ -72,7 +72,7 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 				.repairable(TagKey.create(Registries.ITEM, ResourceLocation.parse("${modid}:${registryname}_repair_items")))
 				.component(DataComponents.BREAK_SOUND, SoundEvents.SHIELD_BREAK)
 				.equippableUnswappable(EquipmentSlot.OFFHAND)
-            	.component(DataComponents.BLOCKS_ATTACKS, new BlocksAttacks(
+				.component(DataComponents.BLOCKS_ATTACKS, new BlocksAttacks(
 					0.25f,
 					1,
 					List.of(new BlocksAttacks.DamageReduction(90.0f, Optional.empty(), 0, 1)),

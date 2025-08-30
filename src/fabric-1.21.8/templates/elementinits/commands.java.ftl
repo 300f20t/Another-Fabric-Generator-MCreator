@@ -29,24 +29,24 @@ package ${package}.init;
 
 public class ${JavaModName}Commands {
 
-    <#if nonClientCommands?has_content>
+	<#if nonClientCommands?has_content>
 	public static void load() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
 		<#list nonClientCommands as command>
-		    ${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
+			${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
 		</#list>
 		});
 	}
-    </#if>
+	</#if>
 
-    <#if clientCommands?has_content>
+	<#if clientCommands?has_content>
 	public static void clientLoad() {
 		CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, environment) -> {
 		<#list clientCommands as command>
-		    ${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
+			${command.getModElement().getName()}Command.register(dispatcher, commandBuildContext, environment);
 		</#list>
 		});
 	}
-    </#if>
+	</#if>
 }
 <#-- @formatter:on -->

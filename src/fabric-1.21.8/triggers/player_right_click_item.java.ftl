@@ -12,7 +12,7 @@ public ${name}Procedure() {
 			}/>
 		</#compress></#assign>
 		if (hand == player.getUsedItemHand())
-		    execute(${dependenciesCode});
+			execute(${dependenciesCode});
 		boolean result = eventResult;
 		eventResult = true;
 		return result ? InteractionResult.PASS : InteractionResult.FAIL;

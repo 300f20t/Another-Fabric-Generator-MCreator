@@ -22,7 +22,7 @@
 <#include "../mcitems.ftl">
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
@@ -39,26 +39,26 @@ import com.google.common.base.Suppliers;
 
 public class ${JavaModName}Biomes {
 
-    <#if decoratedBiomes?has_content>
+	<#if decoratedBiomes?has_content>
 	public static void load() {
 		<#list decoratedBiomes as biome>
-		    <#assign biomeME = biome.getModElement()>
-		    <#if biome.hasFruits()>
-		        register("${biomeME.getRegistryName()}_tree_fruit_decorator", ${biomeME.getName()}FruitDecorator.DECORATOR_TYPE);
-		    </#if>
-		    <#if biome.hasVines()>
-		        register("${biomeME.getRegistryName()}_tree_leave_decorator", ${biomeME.getName()}LeaveDecorator.DECORATOR_TYPE);
-		        register("${biomeME.getRegistryName()}_tree_trunk_decorator", ${biomeME.getName()}TrunkDecorator.DECORATOR_TYPE);
-		    </#if>
+			<#assign biomeME = biome.getModElement()>
+			<#if biome.hasFruits()>
+				register("${biomeME.getRegistryName()}_tree_fruit_decorator", ${biomeME.getName()}FruitDecorator.DECORATOR_TYPE);
+			</#if>
+			<#if biome.hasVines()>
+				register("${biomeME.getRegistryName()}_tree_leave_decorator", ${biomeME.getName()}LeaveDecorator.DECORATOR_TYPE);
+				register("${biomeME.getRegistryName()}_tree_trunk_decorator", ${biomeME.getName()}TrunkDecorator.DECORATOR_TYPE);
+			</#if>
 		</#list>
-    }
+	}
 
 	private static void register(String registryname, TreeDecoratorType<?> treeDecoratorType) {
 		Registry.register(BuiltInRegistries.TREE_DECORATOR_TYPE, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), treeDecoratorType);
 	}
-    </#if>
+	</#if>
 
-    <#if spawnableBiomes?has_content>
+	<#if spawnableBiomes?has_content>
 	public static void load(MinecraftServer server) {
 		Registry<LevelStem> levelStemTypeRegistry = server.registryAccess().lookupOrThrow(Registries.LEVEL_STEM);
 		Registry<Biome> biomeRegistry = server.registryAccess().lookupOrThrow(Registries.BIOME);
@@ -298,6 +298,6 @@ public class ${JavaModName}Biomes {
 	public interface ${JavaModName}NoiseGeneratorSettings {
 		void set${modid}DimensionTypeReference(Holder<DimensionType> dimensionType);
 	}
-    </#if>
+	</#if>
 }
 <#-- @formatter:on -->

@@ -32,26 +32,26 @@ public class ${JavaModName}ItemExtensions {
 		<#compress>
 
 		<#list itemextensions as extension>
-		    <#if extension.hasDispenseBehavior>
-		        ${extension.getModElement().getName()}ItemExtension.init();
-		    </#if>
+			<#if extension.hasDispenseBehavior>
+				${extension.getModElement().getName()}ItemExtension.init();
+			</#if>
 
-		    <#if (extension.compostLayerChance > 0)>
-		        CompostingChanceRegistry.INSTANCE.add(${mappedMCItemToItem(extension.item)}, ${extension.compostLayerChance}f);
-		    </#if>
+			<#if (extension.compostLayerChance > 0)>
+				CompostingChanceRegistry.INSTANCE.add(${mappedMCItemToItem(extension.item)}, ${extension.compostLayerChance}f);
+			</#if>
 		</#list>
 
 		FuelRegistryEvents.BUILD.register((builder, context) -> {
 		<#list itemextensions?filter(e -> e.enableFuel) as extension>
-		    <#if extension.enableFuel>
-		        <#if hasProcedure(extension.fuelSuccessCondition)>if(<@procedureOBJToConditionCode extension.fuelSuccessCondition/>)</#if>
-		            builder.add(${mappedMCItemToItem(extension.item)},
-                    <#if hasProcedure(extension.fuelPower)>
-                        (int) <@procedureOBJToNumberCode extension.fuelPower/>
-                    <#else>
-                        ${extension.fuelPower.getFixedValue()}
-                    </#if>);
-		        </#if>
+			<#if extension.enableFuel>
+				<#if hasProcedure(extension.fuelSuccessCondition)>if(<@procedureOBJToConditionCode extension.fuelSuccessCondition/>)</#if>
+					builder.add(${mappedMCItemToItem(extension.item)},
+					<#if hasProcedure(extension.fuelPower)>
+						(int) <@procedureOBJToNumberCode extension.fuelPower/>
+					<#else>
+						${extension.fuelPower.getFixedValue()}
+					</#if>);
+				</#if>
 		</#list>
 		});
 		</#compress>

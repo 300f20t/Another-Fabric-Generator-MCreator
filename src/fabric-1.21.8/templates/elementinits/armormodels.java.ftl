@@ -21,49 +21,49 @@
 <#-- @formatter:off -->
 
 /*
- *    MCreator note: This file will be REGENERATED on each build.
+ *	MCreator note: This file will be REGENERATED on each build.
  */
 
 package ${package}.init;
 
 @Environment(EnvType.CLIENT) public class ${JavaModName}ArmorModels {
 
-    public static Map<Item, ArmorModel> ARMOR_MODELS = new Reference2ObjectOpenHashMap<>();
+	public static Map<Item, ArmorModel> ARMOR_MODELS = new Reference2ObjectOpenHashMap<>();
 
-    public static class ArmorModel {
-        public ArmorModel() {}
+	public static class ArmorModel {
+		public ArmorModel() {}
 
-        public HumanoidModel getHumanoidArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
-            return null;
-        }
+		public HumanoidModel getHumanoidArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
+			return null;
+		}
 
-        public ResourceLocation getArmorTexture(ItemStack stack, EquipmentClientInfo.LayerType type, EquipmentClientInfo.Layer layer, ResourceLocation _default) {
-            return null;
-        }
+		public ResourceLocation getArmorTexture(ItemStack stack, EquipmentClientInfo.LayerType type, EquipmentClientInfo.Layer layer, ResourceLocation _default) {
+			return null;
+		}
 
-        public Model getGenericArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
-            Model replacement = getHumanoidArmorModel(itemStack, layerType, original);
-            if (replacement != original) {
-                if (original instanceof HumanoidModel<?> originalHumanoid && replacement instanceof HumanoidModel<?> replacementHumanoid) {
-                    originalHumanoid.copyPropertiesTo((HumanoidModel) replacement);
-                    replacementHumanoid.head.visible = originalHumanoid.head.visible;
-                    replacementHumanoid.hat.visible = originalHumanoid.hat.visible;
-                    replacementHumanoid.body.visible = originalHumanoid.body.visible;
-                    replacementHumanoid.rightArm.visible = originalHumanoid.rightArm.visible;
-                    replacementHumanoid.leftArm.visible = originalHumanoid.leftArm.visible;
-                    replacementHumanoid.rightLeg.visible = originalHumanoid.rightLeg.visible;
-                    replacementHumanoid.leftLeg.visible = originalHumanoid.leftLeg.visible;
-                }
-                return replacement;
-            }
-            return original;
-        }
-    }
+		public Model getGenericArmorModel(ItemStack itemStack, EquipmentClientInfo.LayerType layerType, Model original) {
+			Model replacement = getHumanoidArmorModel(itemStack, layerType, original);
+			if (replacement != original) {
+				if (original instanceof HumanoidModel<?> originalHumanoid && replacement instanceof HumanoidModel<?> replacementHumanoid) {
+					originalHumanoid.copyPropertiesTo((HumanoidModel) replacement);
+					replacementHumanoid.head.visible = originalHumanoid.head.visible;
+					replacementHumanoid.hat.visible = originalHumanoid.hat.visible;
+					replacementHumanoid.body.visible = originalHumanoid.body.visible;
+					replacementHumanoid.rightArm.visible = originalHumanoid.rightArm.visible;
+					replacementHumanoid.leftArm.visible = originalHumanoid.leftArm.visible;
+					replacementHumanoid.rightLeg.visible = originalHumanoid.rightLeg.visible;
+					replacementHumanoid.leftLeg.visible = originalHumanoid.leftLeg.visible;
+				}
+				return replacement;
+			}
+			return original;
+		}
+	}
 
-    public static void clientLoad() {
-        <#list armors as armor>
-            ${armor.getModElement().getName()}Armor.clientLoad();
-        </#list>
-    }
+	public static void clientLoad() {
+		<#list armors as armor>
+			${armor.getModElement().getName()}Armor.clientLoad();
+		</#list>
+	}
 }
 <#-- @formatter:on -->

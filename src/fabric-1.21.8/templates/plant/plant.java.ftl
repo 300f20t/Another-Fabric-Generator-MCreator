@@ -28,11 +28,11 @@
 <#if data.restrictionBiomes?has_content>
 	<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
 		<#if restrictionBiome?contains("#")>
-		    <#assign biomeSelector = "tag">
-		    <#assign resourceKey = "TagKey">
-		    <#break>
+			<#assign biomeSelector = "tag">
+			<#assign resourceKey = "TagKey">
+			<#break>
 		</#if>
-    </#list>
+	</#list>
 </#if>
 package ${package}.block;
 
@@ -136,21 +136,21 @@ public class ${name}Block extends ${getPlantClass(data.plantType)}Block
 	}
 
 	@Environment(EnvType.CLIENT) public static void registerRenderLayer() {
-	    BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}, ChunkSectionLayer.CUTOUT);
+		BlockRenderLayerMap.putBlock(${JavaModName}Blocks.${REGISTRYNAME}, ChunkSectionLayer.CUTOUT);
 	}
 
 	<#if data.generateFeature>
-        public static final Predicate<BiomeSelectionContext> GENERATE_BIOMES =
-        BiomeSelectors.
-        <#if data.restrictionBiomes?has_content>
-        ${biomeSelector}(
-            <#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
-                ${resourceKey}.create(Registries.BIOME, ResourceLocation.parse("${restrictionBiome?replace("#", "")}"))<#sep>,
-            </#list>
-        )
-        <#else>
-        all()
-        </#if>;
+		public static final Predicate<BiomeSelectionContext> GENERATE_BIOMES =
+		BiomeSelectors.
+		<#if data.restrictionBiomes?has_content>
+		${biomeSelector}(
+			<#list w.filterBrokenReferences(data.restrictionBiomes) as restrictionBiome>
+				${resourceKey}.create(Registries.BIOME, ResourceLocation.parse("${restrictionBiome?replace("#", "")}"))<#sep>,
+			</#list>
+		)
+		<#else>
+		all()
+		</#if>;
 	</#if>
 
 	<#if data.isWaterloggable()>

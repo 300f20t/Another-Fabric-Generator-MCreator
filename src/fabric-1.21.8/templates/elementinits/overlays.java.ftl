@@ -27,7 +27,7 @@ package ${package}.init;
 
 	public static void clientLoad() {
 		<#list overlays as overlay>
-		    register("${overlay.getModElement().getRegistryName()}", ${overlay.getModElement().getName()}Overlay::render);
+			register("${overlay.getModElement().getRegistryName()}", ${overlay.getModElement().getName()}Overlay::render);
 		</#list>
 	}
 
