@@ -1,3 +1,7 @@
+plugins {
+    id "java"
+}
+
 import java.nio.file.Files
 
 class Globals {
@@ -17,6 +21,33 @@ class Globals {
 
     static String getUserHome() {
         return System.getProperty("user.home") //user.name is the name of the pc, not the name of the directory
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.jar {
+    archiveFileName.set(Globals.getArchiveName())
+}
+
+subprojects { subproject ->
+    subproject.plugins.withType(JavaPlugin) {
+        test {
+            useJUnitPlatform()
+            include '**/GeneratorsTest.class'
+
+            dependsOn rootProject.jar
+
+            environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
+            environment("MCREATOR_PLUGINS_DEV", "")
+            environment("MCREATOR_TEST_GENERATORS", "fabric-1.21.8")
+
+            workingDir = mcreator_path
+        }
     }
 }
 
