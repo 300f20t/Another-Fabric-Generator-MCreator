@@ -75,6 +75,15 @@ public abstract class ${name}Fluid extends FlowingFluid {
 	@Override protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = state.hasBlockEntity() ? level.getBlockEntity(pos) : null;
 		Block.dropResources(state, level, pos, blockEntity);
+	<#if hasProcedure(data.beforeReplacingBlock)>
+		<@procedureCode data.beforeReplacingBlock, {
+			"x": "pos.getX()",
+			"y": "pos.getY()",
+			"z": "pos.getZ()",
+			"world": "level",
+			"blockstate": "state"
+		}/>
+	</#if>
 	}
 
 	@Override protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluid, Direction direction) {
@@ -142,18 +151,6 @@ public abstract class ${name}Fluid extends FlowingFluid {
 		int z = fromPos.getZ();
 		if(<@procedureOBJToConditionCode data.flowCondition/>)
 			super.spread(world, fromPos, blockstate, fluidIn);
-	}
-	</#if>
-
-	<#if hasProcedure(data.beforeReplacingBlock)>
-	@Override protected void beforeDestroyingBlock(LevelAccessor world, BlockPos pos, BlockState blockstate) {
-		<@procedureCode data.beforeReplacingBlock, {
-			"x": "pos.getX()",
-			"y": "pos.getY()",
-			"z": "pos.getZ()",
-			"world": "world",
-			"blockstate": "blockstate"
-		}/>
 	}
 	</#if>
 

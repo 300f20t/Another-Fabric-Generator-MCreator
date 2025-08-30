@@ -69,17 +69,7 @@ public class ${JavaModName}Variables {
 		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
 			PlayerVariables original = oldPlayer.getAttachedOrCreate(PLAYER_VARIABLES.get());
 			PlayerVariables clone = new PlayerVariables();
-			<#list variables as var>
-				<#if var.getScope().name() == "PLAYER_PERSISTENT">
-				clone.${var.getName()} = original.${var.getName()};
-				</#if>
-			</#list>
 			if(alive) {
-				<#list variables as var>
-					<#if var.getScope().name() == "PLAYER_LIFETIME">
-					clone.${var.getName()} = original.${var.getName()};
-					</#if>
-				</#list>
 			}
 			newPlayer.setAttached(PLAYER_VARIABLES.get(), clone);
 		});
@@ -265,32 +255,10 @@ public class ${JavaModName}Variables {
 	<#if w.hasVariablesOfScope("PLAYER_LIFETIME") || w.hasVariablesOfScope("PLAYER_PERSISTENT")>
 	public static class PlayerVariables {
 
-		<#list variables as var>
-			<#if var.getScope().name() == "PLAYER_LIFETIME">
-				<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['init']?interpret/> -->
-			<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-				<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['init']?interpret/> -->
-			</#if>
-		</#list>
-
 		public void serialize(ValueOutput output) {
-			<#list variables as var>
-				<#if var.getScope().name() == "PLAYER_LIFETIME">
-					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['write']?interpret/> -->
-				<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['write']?interpret/> -->
-				</#if>
-			</#list>
 		}
 
 		public void deserialize(ValueInput input) {
-			<#list variables as var>
-				<#if var.getScope().name() == "PLAYER_LIFETIME">
-					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['read']?interpret/> -->
-				<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['read']?interpret/> -->
-				</#if>
-			</#list>
 		}
 
 		public void syncPlayerVariables(Entity entity) {
