@@ -1,8 +1,7 @@
 <#include "procedures.java.ftl">
+public static boolean eventResult = true;
 public ${name}Procedure() {
 	UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> {
-		if (hand != player.getUsedItemHand())
-			return InteractionResult.PASS;
 		<#assign dependenciesCode><#compress>
 			<@procedureDependenciesCode dependencies, {
 			"x": "hitResult.getBlockPos().getX()",
@@ -14,8 +13,10 @@ public ${name}Procedure() {
 			"blockstate": "hitResult.getBlockPos()"
 			}/>
 		</#compress></#assign>
-		execute(${dependenciesCode});
-
-		return InteractionResult.PASS;
+		if (hand == player.getUsedItemHand())
+		    execute(${dependenciesCode});
+		boolean result = eventResult;
+		eventResult = true;
+		return result ? InteractionResult.PASS : InteractionResult.FAIL;
 	});
 }

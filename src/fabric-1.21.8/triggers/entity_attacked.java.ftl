@@ -1,7 +1,8 @@
 <#include "procedures.java.ftl">
+public static boolean eventResult = true;
 public ${name}Procedure() {
 	ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, damageSource, amount) -> {
-		if (entity!=null) {
+		if (entity != null) {
 			<#assign dependenciesCode><#compress>
 			<@procedureDependenciesCode dependencies, {
 				"x": "entity.getX()",
@@ -17,6 +18,8 @@ public ${name}Procedure() {
 			</#compress></#assign>
 			execute(${dependenciesCode});
 		}
-		return true;
+		boolean result = eventResult;
+		eventResult = true;
+		return result;
 	});
 }
