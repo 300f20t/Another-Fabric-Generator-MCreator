@@ -54,5 +54,11 @@ public abstract class LivingEntityMixin {
 			LivingEntityEvents.START_USE_ITEM.invoker().onStartUseItem(entity, stack);
 		}
 	}
+
+	@Inject(method = "heal(F)V", at = @At("HEAD"), cancellable = true)
+	public void heal(float amount, CallbackInfo cir) {
+		if (!LivingEntityEvents.ENTITY_HEAL.invoker().onEntityHeal((LivingEntity) (Object) this, amount))
+            cir.cancel();
+	}
 }
 <#-- @formatter:on -->

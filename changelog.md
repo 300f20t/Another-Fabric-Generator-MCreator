@@ -1,7 +1,7 @@
 # Changelogs:
 
 ## Next update
-- Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed
+- Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
 - Some events are now cancellable
 - [Bugfix] Player right-clicked item trigger did not work
 - [Bugfix #561] Equip sound on custom armors caused a build error
