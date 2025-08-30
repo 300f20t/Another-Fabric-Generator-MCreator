@@ -21,7 +21,8 @@ package ${package}.event;
 public class LivingEntityEvents {
 
 	public static final Event<StartUseItem> START_USE_ITEM = EventFactory.createArrayBacked(StartUseItem.class, (callbacks) -> (entity, itemstack) -> Arrays.stream(callbacks).forEach(callback -> callback.onStartUseItem(entity, itemstack)));
-	public static final Event<EntityHeal> ENTITY_HEAL = EventFactory.createArrayBacked(EntityHeal.class, (callbacks) -> (entity, amount) -> Arrays.stream(callbacks).findFirst().map(event -> !event.onEntityHeal(entity, amount)).orElse(true));
+	public static final Event<EntityHeal> ENTITY_HEAL = EventFactory.createArrayBacked(EntityHeal.class, (callbacks) -> (entity, amount) -> Arrays.stream(callbacks).allMatch(event -> event.onEntityHeal(entity, amount)));
+    public static final Event<EntityBlock> ENTITY_BLOCK = EventFactory.createArrayBacked(EntityBlock.class, (callbacks) -> (entity, damagesource, amount) -> Arrays.stream(callbacks).allMatch(event -> event.onEntityBlock(entity, damagesource, amount)));
 
 	@FunctionalInterface
 	public interface StartUseItem {
@@ -31,6 +32,11 @@ public class LivingEntityEvents {
 	@FunctionalInterface
 	public interface EntityHeal {
 		boolean onEntityHeal(Entity entity, float amount);
+	}
+
+	@FunctionalInterface
+	public interface EntityBlock {
+		boolean onEntityBlock(Entity entity, DamageSource damagesource, double amount);
 	}
 		
 }

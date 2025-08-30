@@ -56,8 +56,14 @@ public abstract class LivingEntityMixin {
 	}
 
 	@Inject(method = "heal(F)V", at = @At("HEAD"), cancellable = true)
-	public void heal(float amount, CallbackInfo cir) {
+	public void heal(float amount, CallbackInfo ci) {
 		if (!LivingEntityEvents.ENTITY_HEAL.invoker().onEntityHeal((LivingEntity) (Object) this, amount))
+			ci.cancel();
+	}
+
+	@Inject(method = "applyItemBlocking", at = @At("HEAD"), cancellable = true)
+	public void applyItemBlocking(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Float> cir) {
+		if (!LivingEntityEvents.ENTITY_BLOCK.invoker().onEntityBlock((LivingEntity) (Object) this, damageSource, (double) f))
 			cir.cancel();
 	}
 }

@@ -1,0 +1,26 @@
+<#include "procedures.java.ftl">
+public static boolean eventResult = true;
+public ${name}Procedure() {
+	LivingEntityEvents.ENTITY_BLOCK.register((entity, damagesource, amount) -> {
+		if (entity != null) {
+			<#assign dependenciesCode><#compress>
+			<@procedureDependenciesCode dependencies, {
+				"x": "entity.getX()",
+				"y": "entity.getY()",
+				"z": "entity.getZ()",
+				"world": "entity.level()",
+				"entity": "entity",
+				"damagesource": "damagesource",
+				"sourceentity": "damagesource.getEntity()",
+				"immediatesourceentity": "damagesource.getDirectEntity()",
+				"originalblockedamount": "amount",
+				"blockedamount": "amount"
+				}/>
+			</#compress></#assign>
+			execute(${dependenciesCode});
+		}
+		boolean result = eventResult;
+		eventResult = true;
+		return result;
+	});
+}
