@@ -267,18 +267,18 @@ public class ${JavaModName}Variables {
 
 		<#list variables as var>
 			<#if var.getScope().name() == "PLAYER_LIFETIME">
-				<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['init']?interpret/>
+				<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['init']?interpret/> -->
 			<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-				<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['init']?interpret/>
+				<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['init']?interpret/> -->
 			</#if>
 		</#list>
 
 		public void serialize(ValueOutput output) {
 			<#list variables as var>
 				<#if var.getScope().name() == "PLAYER_LIFETIME">
-					<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['write']?interpret/>
+					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['write']?interpret/> -->
 				<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-					<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['write']?interpret/>
+					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['write']?interpret/> -->
 				</#if>
 			</#list>
 		}
@@ -286,9 +286,9 @@ public class ${JavaModName}Variables {
 		public void deserialize(ValueInput input) {
 			<#list variables as var>
 				<#if var.getScope().name() == "PLAYER_LIFETIME">
-					<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['read']?interpret/>
+					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_LIFETIME")['read']?interpret/> -->
 				<#elseif var.getScope().name() == "PLAYER_PERSISTENT">
-					<@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['read']?interpret/>
+					<#-- <@var.getType().getScopeDefinition(generator.getWorkspace(), "PLAYER_PERSISTENT")['read']?interpret/> -->
 				</#if>
 			</#list>
 		}
