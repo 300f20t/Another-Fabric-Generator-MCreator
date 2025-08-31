@@ -62,6 +62,9 @@ public class LivingEntityEvents {
 		return true;
 	});
 
+	public static final Event<EntityPickupItem> ENTITY_PICKUP_ITEM = EventFactory.createArrayBacked(EntityPickupItem.class, (callbacks) -> (entity, itemstack) -> Arrays.stream(callbacks).forEach(callback -> callback.onEntityPickupItem(entity, itemstack)));
+    public static final Event<EntityJump> ENTITY_JUMP = EventFactory.createArrayBacked(EntityJump.class, (callbacks) -> (entity) -> Arrays.stream(callbacks).forEach(callback -> callback.onEntityJump(entity)));
+
 	@FunctionalInterface
 	public interface StartUseItem {
 		void onStartUseItem(Entity entity, ItemStack itemstack);
@@ -85,6 +88,16 @@ public class LivingEntityEvents {
 	@FunctionalInterface
 	public interface EntityFall {
 		boolean onEntityFall(Entity entity, double falldistance, double damagemultiplier);
+	}
+
+	@FunctionalInterface
+	public interface EntityPickupItem {
+		void onEntityPickupItem(Entity entity, ItemStack itemstack);
+	}
+
+	@FunctionalInterface
+	public interface EntityJump {
+		void onEntityJump(Entity entity);
 	}
 		
 }

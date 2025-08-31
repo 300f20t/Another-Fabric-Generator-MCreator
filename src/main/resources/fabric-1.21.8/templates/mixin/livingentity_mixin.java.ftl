@@ -89,5 +89,15 @@ public abstract class LivingEntityMixin {
 		if (!LivingEntityEvents.ENTITY_FALL.invoker().onEntityFall((LivingEntity) (Object) this, d, (double) f))
 			cir.setReturnValue(false);
 	}
+
+	@Inject(method = "onItemPickup", at = @At("HEAD"))
+	public void onItemPickup(ItemEntity itemEntity, CallbackInfo ci) {
+        LivingEntityEvents.ENTITY_PICKUP_ITEM.invoker().onEntityPickupItem(itemEntity.getOwner(), itemEntity.getItem());
+	}
+
+	@Inject(method = "jumpFromGround", at = @At("TAIL"))
+	public void jumpFromGround(CallbackInfo ci) {
+        LivingEntityEvents.ENTITY_JUMP.invoker().onEntityJump((LivingEntity) (Object) this);
+	}
 }
 <#-- @formatter:on -->

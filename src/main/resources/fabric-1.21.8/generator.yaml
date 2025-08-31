@@ -126,6 +126,9 @@ base_templates:
   - template: mixin/commands_mixin.java.ftl
     writer: java
     name: "@SRCROOT/@BASEPACKAGEPATH/mixin/CommandsMixin.java"
+  - template: mixin/experienceorb_mixin.java.ftl
+    writer: java
+    name: "@SRCROOT/@BASEPACKAGEPATH/mixin/ExperienceOrbMixin.java"
 
 # Custom events
   - template: event/livingentity_events.java.ftl
