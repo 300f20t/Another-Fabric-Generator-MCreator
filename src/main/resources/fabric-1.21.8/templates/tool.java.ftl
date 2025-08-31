@@ -132,13 +132,6 @@ public class ${name}Item extends ${data.toolType?replace("Spade", "Shovel")?repl
 			</#if>
 		}
 
-		@Override public boolean canPerformAction(ItemStack stack, ItemAbility toolAction) {
-			return ItemAbilities.DEFAULT_AXE_ACTIONS.contains(toolAction) ||
-					ItemAbilities.DEFAULT_HOE_ACTIONS.contains(toolAction) ||
-					ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(toolAction) ||
-					toolAction == ItemAbilities.SWORD_SWEEP;
-		}
-
 		@Override public float getDestroySpeed(ItemStack itemstack, BlockState blockstate) {
 			return ${data.efficiency}f;
 		}
