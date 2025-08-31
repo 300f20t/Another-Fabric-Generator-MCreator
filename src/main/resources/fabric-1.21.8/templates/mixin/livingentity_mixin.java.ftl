@@ -83,5 +83,11 @@ public abstract class LivingEntityMixin {
 			    ci.cancel();
 	    }
 	}
+
+	@Inject(method = "causeFallDamage", at = @At("HEAD"), cancellable = true)
+	public void causeFallDamage(double d, float f, DamageSource damageSource, CallbackInfoReturnable<Boolean> cir) {
+		if (!LivingEntityEvents.ENTITY_FALL.invoker().onEntityFall((LivingEntity) (Object) this, d, (double) f))
+			cir.setReturnValue(false);
+	}
 }
 <#-- @formatter:on -->

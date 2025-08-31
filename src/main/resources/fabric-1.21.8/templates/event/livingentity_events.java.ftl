@@ -52,6 +52,16 @@ public class LivingEntityEvents {
 		return true;
 	});
 
+    public static final Event<EntityFall> ENTITY_FALL = EventFactory.createArrayBacked(EntityFall.class, (callbacks) -> (entity, falldistance, damagemultiplier) -> {
+		for (EntityFall event : callbacks) {
+			boolean result = event.onEntityFall(entity, falldistance, damagemultiplier);
+			if (!result) {
+				return false;
+			}
+		}
+		return true;
+	});
+
 	@FunctionalInterface
 	public interface StartUseItem {
 		void onStartUseItem(Entity entity, ItemStack itemstack);
@@ -70,6 +80,11 @@ public class LivingEntityEvents {
 	@FunctionalInterface
 	public interface EntityDropXp {
 		boolean onEntityDropXp(Entity entity, Entity sourceentity, double amount);
+	}
+
+	@FunctionalInterface
+	public interface EntityFall {
+		boolean onEntityFall(Entity entity, double falldistance, double damagemultiplier);
 	}
 		
 }

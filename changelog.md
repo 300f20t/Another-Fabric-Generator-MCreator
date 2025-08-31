@@ -1,7 +1,7 @@
 # Changelogs:
 
 ## 2.2
-- Add new global triggers: Entity blocks with shield, Entity drops experience
+- Add new global triggers: Entity blocks with shield, Entity drops experience, Entity falls
 - [Bugfix] Entity heals trigger only worked for one procedure
 - [Bugfix] Cancellable global triggers could not be cancelled
 - [Bugfix] Player starts using item global trigger caused a build error
