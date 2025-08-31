@@ -21,8 +21,36 @@ package ${package}.event;
 public class LivingEntityEvents {
 
 	public static final Event<StartUseItem> START_USE_ITEM = EventFactory.createArrayBacked(StartUseItem.class, (callbacks) -> (entity, itemstack) -> Arrays.stream(callbacks).forEach(callback -> callback.onStartUseItem(entity, itemstack)));
-	public static final Event<EntityHeal> ENTITY_HEAL = EventFactory.createArrayBacked(EntityHeal.class, (callbacks) -> (entity, amount) -> Arrays.stream(callbacks).allMatch(event -> event.onEntityHeal(entity, amount)));
-    public static final Event<EntityBlock> ENTITY_BLOCK = EventFactory.createArrayBacked(EntityBlock.class, (callbacks) -> (entity, damagesource, amount) -> Arrays.stream(callbacks).allMatch(event -> event.onEntityBlock(entity, damagesource, amount)));
+
+	public static final Event<EntityHeal> ENTITY_HEAL = EventFactory.createArrayBacked(EntityHeal.class, (callbacks) -> (entity, amount) -> {
+		for (EntityHeal event : callbacks) {
+			boolean result = event.onEntityHeal(entity, amount);
+			if (!result) {
+				return false;
+			}
+		}
+		return true;
+	});
+	
+    public static final Event<EntityBlock> ENTITY_BLOCK = EventFactory.createArrayBacked(EntityBlock.class, (callbacks) -> (entity, damagesource, amount) -> {
+		for (EntityBlock event : callbacks) {
+			boolean result = event.onEntityBlock(entity, damagesource, amount);
+			if (!result) {
+				return false;
+			}
+		}
+		return true;
+	});
+
+    public static final Event<EntityDropXp> ENTITY_DROP_XP = EventFactory.createArrayBacked(EntityDropXp.class, (callbacks) -> (entity, sourceentity, amount) -> {
+		for (EntityDropXp event : callbacks) {
+			boolean result = event.onEntityDropXp(entity, sourceentity, amount);
+			if (!result) {
+				return false;
+			}
+		}
+		return true;
+	});
 
 	@FunctionalInterface
 	public interface StartUseItem {
@@ -37,6 +65,11 @@ public class LivingEntityEvents {
 	@FunctionalInterface
 	public interface EntityBlock {
 		boolean onEntityBlock(Entity entity, DamageSource damagesource, double amount);
+	}
+
+	@FunctionalInterface
+	public interface EntityDropXp {
+		boolean onEntityDropXp(Entity entity, Entity sourceentity, double amount);
 	}
 		
 }

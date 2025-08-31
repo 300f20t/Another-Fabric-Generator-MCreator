@@ -35,6 +35,14 @@ package ${package}.mixin;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+    @Shadow
+    protected int lastHurtByPlayerMemoryTime;
+
+    @Shadow
+    protected boolean isAlwaysExperienceDropper() {
+        return false;
+    }
+
 	@Inject(method = "swing(Lnet/minecraft/world/InteractionHand;Z)V", at = @At("HEAD"))
 	public void swing(InteractionHand hand, boolean updateSelf, CallbackInfo ci) {
 		ItemStack stack = ((LivingEntity) (Object) this).getItemInHand(hand);
@@ -65,6 +73,15 @@ public abstract class LivingEntityMixin {
 	public void applyItemBlocking(ServerLevel serverLevel, DamageSource damageSource, float f, CallbackInfoReturnable<Float> cir) {
 		if (!LivingEntityEvents.ENTITY_BLOCK.invoker().onEntityBlock((LivingEntity) (Object) this, damageSource, (double) f))
 			cir.cancel();
+	}
+
+	@Inject(method = "dropExperience", at = @At("HEAD"), cancellable = true)
+	public void dropExperience(ServerLevel serverLevel, Entity entity, CallbackInfo ci) {
+	    LivingEntity self = (LivingEntity) (Object) this;
+	    if (!self.wasExperienceConsumed() && (this.isAlwaysExperienceDropper() || this.lastHurtByPlayerMemoryTime > 0 && self.shouldDropExperience() && serverLevel.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
+		    if (!LivingEntityEvents.ENTITY_DROP_XP.invoker().onEntityDropXp(self, self.getLastHurtByPlayer(), (double) self.getExperienceReward(serverLevel, entity)))
+			    ci.cancel();
+	    }
 	}
 }
 <#-- @formatter:on -->
