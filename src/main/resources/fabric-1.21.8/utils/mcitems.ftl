@@ -62,9 +62,9 @@
 
 <#function mappedMCItemToIngredient mappedBlock>
 	<#if mappedBlock.getUnmappedValue().startsWith("TAG:")>
-		<#return "Ingredient.of(HolderSet.emptyNamed(BuiltInRegistries.ITEM, ItemTags.create(ResourceLocation.parse(\"" + mappedBlock.getUnmappedValue().replace("TAG:", "").replace("mod:", modid + ":") + "\"))))">
+		<#return "Ingredient.of(HolderSet.emptyNamed(BuiltInRegistries.ITEM, TagKey.create(Registries.ITEM, ResourceLocation.parse(\"" + mappedBlock.getUnmappedValue().replace("TAG:", "").replace("mod:", modid + ":") + "\"))))">
 	<#elseif mappedBlock.getMappedValue(1).startsWith("#")>
-		<#return "Ingredient.of(HolderSet.emptyNamed(BuiltInRegistries.ITEM, ItemTags.create(ResourceLocation.parse(\"" + mappedBlock.getMappedValue(1).replace("#", "") + "\"))))">
+		<#return "Ingredient.of(HolderSet.emptyNamed(BuiltInRegistries.ITEM, TagKey.create(Registries.ITEM, ResourceLocation.parse(\"" + mappedBlock.getMappedValue(1).replace("#", "") + "\"))))">
 	<#else>
 		<#return "Ingredient.of(" + mappedMCItemToItem(mappedBlock) + ")">
 	</#if>
@@ -142,7 +142,7 @@
 	<#if tags?has_content>
 		<#assign retval += "Stream.of(">
 		<#list tags as tag>
-			<#assign retval += "BlockTags.create(ResourceLocation.parse(\"" + tag + "\"))">
+			<#assign retval += "TagKey.create(Registries.BLOCK, ResourceLocation.parse(\"" + tag + "\"))">
 			<#if tag?has_next><#assign retval += ","></#if>
 		</#list>
 		<#assign retval += ").anyMatch(" + blockToCheck + "::is)">

@@ -27,7 +27,7 @@ package ${package}.init;
 public class ${JavaModName}MobEffects {
 
 	<#list potioneffects as effect>
-		public static MobEffect ${effect.getModElement().getRegistryNameUpper()};
+		public static Holder<MobEffect> ${effect.getModElement().getRegistryNameUpper()};
 	</#list>
 
 	public static void load() {
@@ -36,8 +36,8 @@ public class ${JavaModName}MobEffects {
 		</#list>
 	}
 
-	private static MobEffect register(String registryname, Supplier<MobEffect> element) {
-		return Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element.get());
+	private static Holder<MobEffect> register(String registryname, Supplier<MobEffect> element) {
+		return Holder.direct(Registry.register(BuiltInRegistries.MOB_EFFECT, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element.get()));
 	}
 }
 <#-- @formatter:on -->
