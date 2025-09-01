@@ -32,7 +32,7 @@
 - [Bugfix] Message sent in chat's text dependency caused a build error when used
 - [Bugfix] Place feature and Place feature with result procedure blocks caused a build error
 - [Bugfix] Damage source from source caused a build error
-- [Bugfix] Get enchantment level caused a build error
+- [Bugfix] Get and Has enchantment level blocks caused a build error
 - [Bugfix] Get number of players on server caused a build error
 - [Bugfix] Close opened GUI  block caused a build error
 
