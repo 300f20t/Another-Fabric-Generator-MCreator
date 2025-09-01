@@ -1,6 +1,7 @@
 # Changelogs:
 
 ## 2.2
+- Updated to Fabric API 0.133.0
 - Add new global triggers: Entity blocks with shield, Entity drops experience, Entity falls, Entity picks up item, Entity jumps, Entity picks up experience
 - Added wait procedure block
 - [Bugfix] Entity heals trigger only worked for one procedure
