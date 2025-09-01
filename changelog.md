@@ -23,6 +23,7 @@
 - [Bugfix] Setting particles for custom potion effects would cause a build error
 - [Bugfix] Block is tagged procedure caused a build error
 - [Bugfix] Command ME caused a build error
+- [Bugfix] Fixed some other events caused a build error
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
