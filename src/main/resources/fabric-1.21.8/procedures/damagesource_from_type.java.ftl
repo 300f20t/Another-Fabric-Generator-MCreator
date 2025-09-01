@@ -1,1 +1,1 @@
-new DamageSource(world.registryAccess().holderOrThrow(${generator.map(field$damagetype, "damagesources")}))
+new DamageSource(world.registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(${generator.map(field$damagetype, "damagesources")}))
