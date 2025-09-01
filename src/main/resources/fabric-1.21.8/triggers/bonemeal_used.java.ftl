@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	ItemEvents.BONEMEAL_USED.register((position, entity, itemstack, blockstate) -> {
 		<#assign dependenciesCode><#compress>

@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	LivingEntityEvents.ENTITY_DROP_XP.register((entity, sourceentity, amount) -> {
 		if (entity != null) {

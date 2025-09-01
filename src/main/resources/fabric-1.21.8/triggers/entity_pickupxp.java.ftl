@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	PlayerEvents.PICKUP_XP.register((entity) -> {
 		if (entity != null) {

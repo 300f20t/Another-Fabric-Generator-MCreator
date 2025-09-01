@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	AttackBlockCallback.EVENT.register((player, level, hand, pos, direction) -> {
 		<#assign dependenciesCode><#compress>

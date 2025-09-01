@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	LivingEntityEvents.ENTITY_FALL.register((entity, falldistance, damagemultiplier) -> {
 		if (entity != null) {

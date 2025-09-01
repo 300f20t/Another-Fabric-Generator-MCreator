@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	MiscEvents.COMMAND_EXECUTE.register((results) -> {
 		Entity entity = results.getContext().getSource().getEntity();

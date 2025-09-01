@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	ServerLivingEntityEvents.ALLOW_DEATH.register((entity, damageSource, amount) -> {
 		if (entity != null) {

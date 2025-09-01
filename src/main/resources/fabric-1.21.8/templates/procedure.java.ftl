@@ -40,6 +40,8 @@ package ${package}.procedures;
 
 public class ${name}Procedure {
 
+public static boolean eventResult = true;
+
 <#if trigger_code?has_content>
 	${trigger_code}
 </#if>

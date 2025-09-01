@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	UseEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
 		<#assign dependenciesCode><#compress>

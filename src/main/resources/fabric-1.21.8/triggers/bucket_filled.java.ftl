@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	UseItemCallback.EVENT.register((player, level, hand) -> {
 		<#assign dependenciesCode><#compress>

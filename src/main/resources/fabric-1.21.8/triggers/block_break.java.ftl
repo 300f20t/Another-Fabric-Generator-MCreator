@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockentity) -> {
 		<#assign dependenciesCode><#compress>

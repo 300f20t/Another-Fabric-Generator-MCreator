@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	BlockEvents.BLOCK_PLACE.register((position, entity, placed, placedAgainst) -> {
 		<#assign dependenciesCode><#compress>

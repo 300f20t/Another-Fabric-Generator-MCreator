@@ -1,5 +1,4 @@
 <#include "procedures.java.ftl">
-public static boolean eventResult = true;
 public ${name}Procedure() {
 	LivingEntityEvents.ENTITY_HEAL.register((entity, amount) -> {
 		if (entity != null) {
