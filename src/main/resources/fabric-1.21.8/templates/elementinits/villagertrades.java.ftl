@@ -29,6 +29,8 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 
 public class ${JavaModName}Trades {
 
+    private static final ResourceLocation CUSTOM_WANDERING_TRADER_POOL = ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, "custom_wandering_trader_pool");
+
 	public static void registerTrades() {
 		<#list villagertrades as trade>
 			<#list trade.tradeEntries as tradeEntry>
@@ -74,16 +76,27 @@ public class ${JavaModName}Trades {
 <#macro trades entries level villagerProfession>
 <#if entries?has_content>
 	TradeOfferHelper.
-		<#if villagerProfession == "WanderingTrader">registerWanderingTraderOffers(${level}
-		<#else>registerVillagerOffers(${villagerProfession}, ${level}</#if>,
-		factories -> {
+		<#if villagerProfession == "WanderingTrader">registerWanderingTraderOffers(builder -> {
+		    builder.pool(CUSTOM_WANDERING_TRADER_POOL, 5,
 			<#list entries as entry>
-				factories.add(new BasicTrade(${mappedMCItemToItemStackCode(entry.price1, entry.countPrice1)},
-					<#if !entry.price2.isEmpty()>${mappedMCItemToItemStackCode(entry.price2, entry.countPrice2)}
-					<#else> ItemStack.EMPTY</#if>, ${mappedMCItemToItemStackCode(entry.offer, entry.countOffer)},
-					${entry.maxTrades}, ${entry.xp}, ${entry.priceMultiplier}f)
-				);
+				builder.add(<@basiceTrade price1, countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.xp, entry.priceMultiplier/><#sep>
 			</#list>
+		        );
+		<#else>registerVillagerOffers(${villagerProfession}, ${level},
+		builder -> {
+			<#list entries as entry>
+				builder.add(<@basiceTrade price1, countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.xp, entry.priceMultiplier/><#sep>
+			</#list>
+			    );
+		</#if>
 	});
 </#if>
+</#macro>
+
+<#macro basicTrade price1 countPrice1 hasPrice2 price2 countPrice2 offer countOffer maxTrades xp priceMultiplier>
+new BasicTrade(${mappedMCItemToItemStackCode(price1, countPrice1)},
+    <#if hasPrice2>${mappedMCItemToItemStackCode(price2, countPrice2)}
+	<#else> ItemStack.EMPTY</#if>, ${mappedMCItemToItemStackCode(offer, countOffer)},
+	${maxTrades}, ${xp}, ${priceMultiplier}f
+)
 </#macro>
