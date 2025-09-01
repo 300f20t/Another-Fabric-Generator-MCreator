@@ -19,6 +19,7 @@
 - [Bugfix] It was possible to move items into their own inventories
 - [Bugfix] Shift clicking items into custom GUIs made them disappear
 - [Bugfix] Block inventories did not store items when opened with right click
+- [Bugfix] Custom attributes would cause build errors when used
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
