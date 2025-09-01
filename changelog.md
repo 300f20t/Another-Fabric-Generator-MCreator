@@ -4,6 +4,7 @@
 - Updated to Fabric API 0.133.0
 - Add new global triggers: Entity blocks with shield, Entity drops experience, Entity falls, Entity picks up item, Entity jumps, Entity picks up experience
 - Added wait procedure block
+- Removed Get block's enchant power bonus procedure block (will be re-implemented later)
 - [Bugfix] Entity heals trigger only worked for one procedure
 - [Bugfix] Cancellable global triggers could not be cancelled
 - [Bugfix] Player starts using item global trigger caused a build error
@@ -27,6 +28,7 @@
 - [Bugfix] Fixed some other events that caused a build error
 - [Bugfix] Get item's fuel power procedure block caused a build error
 - [Bugfix] Get block's light level caused a build error
+- [Bugfix] message sent in chat's text dependency caused a build error when used
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
