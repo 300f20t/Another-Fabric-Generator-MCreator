@@ -11,7 +11,7 @@ public ${name}Procedure() {
 					"world": "entity.level()",
 					"entity": "entity",
 					"command": "results.getReader().getString()",
-					"arguments": "results.getContext().build(event.getParseResults().getReader().getString())"
+					"arguments": "results.getContext().build(results.getReader().getString())"
 				}/>
 			</#compress></#assign>
 			execute(${dependenciesCode});
