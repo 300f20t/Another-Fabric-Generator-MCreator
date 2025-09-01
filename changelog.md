@@ -13,6 +13,7 @@
 - [Bugfix] Custom Wandering Trader trades were causing a build error
 - [Bugfix] Custom potion effects caused a build error when used
 - [Bugfix] Tools caused a build error in some cases
+- [Bugfix] Disabled armor pieces caused a build error if they were piglin neutral
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
