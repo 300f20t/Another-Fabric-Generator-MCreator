@@ -19,8 +19,10 @@
 <#-- @formatter:off -->
 package ${package};
 
-import org.apache.logging.log4j.Logger;
+import java.lang.invoke.MethodHandle;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ${package}.init.*;
 
 public class ${JavaModName} implements ModInitializer {
@@ -91,6 +93,28 @@ public class ${JavaModName} implements ModInitializer {
             actions.forEach(e -> e.getA().run());
             workQueue.removeAll(actions);
         });
+	}
+
+	<#-- Client side player query support below, we use method handles for this -->
+	private static Object minecraft;
+	private static MethodHandle playerHandle;
+	@Nullable public static Player clientPlayer() {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+			try {
+				<#-- Lazy initialize and cache the Minecraft instance and player handle -->
+				if (minecraft == null || playerHandle == null) {
+					Class<?> minecraftClass = Class.forName("net.minecraft.client.Minecraft");
+					minecraft = MethodHandles.publicLookup().findStatic(minecraftClass, "getInstance", MethodType.methodType(minecraftClass)).invoke();
+					playerHandle = MethodHandles.publicLookup().findGetter(minecraftClass, "player", Class.forName("net.minecraft.client.player.LocalPlayer"));
+				}
+				return (Player) playerHandle.invoke(minecraft);
+			} catch (Throwable e) {
+				LOGGER.error("Failed to get client player", e);
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 }
 <#-- @formatter:on -->
