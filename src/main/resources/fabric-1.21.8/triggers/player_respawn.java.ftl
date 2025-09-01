@@ -7,7 +7,8 @@ public ${name}Procedure() {
 			"y": "newPlayer.getY()",
 			"z": "newPlayer.getZ()",
 			"world": "(LevelAccessor) newPlayer.level()",
-			"entity": "newPlayer"
+			"entity": "(Entity) newPlayer",
+			"endconquered": "false"
 			}/>
 		</#compress></#assign>
 		execute(${dependenciesCode});
