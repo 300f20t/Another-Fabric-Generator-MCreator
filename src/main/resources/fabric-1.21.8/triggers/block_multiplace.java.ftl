@@ -9,7 +9,7 @@ public ${name}Procedure() {
 				"px": "entity.getX()",
 				"py": "entity.getY()",
 				"pz": "entity.getZ()",
-				"world": "entity.getLevel()",
+				"world": "entity.level()",
 				"entity": "entity",
 				"blockstate": "placed",
 				"placedagainst": "placedAgainst"

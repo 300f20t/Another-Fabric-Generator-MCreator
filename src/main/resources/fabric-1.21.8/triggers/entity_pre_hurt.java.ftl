@@ -8,7 +8,7 @@ public ${name}Procedure() {
 				"y": "entity.getY()",
 				"z": "entity.getZ()",
 				"world": "entity.level()",
-				"amount": "event.getAmount()",
+				"amount": "amount",
 				"entity": "entity",
 				"damagesource": "damageSource",
 				"sourceentity": "damageSource.getEntity()"
