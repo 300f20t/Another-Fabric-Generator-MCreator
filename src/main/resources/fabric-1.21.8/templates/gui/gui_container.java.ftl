@@ -51,6 +51,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 
 	private boolean bound = false;
 	private Supplier<Boolean> boundItemMatcher = null;
+	private ItemStack boundItem = null;
 
 	public ${name}Menu(int id, Inventory inv) {
 		this(id, inv, new SimpleContainer(${data.getMaxSlotID() + 1}));
@@ -78,6 +79,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 				if (extraData.readableBytes() == 1) { // bound to item
 					byte hand = extraData.readByte();
 					ItemStack itemstack = hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem();
+					this.boundItem = itemstack;
 					this.boundItemMatcher = () -> itemstack == (hand == 0 ? this.entity.getMainHandItem() : this.entity.getOffhandItem());
 					this.bound = true;
 				}
@@ -179,45 +181,115 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 
 	<#if data.type == 1>
 		@Override public ItemStack quickMoveStack(Player playerIn, int index) {
-			ItemStack itemstack = ItemStack.EMPTY;
-			Slot slot = (Slot) this.slots.get(index);
+		  ItemStack itemstack = ItemStack.EMPTY;
+		  Slot slot = (Slot) this.slots.get(index);
 
-			if (slot != null && slot.hasItem()) {
-				ItemStack itemstack1 = slot.getItem();
-				itemstack = itemstack1.copy();
+		  if (slot != null && slot.hasItem()) {
+			 ItemStack itemstack1 = slot.getItem();
+			 itemstack = itemstack1.copy();
 
-				if (index < ${slotnum}) {
-					if (!this.moveItemStackTo(itemstack1, ${slotnum}, this.slots.size(), true))
-						return ItemStack.EMPTY;
-					slot.onQuickCraft(itemstack1, itemstack);
-				} else if (!this.moveItemStackTo(itemstack1, 0, ${slotnum}, false)) {
-					if (index < ${slotnum} + 27) {
-						if (!this.moveItemStackTo(itemstack1, ${slotnum} + 27, this.slots.size(), true))
-							return ItemStack.EMPTY;
-					} else {
-						if (!this.moveItemStackTo(itemstack1, ${slotnum}, ${slotnum} + 27, false))
-							return ItemStack.EMPTY;
-					}
-					return ItemStack.EMPTY;
+			 if (index < ${slotnum}) {
+				if (!this.moveItemStackTo(itemstack1, ${slotnum}, this.slots.size(), true))
+				   return ItemStack.EMPTY;
+				slot.onQuickCraft(itemstack1, itemstack);
+			 } else if (boundItem != null && itemstack1 == boundItem) {
+				return ItemStack.EMPTY;
+			 } else if (!this.moveItemStackTo(itemstack1, 0, ${slotnum}, false)) {
+				if (index < ${slotnum} + 27) {
+				   if (!this.moveItemStackTo(itemstack1, ${slotnum} + 27, this.slots.size(), true))
+					  return ItemStack.EMPTY;
+				} else {
+				   if (!this.moveItemStackTo(itemstack1, ${slotnum}, ${slotnum} + 27, false))
+					  return ItemStack.EMPTY;
 				}
+				return ItemStack.EMPTY;
+			 }
 
-				if (itemstack1.isEmpty())
-					slot.setByPlayer(ItemStack.EMPTY);
-				else
-					slot.setChanged();
+			 if (itemstack1.isEmpty()) {
+				slot.setByPlayer(ItemStack.EMPTY);
+			 } else {
+				slot.setChanged();
+			 }
 
-				if (itemstack1.getCount() == itemstack.getCount())
-					return ItemStack.EMPTY;
+			 if (itemstack1.getCount() == itemstack.getCount()) {
+				return ItemStack.EMPTY;
+			 }
 
-				slot.onTake(playerIn, itemstack1);
-			}
-			return itemstack;
+			 slot.onTake(playerIn, itemstack1);
+		  }
+		  return itemstack;
 		}
 
-		<#-- #47997 -->
-		@Override ${mcc.getMethod("net.minecraft.world.inventory.AbstractContainerMenu", "moveItemStackTo", "ItemStack", "int", "int", "boolean")
-			.replace("itemStack", "itemstack")
-			.replace("slot.setChanged();", "slot.set(itemstack);")}
+		@Override
+		public void clicked(int slotId, int button, ClickType clickType, Player player) {
+			if (clickType == ClickType.SWAP && boundItem != null) {
+				if (slotId >= 0 && slotId < this.slots.size()) {
+					ItemStack slotItem = this.slots.get(slotId).getItem();
+					ItemStack hotbarItem = player.getInventory().getItem(button);
+					if (slotItem == boundItem || hotbarItem == boundItem) {
+						return;
+					}
+				}
+			}
+			super.clicked(slotId, button, clickType, player);
+		}
+
+		@Override
+		protected boolean moveItemStackTo(ItemStack itemstack, int i, int j, boolean bl) {
+			int l;
+			ItemStack itemstack2;
+			Slot slot;
+			boolean bl2 = false;
+			int k = i;
+			if (bl) {
+				k = j - 1;
+			}
+			if (itemstack.isStackable()) {
+				while (!itemstack.isEmpty() && (bl ? k >= i : k < j)) {
+					slot = this.slots.get(k);
+					itemstack2 = slot.getItem();
+					if (!itemstack2.isEmpty() && ItemStack.isSameItemSameComponents(itemstack, itemstack2)) {
+						int m;
+						l = itemstack2.getCount() + itemstack.getCount();
+						if (l <= (m = slot.getMaxStackSize(itemstack2))) {
+							itemstack.setCount(0);
+							itemstack2.setCount(l);
+							slot.set(itemstack2);
+							bl2 = true;
+						} else if (itemstack2.getCount() < m) {
+							itemstack.shrink(m - itemstack2.getCount());
+							itemstack2.setCount(m);
+							slot.set(itemstack2);
+							bl2 = true;
+						}
+					}
+					if (bl) {
+						--k;
+						continue;
+					}
+					++k;
+				}
+			}
+			if (!itemstack.isEmpty()) {
+				k = bl ? j - 1 : i;
+				while (bl ? k >= i : k < j) {
+					slot = this.slots.get(k);
+					itemstack2 = slot.getItem();
+					if (itemstack2.isEmpty() && slot.mayPlace(itemstack)) {
+						l = slot.getMaxStackSize(itemstack);
+						slot.setByPlayer(itemstack.split(Math.min(itemstack.getCount(), l)));
+						bl2 = true;
+						break;
+					}
+					if (bl) {
+						--k;
+						continue;
+					}
+					++k;
+				}
+			}
+			return bl2;
+		}
 
 		@Override public void removed(Player playerIn) {
 			super.removed(playerIn);

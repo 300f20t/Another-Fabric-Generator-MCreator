@@ -539,14 +539,8 @@ public class ${name}Block extends
 		super.useWithoutItem(blockstate, world, pos, entity, hit);
 		<#if data.shouldOpenGUIOnRightClick()>
 		if(entity instanceof ServerPlayer player) {
-			player.openMenu(new MenuProvider() {
-				@Override public Component getDisplayName() {
-					return Component.literal("${data.name}");
-				}
-				@Override public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new ${data.guiBoundTo}Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-				}
-			});
+		    BlockEntity tileEntity = world.getBlockEntity(pos);
+			player.openMenu(tileEntity instanceof MenuProvider menuProvider ? menuProvider : null);
 		}
 		</#if>
 

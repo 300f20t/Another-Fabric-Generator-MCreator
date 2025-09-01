@@ -16,6 +16,9 @@
 - [Bugfix] Disabled armor pieces caused a build error if they were piglin neutral
 - [Bugfix] Custom blocks could cause build errors in some cases
 - [Bugfix] Custom plants caused build errors when Can be placed on was used
+- [Bugfix] It was possible to move items into their own inventories
+- [Bugfix] Shift clicking items into custom GUIs made them disappear
+- [Bugfix] Block inventories did not store items when opened with right click
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed

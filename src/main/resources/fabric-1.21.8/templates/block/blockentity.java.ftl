@@ -106,7 +106,7 @@ public class ${name}BlockEntity extends RandomizableContainerBlockEntity impleme
 		<#if !data.guiBoundTo?has_content>
 		return ChestMenu.threeRows(id, inventory);
 		<#else>
-		return new ${data.guiBoundTo}Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
+		return new ${data.guiBoundTo}Menu(id, inventory, this, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
 		</#if>
 	}
 
