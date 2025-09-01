@@ -22,9 +22,9 @@
 <#include "../mcitems.ftl">
 <#include "../procedures.java.ftl">
 <#include "../triggers.java.ftl">
+
 package ${package}.client.renderer.item;
 
-import ${package}.init.${JavaModName}ArmorModels;
 import net.minecraft.client.model.Model;
 
 @Environment(EnvType.CLIENT) public class ${name}Armor {
