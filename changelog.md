@@ -6,6 +6,7 @@
 - [Bugfix] Cancellable global triggers could not be cancelled
 - [Bugfix] Player starts using item global trigger caused a build error
 - [Bugfix] Custom multi tools caused a build error
+- [Bugfix] When entity attacked Global trigger was causing a build error
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
