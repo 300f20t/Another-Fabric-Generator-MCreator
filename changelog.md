@@ -23,6 +23,7 @@
 - [Bugfix] Setting particles for custom potion effects would cause a build error
 - [Bugfix] Block is tagged procedure caused a build error
 - [Bugfix] Command ME caused a build error
+- [Bugfix] Player respawns global trigger's world dependency caused a build error
 - [Bugfix] Fixed some other events that caused a build error
 - [Bugfix] Get item's fuel power procedure block caused a build error
 

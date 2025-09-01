@@ -6,7 +6,7 @@ public ${name}Procedure() {
 			"x": "newPlayer.getX()",
 			"y": "newPlayer.getY()",
 			"z": "newPlayer.getZ()",
-			"world": "newPlayer.level()",
+			"world": "(LevelAccessor) newPlayer.level()",
 			"entity": "newPlayer"
 			}/>
 		</#compress></#assign>
