@@ -65,11 +65,32 @@ public class ${JavaModName} implements ModInitializer {
 			${JavaModName}Variables.variablesLoad();
 		</#if>
 
+        tick();
+
 		// Start of user code block mod init
 		// End of user code block mod init
 	}
 
 	// Start of user code block mod methods
 	// End of user code block mod methods
+
+	<#-- Wait procedure block support below -->
+	private static final Collection<Tuple<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
+	public static void queueServerWork(int tick, Runnable action) {
+		workQueue.add(new Tuple<>(action, tick));
+	}
+
+	public void tick() {
+        ServerTickEvents.END_SERVER_TICK.register((server) -> {
+            List<Tuple<Runnable, Integer>> actions = new ArrayList<>();
+            workQueue.forEach(work -> {
+                work.setB(work.getB() - 1);
+                if (work.getB() == 0)
+                    actions.add(work);
+            });
+            actions.forEach(e -> e.getA().run());
+            workQueue.removeAll(actions);
+        });
+	}
 }
 <#-- @formatter:on -->
