@@ -83,7 +83,7 @@ package ${package}.client.screens;
 					<#if hasProcedure(component.displayCondition)>
 						if (<@procedureOBJToConditionCode component.displayCondition/>)
 					</#if>
-					InventoryScreen.renderEntityInInventoryFollowsAngle(guiGraphics,
+					InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics,
 						<@calculatePosition component=component x_offset=(10 - 1000) y_offset=(20 - 1000)/>,
 						<@calculatePosition component=component x_offset=(10 + 1000) y_offset=(20 + 1000)/>,
 						${component.scale}, -livingEntity.getBbHeight() / (2.0f * livingEntity.getScale()),
