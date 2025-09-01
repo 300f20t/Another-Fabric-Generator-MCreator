@@ -8,7 +8,7 @@ public ${name}Procedure() {
 			"z": "sender.getZ()",
 			"world": "sender.level()",
 			"entity": "sender",
-			"text": "message"
+			"text": "message.decoratedContent().getString()"
 			}/>
 		</#compress></#assign>
 		execute(${dependenciesCode});
