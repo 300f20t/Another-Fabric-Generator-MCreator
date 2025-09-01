@@ -1,7 +1,7 @@
 name: Minecraft Fabric for @minecraft (@buildfileversion)
 status: experimental
 buildfileversion: 0.133.0
-subversion: 4
+subversion: 5
 
 import:
   - datapack-1.21.8
@@ -89,11 +89,6 @@ base_templates:
     usercodeComment: "#"
     writer: file
     name: "@RESROOT/META-INF/@modid.accesswidener"
-    condition_any:
-      - "${w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether || e.hasVines() || e.hasFruits())?size != 0}"
-      - "${w.getGElementsOfType('tool')?filter(e -> e.toolType.equals('Fishing rod'))?size != 0}"
-      - "${w.hasElementsOfType('feature')}"
-      - "${w.hasElementsOfType('armor')}"
   - template: elementinits/javamodels.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameModels.java"
     condition: hasJavaModels()
