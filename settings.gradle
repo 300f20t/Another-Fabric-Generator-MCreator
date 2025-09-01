@@ -3,4 +3,4 @@ rootProject.name = 'Fabric-Generator-MCreator'
 try {
     include ":MCreator"
     project(":MCreator").projectDir = file(mcreator_path)
-} catch(Exception e) {}
+} catch(Exception ignored) {}

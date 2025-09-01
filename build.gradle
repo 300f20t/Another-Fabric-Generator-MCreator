@@ -1,8 +1,23 @@
+import java.nio.file.Files
+
 plugins {
     id "java"
 }
 
-import java.nio.file.Files
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+tasks.processResources {
+    filesMatching('plugin.json') {
+        expand(
+                version: project.version,
+                pluginVersion: project.pluginVersion
+        )
+    }
+}
+
+tasks.jar {
+    archiveFileName.set(Globals.getArchiveName())
+}
 
 class Globals {
     private static final def ARCHIVE_NAME = "generator-fabric-1.21.8" // The name of the exported file
@@ -24,41 +39,20 @@ class Globals {
     }
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
-
-tasks.jar {
-    archiveFileName.set(Globals.getArchiveName())
-}
-
-subprojects { subproject ->
-    subproject.plugins.withType(JavaPlugin) {
-        test {
-            useJUnitPlatform()
-            include '**/GeneratorsTest.class'
-
-            dependsOn rootProject.jar
-
-            environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
-            environment("MCREATOR_PLUGINS_DEV", "")
-            environment("MCREATOR_TEST_GENERATORS", "fabric-1.21.8")
-
-            workingDir = mcreator_path
-        }
-    }
-}
-
 // workaround for IDEA-265203
 System.setProperty("user.dir", projectDir.toString())
 
+tasks.register('copyLibs', Copy) {
+    dependsOn(jar)
+
+    from("build/libs")
+    into("build")
+}
+
 tasks.register('exportPlugin', Zip) {
+    dependsOn(processResources, jar, tasks.named('copyLibs'))
+
     group("mcreator_plugins")
-    from 'src/main/resources'
-    archiveFileName = Globals.getArchiveName()
-    destinationDirectory = file('build/')
 }
 
 tasks.register('install') {
@@ -116,5 +110,23 @@ static def installPlugin(String path, String separator) {
     } catch (IOException e) {
         e.printStackTrace()
         throw new RuntimeException("Could not install plugin!")
+    }
+}
+
+subprojects { subproject ->
+    subproject.plugins.withType(JavaPlugin) {
+        test {
+            useJUnitPlatform()
+            include '**/GeneratorsTest.class'
+
+            dependsOn rootProject.processResources
+            dependsOn rootProject.jar
+
+            environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
+            environment("MCREATOR_PLUGINS_DEV", "")
+            environment("MCREATOR_TEST_GENERATORS", "fabric-${version}")
+
+            workingDir = mcreator_path
+        }
     }
 }

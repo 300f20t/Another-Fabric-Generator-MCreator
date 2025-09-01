@@ -1,16 +1,16 @@
 {
-  "id": "generator-fabric-1.21.8",
+  "id": "generator-fabric-${version}",
   "weight": 11,
   "supportedversions": [
     202500333716
   ],
   "info": {
-    "name": "Minecraft Fabric 1.21.8 Generator",
-    "version": "2.1",
+    "name": "Minecraft Fabric ${version} Generator",
+    "version": "${pluginVersion}",
     "description": "A Fabric generator",
-    "author": "Goldorion, NerdyPuzzle and Spectrall368",
+    "author": "Goldorion, NerdyPuzzle and Spectrall",
     "credits": "Thank you to all contributors and supporters on Ko-fi",
-    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Fabric-Generator-MCreator/1.21.8/update.json",
+    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Fabric-Generator-MCreator/${version}/update.json",
     "pluginPageID": 64512
   }
 }
