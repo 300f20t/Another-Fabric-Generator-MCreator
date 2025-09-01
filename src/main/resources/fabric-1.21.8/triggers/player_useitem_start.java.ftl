@@ -8,7 +8,7 @@ public ${name}Procedure() {
 			"y": "entity.getY()",
 			"z": "entity.getZ()",
 			"itemstack": "itemstack",
-			"duration": "itemstack.getUseDuration(entity)",
+			"duration": "itemstack.getUseDuration((LivingEntity) entity)",
 			"world": "entity.level()",
 			"entity": "entity"
 			}/>
