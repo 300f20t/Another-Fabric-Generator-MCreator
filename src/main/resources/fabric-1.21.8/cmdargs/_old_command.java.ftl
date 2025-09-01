@@ -8,7 +8,7 @@
 
     Entity entity = arguments.getSource().getEntity();
     if (entity == null && world instanceof ServerLevel _servLevel)
-        entity = FakePlayerFactory.getMinecraft(_servLevel);
+        entity = FakePlayer.get(_servLevel);
 
     Direction direction = Direction.DOWN;
     if (entity != null)
@@ -34,7 +34,7 @@
 
     Entity entity = arguments.getSource().getEntity();
     if (entity == null && world instanceof ServerLevel _servLevel)
-        entity = FakePlayerFactory.getMinecraft(_servLevel);
+        entity = FakePlayer.get(_servLevel);
 
     Direction direction = Direction.DOWN;
     if (entity != null)
