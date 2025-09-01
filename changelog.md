@@ -34,6 +34,7 @@
 - [Bugfix] Damage source from source caused a build error
 - [Bugfix] Get enchantment level caused a build error
 - [Bugfix] Get number of players on server caused a build error
+- [Bugfix] Close opened GUI  block caused a build error
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
