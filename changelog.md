@@ -21,6 +21,8 @@
 - [Bugfix] Block inventories did not store items when opened with right click
 - [Bugfix] Custom attributes would cause build errors when used
 - [Bugfix] Setting particles for custom potion effects would cause a build error
+- [Bugfix] Block is tagged procedure caused a build error
+- [Bugfix] Command ME caused a build error
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
