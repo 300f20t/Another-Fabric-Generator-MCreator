@@ -26,6 +26,7 @@
 - [Bugfix] Player respawns global trigger's world dependency caused a build error
 - [Bugfix] Fixed some other events that caused a build error
 - [Bugfix] Get item's fuel power procedure block caused a build error
+- [Bugfix] Get block's light level caused a build error
 
 ## 2.1
 - Add new global triggers: Block is placed, Block  is multiplaced, Bonemeal is used, Bucket is filled, Command executed, Entity is healed
