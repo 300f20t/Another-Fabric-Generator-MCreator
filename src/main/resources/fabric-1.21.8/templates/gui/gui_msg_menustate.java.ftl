@@ -19,7 +19,6 @@
 -->
 
 <#-- @formatter:off -->
-
 package ${package}.network;
 
 public record MenuStateUpdateMessage(int elementType, String name, Object elementState) implements CustomPacketPayload {
@@ -31,21 +30,22 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 	public static void write(FriendlyByteBuf buffer, MenuStateUpdateMessage message) {
 		buffer.writeInt(message.elementType);
 		buffer.writeUtf(message.name);
-		if (message.elementType == 0)
+		if (message.elementType == 0) {
 			buffer.writeUtf((String) message.elementState);
-		else if (message.elementType == 1)
+		} else if (message.elementType == 1) {
 			buffer.writeBoolean((boolean) message.elementState);
+		}
 	}
 
 	public static MenuStateUpdateMessage read(FriendlyByteBuf buffer) {
 		int elementType = buffer.readInt();
 		String name = buffer.readUtf();
 		Object elementState = null;
-		if (elementType == 0)
+		if (elementType == 0) {
 			elementState = buffer.readUtf();
-		else if (elementType == 1)
+		} else if (elementType == 1) {
 			elementState = buffer.readBoolean();
-
+		}
 		return new MenuStateUpdateMessage(elementType, name, elementState);
 	}
 
@@ -53,7 +53,7 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 		return TYPE;
 	}
 
-	public static void apply(MenuStateUpdateMessage message, ServerPlayNetworking.Context context) {
+	public static void handleMenuState(final MenuStateUpdateMessage message, final ServerPlayNetworking.Context context) {
 		<#-- Security measure to prevent accepting too big strings -->
 		if (message.name.length() > 256 || message.elementState instanceof String string && string.length() > 8192)
 			return;
@@ -61,13 +61,14 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 		context.server().execute(() -> {
 			if (context.player().containerMenu instanceof ${JavaModName}Menus.MenuAccessor menu) {
 				menu.getMenuState().put(message.elementType + ":" + message.name, message.elementState);
-				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.${JavaModName}ScreenAccessor accessor)
+				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.FabricScreenAccessor accessor) {
 					accessor.updateMenuState(message.elementType, message.name, message.elementState);
+				}
 			}
 		});
 	}
 
-	public static void applyClient(MenuStateUpdateMessage message, ClientPlayNetworking.Context context) {
+	public static void handleClientMenuState(final MenuStateUpdateMessage message, final ClientPlayNetworking.Context context) {
 		<#-- Security measure to prevent accepting too big strings -->
 		if (message.name.length() > 256 || message.elementState instanceof String string && string.length() > 8192)
 			return;
@@ -75,8 +76,9 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 		context.client().execute(() -> {
 			if (context.player().containerMenu instanceof ${JavaModName}Menus.MenuAccessor menu) {
 				menu.getMenuState().put(message.elementType + ":" + message.name, message.elementState);
-				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.${JavaModName}ScreenAccessor accessor)
+				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.FabricScreenAccessor accessor) {
 					accessor.updateMenuState(message.elementType, message.name, message.elementState);
+				}
 			}
 		});
 	}

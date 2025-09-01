@@ -19,7 +19,6 @@
 -->
 
 <#-- @formatter:off -->
-<#compress>
 <#include "../procedures.java.ftl">
 package ${package}.client.gui;
 
@@ -29,7 +28,8 @@ package ${package}.client.gui;
 <#assign imageButtons = data.getComponentsOfType("ImageButton")>
 <#assign tooltips = data.getComponentsOfType("Tooltip")>
 
-public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implements ${JavaModName}Screens.${JavaModName}ScreenAccessor {
+<#compress>
+public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implements ${JavaModName}Screens.FabricScreenAccessor {
 
 	private final Level world;
 	private final int x, y, z;
@@ -307,6 +307,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 	}
 	</#if>
 }
+</#compress>
 
 <#macro buttonOnClick component>
 e -> {
@@ -315,6 +316,7 @@ e -> {
 		int y = ${name}Screen.this.y;
 		if (<@procedureOBJToConditionCode component.displayCondition/>) {
 			ClientPlayNetworking.send(new ${name}ButtonMessage(${btid}, x, y, z));
+			${name}ButtonMessage.handleButtonAction(entity, ${btid}, x, y, z);
 		}
 	</#if>
 }
@@ -343,5 +345,4 @@ e -> {
 		</#if>
 	</#if>
 </#macro>
-</#compress>
 <#-- @formatter:on -->

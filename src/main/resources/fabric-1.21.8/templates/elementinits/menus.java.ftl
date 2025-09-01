@@ -33,19 +33,18 @@ public class ${JavaModName}Menus {
 	</#list>
 
 	public static void load() {
-		<#list guis as gui>
-			${gui.getModElement().getRegistryNameUpper()} = Registry.register(BuiltInRegistries.MENU, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID,
-					"${gui.getModElement().getRegistryName()}"),
-			 new MenuType<>(${gui.getModElement().getName()}Menu::new, FeatureFlags.DEFAULT_FLAGS));
-			${gui.getModElement().getName()}Menu.screenInit();
-		</#list>
-		PayloadTypeRegistry.playC2S().register(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage.STREAM_CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage::apply);
+	    <#list guis as gui>
+	    ${gui.getModElement().getRegistryNameUpper()} = register("${gui.getModElement().getRegistryName()}", ${gui.getModElement().getName()}Menu::new);
+	    ${gui.getModElement().getName()}Menu.screenInit();
+	    </#list>
+
+	    PayloadTypeRegistry.playC2S().register(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage.STREAM_CODEC);
+	    ServerPlayNetworking.registerGlobalReceiver(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage::handleMenuState);
 	}
 
 	public static void clientLoad() {
-		PayloadTypeRegistry.playS2C().register(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage.STREAM_CODEC);
-		ClientPlayNetworking.registerGlobalReceiver(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage::applyClient);
+	    PayloadTypeRegistry.playS2C().register(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage.STREAM_CODEC);
+	    ClientPlayNetworking.registerGlobalReceiver(MenuStateUpdateMessage.TYPE, MenuStateUpdateMessage::handleClientMenuState);
 	}
 
 	public interface MenuAccessor {
@@ -58,7 +57,7 @@ public class ${JavaModName}Menus {
 			if (player instanceof ServerPlayer serverPlayer) {
 				ServerPlayNetworking.send(serverPlayer, new MenuStateUpdateMessage(elementType, name, elementState));
 			} else if (player.level().isClientSide) {
-				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.${JavaModName}ScreenAccessor accessor && needClientUpdate)
+				if (Minecraft.getInstance().screen instanceof ${JavaModName}Screens.FabricScreenAccessor accessor && needClientUpdate)
 					accessor.updateMenuState(elementType, name, elementState);
 				ClientPlayNetworking.send(new MenuStateUpdateMessage(elementType, name, elementState));
 			}
@@ -71,6 +70,10 @@ public class ${JavaModName}Menus {
 				return defaultValue;
 			}
 		}
+	}
+
+	private static <M extends AbstractContainerMenu> MenuType<M> register(String registryname, MenuType.MenuSupplier<M> element) {
+		return Registry.register(BuiltInRegistries.MENU, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), new MenuType<>(element, FeatureFlags.DEFAULT_FLAGS));
 	}
 }
 <#-- @formatter:on -->

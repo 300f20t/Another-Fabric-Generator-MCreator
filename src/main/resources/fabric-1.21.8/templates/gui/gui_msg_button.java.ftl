@@ -41,38 +41,34 @@ public record ${name}ButtonMessage(int buttonID, int x, int y, int z) implements
 		return TYPE;
 	}
 
-	public static void apply(${name}ButtonMessage payload, ServerPlayNetworking.Context context) {
-		int buttonID = payload.buttonID();
-		int x = payload.x();
-		int y = payload.y();
-		int z = payload.z();
-		Entity entity = context.player();
-		Level world = entity.level();
-			
-		context.server().execute(() -> {
+	public static void handleData(final ${name}ButtonMessage message, final ServerPlayNetworking.Context context) {
+		context.server().execute(() -> handleButtonAction(context.player(), message.buttonID, message.x, message.y, message.z));
+	}
 
-			// security measure to prevent arbitrary chunk generation
-			if (!world.hasChunkAt(new BlockPos(x, y, z)))
-				return;
-			
-			<#assign btid = 0>
-			<#list data.getComponentsOfType("Button") as component>
+	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
+		Level world = entity.level();
+
+		// security measure to prevent arbitrary chunk generation
+		if (!world.hasChunkAt(new BlockPos(x, y, z)))
+			return;
+
+		<#assign btid = 0>
+		<#list data.getComponentsOfType("Button") as component>
 				<#if hasProcedure(component.onClick)>
 					if (buttonID == ${btid}) {
 						<@procedureOBJToCode component.onClick/>
 					}
 				</#if>
 				<#assign btid +=1>
-			</#list>
-			<#list data.getComponentsOfType("ImageButton") as component>
+		</#list>
+		<#list data.getComponentsOfType("ImageButton") as component>
 				<#if hasProcedure(component.onClick)>
 					if (buttonID == ${btid}) {
 						<@procedureOBJToCode component.onClick/>
 					}
 				</#if>
 				<#assign btid +=1>
-			</#list>
-		});
+		</#list>
 	}
 }
 <#-- @formatter:on -->

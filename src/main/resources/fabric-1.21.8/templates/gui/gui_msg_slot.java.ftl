@@ -43,43 +43,38 @@ public record ${name}SlotMessage(int slotID, int x, int y, int z, int changeType
 		return TYPE;
 	}
 
-	public static void apply(${name}SlotMessage payload, ServerPlayNetworking.Context context) {
-		int slot = payload.slotID();
-		int x = payload.x();
-		int y = payload.y();
-		int z = payload.z();
-		int changeType = payload.changeType();
-		int meta = payload.meta();
-		Entity entity = context.player();
+	public static void handleData(final ${name}SlotMessage message, final ServerPlayNetworking.Context context) {
+		context.server().execute(() -> handleSlotAction(context.player(), message.slotID, message.changeType, message.meta, message.x, message.y, message.z));
+	}
+
+	public static void handleSlotAction(Player entity, int slot, int changeType, int meta, int x, int y, int z) {
 		Level world = entity.level();
 
-		context.server().execute(() -> {
-			// security measure to prevent arbitrary chunk generation
-			if (!world.hasChunkAt(new BlockPos(x, y, z)))
-				return;
+		// security measure to prevent arbitrary chunk generation
+		if (!world.hasChunkAt(new BlockPos(x, y, z)))
+			return;
 
-			<#list data.components as component>
-				<#if component.getClass().getSimpleName()?ends_with("Slot")>
-					<#if hasProcedure(component.onSlotChanged)>
-						if (slot == ${component.id} && changeType == 0) {
-							<@procedureOBJToCode component.onSlotChanged/>
-						}
-					</#if>
-					<#if hasProcedure(component.onTakenFromSlot)>
-						if (slot == ${component.id} && changeType == 1) {
-							int amount = meta;
-							<@procedureOBJToCode component.onTakenFromSlot/>
-						}
-					</#if>
-					<#if hasProcedure(component.onStackTransfer)>
-						if (slot == ${component.id} && changeType == 2) {
-							int amount = meta;
-							<@procedureOBJToCode component.onStackTransfer/>
-						}
-					</#if>
+		<#list data.components as component>
+			<#if component.getClass().getSimpleName()?ends_with("Slot")>
+				<#if hasProcedure(component.onSlotChanged)>
+					if (slot == ${component.id} && changeType == 0) {
+						<@procedureOBJToCode component.onSlotChanged/>
+					}
 				</#if>
-			</#list>
-		});
+				<#if hasProcedure(component.onTakenFromSlot)>
+					if (slot == ${component.id} && changeType == 1) {
+						int amount = meta;
+						<@procedureOBJToCode component.onTakenFromSlot/>
+					}
+				</#if>
+				<#if hasProcedure(component.onStackTransfer)>
+					if (slot == ${component.id} && changeType == 2) {
+						int amount = meta;
+						<@procedureOBJToCode component.onStackTransfer/>
+					}
+				</#if>
+			</#if>
+		</#list>
 	}
 }
 <#-- @formatter:on -->

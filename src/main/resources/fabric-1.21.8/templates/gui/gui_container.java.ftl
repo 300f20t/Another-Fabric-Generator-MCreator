@@ -21,15 +21,12 @@
 <#-- @formatter:off -->
 <#include "../mcitems.ftl">
 <#include "../procedures.java.ftl">
-
-<#assign mx = (data.W - data.width) / 2>
-<#assign my = (data.H - data.height) / 2>
 <#assign slotnum = 0>
-
 package ${package}.world.inventory;
 
 import ${package}.${JavaModName};
 
+<#compress>
 public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}Menus.MenuAccessor {
 
 	public final Map<String, Object> menuState = new HashMap<>() {
@@ -58,6 +55,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 		this.x = (int) inv.player.getX();
 		this.y = (int) inv.player.getY();
 		this.z = (int) inv.player.getZ();
+		access = ContainerLevelAccess.create(inv.player.level(), new BlockPos(x, y, z));
 	}
 
 	public ${name}Menu(int id, Inventory inv, FriendlyByteBuf extraData) {
@@ -72,6 +70,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			this.x = pos.getX();
 			this.y = pos.getY();
 			this.z = pos.getZ();
+			access = ContainerLevelAccess.create(world, pos);
 		}
 
 		<#if data.type == 1>
@@ -99,37 +98,40 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			<#list data.components as component>
 				<#if component.getClass().getSimpleName()?ends_with("Slot")>
 					<#assign slotnum += 1>
-					this.customSlots.put(${component.id}, new Slot(inventory, ${component.id}, ${(component.x - mx)?int + 1},
-						${(component.y - my)?int + 1}) {
-						private final int slot = ${component.id};
+					this.customSlots.put(${component.id}, this.addSlot(new Slot(inventory, ${component.id},
+						${component.gx(data.width) + 1},
+						${component.gy(data.height) + 1}) {
+						private final int slot = ${component.id}; <#-- #5209, this is needed for procedure dependencies -->
+						private int x = ${name}Menu.this.x; <#-- #5239 - x and y provided by slot are in-GUI, not in-world coordinates -->
+						private int y = ${name}Menu.this.y;
 
 						<#if hasProcedure(component.disablePickup) || component.disablePickup.getFixedValue()>
-							@Override public boolean mayPickup(Player entity) {
-								return <@procedureOBJToConditionCode component.disablePickup false true/>;
-							}
+						@Override public boolean mayPickup(Player entity) {
+							return <@procedureOBJToConditionCode component.disablePickup false true/>;
+						}
 						</#if>
-	
+
 						<#if hasProcedure(component.onSlotChanged)>
-							@Override public void setChanged() {
-								super.setChanged();
-								slotChanged(${component.id}, 0, 0);
-							}
+						@Override public void setChanged() {
+							super.setChanged();
+							slotChanged(${component.id}, 0, 0);
+						}
 						</#if>
-	
+
 						<#if hasProcedure(component.onTakenFromSlot)>
-							@Override public void onTake(Player entity, ItemStack stack) {
-								super.onTake(entity, stack);
-								slotChanged(${component.id}, 1, 0);
-							}
+						@Override public void onTake(Player entity, ItemStack stack) {
+							super.onTake(entity, stack);
+							slotChanged(${component.id}, 1, stack.getCount());
+						}
 						</#if>
-	
+
 						<#if hasProcedure(component.onStackTransfer)>
-							@Override public void onQuickCraft(ItemStack a, ItemStack b) {
-								super.onQuickCraft(a, b);
-								slotChanged(${component.id}, 2, b.getCount() - a.getCount());
-							}
+						@Override public void onQuickCraft(ItemStack a, ItemStack b) {
+							super.onQuickCraft(a, b);
+							slotChanged(${component.id}, 2, b.getCount() - a.getCount());
+						}
 						</#if>
-	
+
 						<#if component.getClass().getSimpleName() == "InputSlot">
 							<#if hasProcedure(component.disablePlacement) || component.disablePlacement.getFixedValue()>
 								@Override public boolean mayPlace(ItemStack itemstack) {
@@ -138,7 +140,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 							<#elseif component.inputLimit.toString()?has_content>
 								@Override public boolean mayPlace(ItemStack stack) {
 									<#if component.inputLimit.getUnmappedValue().startsWith("TAG:")>
-										<#assign tag = "\"" + component.inputLimit.getUnmappedValue().replace("TAG:", "") + "\"">
+										<#assign tag = "\"" + component.inputLimit.getUnmappedValue().replace("TAG:", "").replace("mod:", modid + ":") + "\"">
 										return stack.is(TagKey.create(Registries.ITEM, ResourceLocation.parse(${tag})));
 									<#else>
 										return ${mappedMCItemToItem(component.inputLimit)} == stack.getItem();
@@ -150,24 +152,23 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 								return false;
 							}
 						</#if>
-						});
+					}));
 				</#if>
 			</#list>
-			customSlots.forEach((i, slot) -> this.addSlot(slot));
 
-			<#assign coffx = ((data.width - 176) / 2 + data.inventoryOffsetX)?int>
-			<#assign coffy = ((data.height - 166) / 2 + data.inventoryOffsetY)?int>
+			<#assign coffx = data.getInventorySlotsX()>
+			<#assign coffy = data.getInventorySlotsY()>
 
 			for (int si = 0; si < 3; ++si)
 				for (int sj = 0; sj < 9; ++sj)
-					this.addSlot(new Slot(inv, sj + (si + 1) * 9, ${coffx} + 8 + sj * 18, ${coffy}+ 84 + si * 18));
+					this.addSlot(new Slot(inv, sj + (si + 1) * 9, ${coffx} + 8 + sj * 18, ${coffy} + 84 + si * 18));
 
 			for (int si = 0; si < 9; ++si)
 				this.addSlot(new Slot(inv, si, ${coffx} + 8 + si * 18, ${coffy} + 142));
 		</#if>
 
 		<#if hasProcedure(data.onOpen)>
-		   <@procedureOBJToCode data.onOpen/>
+			<@procedureOBJToCode data.onOpen/>
 		</#if>
 	}
 
@@ -181,43 +182,43 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 
 	<#if data.type == 1>
 		@Override public ItemStack quickMoveStack(Player playerIn, int index) {
-		  ItemStack itemstack = ItemStack.EMPTY;
-		  Slot slot = (Slot) this.slots.get(index);
+			ItemStack itemstack = ItemStack.EMPTY;
+			Slot slot = (Slot) this.slots.get(index);
 
-		  if (slot != null && slot.hasItem()) {
-			 ItemStack itemstack1 = slot.getItem();
-			 itemstack = itemstack1.copy();
+			if (slot != null && slot.hasItem()) {
+				ItemStack itemstack1 = slot.getItem();
+				itemstack = itemstack1.copy();
 
-			 if (index < ${slotnum}) {
-				if (!this.moveItemStackTo(itemstack1, ${slotnum}, this.slots.size(), true))
-				   return ItemStack.EMPTY;
-				slot.onQuickCraft(itemstack1, itemstack);
-			 } else if (boundItem != null && itemstack1 == boundItem) {
-				return ItemStack.EMPTY;
-			 } else if (!this.moveItemStackTo(itemstack1, 0, ${slotnum}, false)) {
-				if (index < ${slotnum} + 27) {
-				   if (!this.moveItemStackTo(itemstack1, ${slotnum} + 27, this.slots.size(), true))
-					  return ItemStack.EMPTY;
-				} else {
-				   if (!this.moveItemStackTo(itemstack1, ${slotnum}, ${slotnum} + 27, false))
-					  return ItemStack.EMPTY;
+				if (index < ${slotnum}) {
+					if (!this.moveItemStackTo(itemstack1, ${slotnum}, this.slots.size(), true))
+						return ItemStack.EMPTY;
+					slot.onQuickCraft(itemstack1, itemstack);
+				} else if (boundItem != null && itemstack1 == boundItem) {
+				    return ItemStack.EMPTY;
+				} else if (!this.moveItemStackTo(itemstack1, 0, ${slotnum}, false)) {
+					if (index < ${slotnum} + 27) {
+						if (!this.moveItemStackTo(itemstack1, ${slotnum} + 27, this.slots.size(), true))
+							return ItemStack.EMPTY;
+					} else {
+						if (!this.moveItemStackTo(itemstack1, ${slotnum}, ${slotnum} + 27, false))
+							return ItemStack.EMPTY;
+					}
+					return ItemStack.EMPTY;
 				}
-				return ItemStack.EMPTY;
-			 }
 
-			 if (itemstack1.isEmpty()) {
-				slot.setByPlayer(ItemStack.EMPTY);
-			 } else {
-				slot.setChanged();
-			 }
+				if (itemstack1.isEmpty()) {
+					slot.setByPlayer(ItemStack.EMPTY);
+				} else {
+					slot.setChanged();
+				}
 
-			 if (itemstack1.getCount() == itemstack.getCount()) {
-				return ItemStack.EMPTY;
-			 }
+				if (itemstack1.getCount() == itemstack.getCount()) {
+					return ItemStack.EMPTY;
+				}
 
-			 slot.onTake(playerIn, itemstack1);
-		  }
-		  return itemstack;
+				slot.onTake(playerIn, itemstack1);
+			}
+			return itemstack;
 		}
 
 		@Override
@@ -303,6 +304,7 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			private void slotChanged(int slotid, int ctype, int meta) {
 				if(this.world != null && this.world.isClientSide()) {
 					ClientPlayNetworking.send(new ${name}SlotMessage(slotid, x, y, z, ctype, meta));
+					${name}SlotMessage.handleSlotAction(entity, slotid, ctype, meta, x, y, z);
 				}
 			}
 		</#if>
@@ -329,11 +331,11 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 	public static void screenInit() {
 		<#if data.hasButtonEvents()>
 			PayloadTypeRegistry.playC2S().register(${name}ButtonMessage.TYPE, ${name}ButtonMessage.STREAM_CODEC);
-			ServerPlayNetworking.registerGlobalReceiver(${name}ButtonMessage.TYPE, ${name}ButtonMessage::apply);
+			ServerPlayNetworking.registerGlobalReceiver(${name}ButtonMessage.TYPE, ${name}ButtonMessage::handleData);
 		</#if>
 		<#if data.hasSlotEvents()>
 			PayloadTypeRegistry.playC2S().register(${name}SlotMessage.TYPE, ${name}SlotMessage.STREAM_CODEC);
-			ServerPlayNetworking.registerGlobalReceiver(${name}SlotMessage.TYPE, ${name}SlotMessage::apply);
+			ServerPlayNetworking.registerGlobalReceiver(${name}SlotMessage.TYPE, ${name}SlotMessage::handleData);
 		</#if>
 
 		<#if hasProcedure(data.onTick)>
@@ -349,4 +351,5 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 		</#if>
 	}
 }
+</#compress>
 <#-- @formatter:on -->

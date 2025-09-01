@@ -24,7 +24,7 @@
 
 package ${package}.init;
 
-public class ${JavaModName}Screens {
+@Environment(EnvType.CLIENT) public class ${JavaModName}Screens {
 
 	public static void clientLoad() {
 		<#list guis as gui>
@@ -32,7 +32,7 @@ public class ${JavaModName}Screens {
 		</#list>
 	}
 
-	public interface ${JavaModName}ScreenAccessor {
+	public interface FabricScreenAccessor {
 		void updateMenuState(int elementType, String name, Object elementState);
 	}
 }
