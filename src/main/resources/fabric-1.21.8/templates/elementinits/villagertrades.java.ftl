@@ -79,15 +79,14 @@ public class ${JavaModName}Trades {
 		<#if villagerProfession == "WanderingTrader">registerWanderingTraderOffers(builder -> {
 		    builder.pool(CUSTOM_WANDERING_TRADER_POOL, 5,
 			<#list entries as entry>
-				<@basicTrade entry.price1, entry.countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.maxTrades, entry.xp, entry.priceMultiplier/><#sep>
+				<@basicTrade entry.price1, entry.countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.maxTrades, entry.xp, entry.priceMultiplier/><#sep>,
 			</#list>
-		        );
+			);
 		<#else>registerVillagerOffers(${villagerProfession}, ${level},
 		builder -> {
 			<#list entries as entry>
-				builder.add(<@basicTrade entry.price1, entry.countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.maxTrades, entry.xp, entry.priceMultiplier/><#sep>
+				builder.add(<@basicTrade entry.price1, entry.countPrice1, !entry.price2.isEmpty(), entry.price2, entry.countPrice2, entry.offer, entry.countOffer, entry.maxTrades, entry.xp, entry.priceMultiplier/>);
 			</#list>
-			    );
 		</#if>
 	});
 </#if>
