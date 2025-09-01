@@ -289,14 +289,11 @@ public class ${name}Block extends ${getPlantClass(data.plantType)}Block
 			for(;world.getBlockState(pos.below(i)).is(this); ++i);
 			if (i < ${data.growapableMaxHeight}) {
 				int j = blockstate.getValue(AGE);
-				if (CommonHooks.canCropGrow(world, pos, blockstate, true)) {
-					if (j == 15) {
-						world.setBlockAndUpdate(pos.above(), defaultBlockState()<#if data.isWaterloggable()>.setValue(WATERLOGGED, flag)</#if>);
-						CommonHooks.fireCropGrowPost(world, pos.above(), defaultBlockState()<#if data.isWaterloggable()>.setValue(WATERLOGGED, flag)</#if>);
-						world.setBlock(pos, blockstate.setValue(AGE, 0), 4);
-					} else {
-						world.setBlock(pos, blockstate.setValue(AGE, j + 1), 4);
-					}
+				if (j == 15) {
+					world.setBlockAndUpdate(pos.above(), defaultBlockState()<#if data.isWaterloggable()>.setValue(WATERLOGGED, flag)</#if>);
+					world.setBlock(pos, blockstate.setValue(AGE, 0), 4);
+				} else {
+					world.setBlock(pos, blockstate.setValue(AGE, j + 1), 4);
 				}
 			}
 		}
