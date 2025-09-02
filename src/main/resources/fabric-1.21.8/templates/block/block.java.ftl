@@ -519,8 +519,6 @@ public class ${name}Block extends
 
 	<@onAnimateTick data.onRandomUpdateEvent/>
 
-	<@onDestroyedByPlayer data.onDestroyedByPlayer/>
-
 	<@onDestroyedByExplosion data.onDestroyedByExplosion/>
 
 	<@onStartToDestroy data.onStartToDestroy/>
