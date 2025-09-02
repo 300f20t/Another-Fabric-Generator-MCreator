@@ -36,6 +36,8 @@
 - [Bugfix] Get number of players on server caused a build error
 - [Bugfix] Close opened GUI block caused a build error
 - [Bugfix] Convert bucket to fluid blockstate caused a build error
+- [Bugfix] Potion effect projectile procedure block caused a build error
+- [Bugfix] Open GUI for entity procedure block caused a build error
 - [Bugfix] Fixed some other procedure blocks that caused a build error
 
 ## 2.1

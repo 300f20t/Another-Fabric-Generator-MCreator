@@ -27,7 +27,7 @@ package ${package}.init;
 public class ${JavaModName}Potions {
 
 	<#list potions as potion>
-	public static Potion ${potion.getModElement().getRegistryNameUpper()};
+	public static Holder<Potion> ${potion.getModElement().getRegistryNameUpper()};
 	</#list>
 
 	public static void load() {
@@ -42,8 +42,8 @@ public class ${JavaModName}Potions {
 		</#list>
 	}
 
-	private static Potion register(String registryname, Potion element) {
-		return Registry.register(BuiltInRegistries.POTION, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element);
+	private static Holder<Potion> register(String registryname, Potion element) {
+		return Holder.direct(Registry.register(BuiltInRegistries.POTION, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, registryname), element));
 	}
 }
 <#-- @formatter:on -->
