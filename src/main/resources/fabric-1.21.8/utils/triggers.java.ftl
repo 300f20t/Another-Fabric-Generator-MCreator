@@ -255,9 +255,12 @@ public void onDroppedByPlayer(ItemStack itemstack, Player entity) {
 </#macro>
 
 <#macro onItemEntityDestroyed procedure="">
+
+<#-- Fabric don't support damagesource dependency -->
+
 <#if hasProcedure(procedure)>
-@Override public void onDestroyed(ItemEntity entity, DamageSource damagesource) {
-	super.onDestroyed(entity, damagesource);
+@Override public void onDestroyed(ItemEntity entity) {
+	super.onDestroyed(entity);
 	<@procedureCode procedure, {
 		"x": "entity.getX()",
 		"y": "entity.getY()",
@@ -265,7 +268,7 @@ public void onDroppedByPlayer(ItemStack itemstack, Player entity) {
 		"world": "entity.level()",
 		"entity": "entity",
 		"itemstack": "entity.getItem()",
-		"damagesource": "damagesource"
+		"damagesource": "null"
 	}/>
 }
 </#if>
