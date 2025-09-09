@@ -6,14 +6,10 @@ permissions:
 on:
   push:
     branches:
-      - "1.21.8*"
-      - "feature/*"
-      - "dev/*"
+      - "**"
   pull_request:
     branches:
-      - "1.21.8*"
-      - "feature/*"
-      - "dev/*"
+      - "**"
 
 jobs:
   build:
