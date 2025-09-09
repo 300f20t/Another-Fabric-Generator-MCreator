@@ -8,6 +8,7 @@
  # it under the terms of the GNU Lesser General Public License as published by
  # the Free Software Foundation, either version 3 of the License, or
  # (at your option) any later version.
+ #
  # Fabric-Generator-MCreator is distributed in the hope that it will be useful,
  # but WITHOUT ANY WARRANTY; without even the implied warranty of
  # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -81,49 +82,33 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableHelmet>
 		public static class Helmet extends ${name}Item {
-
 			public Helmet() {
 				super(Type.HELMET, new Item.Properties()<#if data.helmetImmuneToFire>.fireResistant()</#if>);
 
-        <#list vanillaTabs as tabName>
-        	<#list tabMap.get(tabName) as tabElement>
-                <#if tabElement + "Armor" == "CUSTOM:" + name>
-                    <#if tabName == "DECORATIONS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "REDSTONE">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "FOOD">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
-                    <#elseif tabName == "TOOLS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
-                    <#elseif tabName == "MATERIALS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
-                    <#elseif tabName == "MISC">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
-                    <#elseif tabName == "TRANSPORTATION">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "BREWING">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
-                    <#else>
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
-                    </#if>
-                </#if>
-        	</#list>
-        </#list>
+				// Vanilla tab checks
+				<#list vanillaTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Helmet">
+							ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
-        <#list customTabs as tabName>
-            <#list tabMap.get(tabName) as tabElement>
-                <#if tabElement == "CUSTOM:" + name>
-                    <#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
-                    ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
-                </#if>
-            </#list>
-        </#list>
+				// Custom tab checks
+				<#list customTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Helmet">
+							<#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
+							ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
+				// Always add to COMBAT as fallback
+				ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(content -> content.accept(this));
 			}
 
 		    <@addSpecialInformation data.helmetSpecialInformation/>
-
 			<#if hasProcedure(data.onHelmetTick)>
 				@Override
 				public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slotinv, boolean selected) {
@@ -137,54 +122,35 @@ public abstract class ${name}Item extends ArmorItem {
 					}
 				}
 			</#if>
-				}
+		}
 	</#if>
 
 	<#if data.enableBody>
 		public static class Chestplate extends ${name}Item {
-
 			public Chestplate() {
 				super(Type.CHESTPLATE, new Item.Properties()<#if data.bodyImmuneToFire>.fireResistant()</#if>);
 
-        <#list vanillaTabs as tabName>
-        	<#list tabMap.get(tabName) as tabElement>
-                <#if tabElement + "Armor" == "CUSTOM:" + name>
-                    <#if tabName == "DECORATIONS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "REDSTONE">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "FOOD">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
-                    <#elseif tabName == "TOOLS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
-                    <#elseif tabName == "MATERIALS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
-                    <#elseif tabName == "MISC">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
-                    <#elseif tabName == "TRANSPORTATION">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "BREWING">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
-                    <#else>
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
-                    </#if>
-                </#if>
-        	</#list>
-        </#list>
+				<#list vanillaTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Chestplate">
+							ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
-        <#list customTabs as tabName>
-            <#list tabMap.get(tabName) as tabElement>
-                <#if tabElement == "CUSTOM:" + name>
-                    <#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
-                    ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
-                </#if>
-            </#list>
-        </#list>
+				<#list customTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Chestplate">
+							<#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
+							ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
+				ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(content -> content.accept(this));
 			}
 
 		    <@addSpecialInformation data.bodySpecialInformation/>
-
 			<#if hasProcedure(data.onBodyTick)>
 				@Override
 				public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slotinv, boolean selected) {
@@ -203,49 +169,30 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableLeggings>
 		public static class Leggings extends ${name}Item {
-
 			public Leggings() {
 				super(Type.LEGGINGS, new Item.Properties()<#if data.leggingsImmuneToFire>.fireResistant()</#if>);
 
-        <#list vanillaTabs as tabName>
-        	<#list tabMap.get(tabName) as tabElement>
-                <#if tabElement + "Armor" == "CUSTOM:" + name>
-                    <#if tabName == "DECORATIONS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "REDSTONE">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "FOOD">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
-                    <#elseif tabName == "TOOLS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
-                    <#elseif tabName == "MATERIALS">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
-                    <#elseif tabName == "MISC">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
-                    <#elseif tabName == "TRANSPORTATION">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
-                    <#elseif tabName == "BREWING">
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
-                    <#else>
-                        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
-                    </#if>
-                </#if>
-        	</#list>
-        </#list>
+				<#list vanillaTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Leggings">
+							ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
-        <#list customTabs as tabName>
-            <#list tabMap.get(tabName) as tabElement>
-                <#if tabElement == "CUSTOM:" + name>
-                    <#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
-                    ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
-                </#if>
-            </#list>
-        </#list>
+				<#list customTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Leggings">
+							<#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
+							ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
+				ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(content -> content.accept(this));
 			}
 
 		    <@addSpecialInformation data.leggingsSpecialInformation/>
-
 			<#if hasProcedure(data.onLeggingsTick)>
 				@Override
 				public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slotinv, boolean selected) {
@@ -264,49 +211,30 @@ public abstract class ${name}Item extends ArmorItem {
 
 	<#if data.enableBoots>
 		public static class Boots extends ${name}Item {
-
 			public Boots() {
 				super(Type.BOOTS, new Item.Properties()<#if data.bootsImmuneToFire>.fireResistant()</#if>);
 
-		        <#list vanillaTabs as tabName>
-                	<#list tabMap.get(tabName) as tabElement>
-                        <#if tabElement + "Armor" == "CUSTOM:" + name>
-                            <#if tabName == "DECORATIONS">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> content.accept(this));
-                            <#elseif tabName == "REDSTONE">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(content -> content.accept(this));
-                            <#elseif tabName == "FOOD">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(content -> content.accept(this));
-                            <#elseif tabName == "TOOLS">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> content.accept(this));
-                            <#elseif tabName == "MATERIALS">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(this));
-                            <#elseif tabName == "MISC">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(content -> content.accept(this));
-                            <#elseif tabName == "TRANSPORTATION">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(content -> content.accept(this));
-                            <#elseif tabName == "BREWING">
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COLORED_BLOCKS).register(content -> content.accept(this));
-                            <#else>
-                                ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
-                            </#if>
-                        </#if>
-                	</#list>
-                </#list>
+				<#list vanillaTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Boots">
+							ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.${tabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
-                <#list customTabs as tabName>
-                    <#list tabMap.get(tabName) as tabElement>
-                        <#if tabElement == "CUSTOM:" + name>
-                            <#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
-                            ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
-                        </#if>
-                    </#list>
-                </#list>
+				<#list customTabs as tabName>
+					<#list tabMap.get(tabName) as tabElement>
+						<#if tabElement == "CUSTOM:" + name || tabElement == "CUSTOM:" + name + "Boots">
+							<#assign modifiedTabName = tabName.replace("CUSTOM:", "")?upper_case>
+							ItemGroupEvents.modifyEntriesEvent(${JavaModName}Tabs.TAB_${modifiedTabName}).register(content -> content.accept(this));
+						</#if>
+					</#list>
+				</#list>
 
+				ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.COMBAT).register(content -> content.accept(this));
 			}
 
 		    <@addSpecialInformation data.bootsSpecialInformation/>
-
 			<#if hasProcedure(data.onBootsTick)>
 				@Override
 				public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slotinv, boolean selected) {
@@ -322,6 +250,5 @@ public abstract class ${name}Item extends ArmorItem {
 			</#if>
 		}
 	</#if>
-
 }
 <#-- @formatter:on -->
