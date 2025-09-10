@@ -1,5 +1,24 @@
 import java.nio.file.Files
 
+plugins {
+	id "java"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+tasks.processResources {
+	filesMatching('plugin.json') {
+		expand(
+				version: project.version,
+				pluginVersion: project.pluginVersion
+		)
+	}
+}
+
+tasks.jar {
+	archiveFileName.set(Globals.getArchiveName())
+}
+
 class Globals {
 	private static final def ARCHIVE_NAME = "another-fabric-generator-1.20.1" // The name of the exported file
 
@@ -13,6 +32,10 @@ class Globals {
 
 	static String getOSName() {
 		return System.getProperty("os.name").toLowerCase()
+	}
+
+	static String getUserHome() {
+		return System.getProperty("user.home") //user.name is the name of the pc, not the name of the directory
 	}
 }
 
@@ -30,11 +53,11 @@ tasks.register('install') {
 	dependsOn exportPlugin
 	group("mcreator_plugins")
 	doLast {
-		System.out.println("Installing plugin...")
+		println("Installing plugin...")
 		if (Globals.getOSName().contains('mac') || Globals.getOSName().contains('OS X') || Globals.getOSName().contains('linux')) {
-			installPlugin((String) ("/Users/" + System.getProperty("user.name") + "/.mcreator/plugins/"), (String) '/')
+			installPlugin("${Globals.getUserHome()}/.mcreator/plugins/", "/")
 		} else if (Globals.getOSName().contains('windows')) {
-			installPlugin((String) ("C:\\Users\\" + System.getProperty("user.name") + "\\.mcreator\\plugins\\"), (String) '\\')
+			installPlugin("${Globals.getUserHome()}\\.mcreator\\plugins\\", "\\")
 		}
 	}
 }
@@ -43,7 +66,7 @@ tasks.register('runMCreator') {
 	dependsOn install
 	group("mcreator_plugins")
 	doLast {
-		System.out.println("Launching MCreator...")
+		println("Launching MCreator...")
 		if (Globals.getOSName().contains('windows')) {
 			try {
 				exec {
@@ -77,9 +100,27 @@ static def installPlugin(String path, String separator) {
 	try {
 		FileOutputStream os = new FileOutputStream(des)
 		Files.copy(original.toPath(), os)
-		System.out.println(String.format("Plugin successfully installed to %s ", path))
+		println("Plugin successfully installed to $path")
 	} catch (IOException e) {
 		e.printStackTrace()
 		throw new RuntimeException("Could not install plugin!")
+	}
+}
+
+subprojects { subproject ->
+	subproject.plugins.withType(JavaPlugin) {
+		test {
+			useJUnitPlatform()
+			include '**/GeneratorsTest.class'
+
+			dependsOn rootProject.processResources
+			dependsOn rootProject.jar
+
+			environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
+			environment("MCREATOR_PLUGINS_DEV", "")
+			environment("MCREATOR_TEST_GENERATORS", "fabric-${version}")
+
+			workingDir = mcreator_path
+		}
 	}
 }
