@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.2.4
+* [Bugfix #20] Fixes armor not appearing in the creative tab (32bitx64bit)
+
 ## 2.2.3
 * Added support for MCreator 2025.2
 * Fixed version
