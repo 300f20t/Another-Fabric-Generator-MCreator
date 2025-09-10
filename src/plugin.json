@@ -1,12 +1,16 @@
 {
   "id": "another-generator-fabric-1.20.1",
-  "supportedversions": [2024004, 2025001, 2025002],
+  "supportedversions": [
+    2024004,
+    2025001,
+    2025002
+  ],
   "info": {
     "name": "Minecraft Fabric 1.20.1 Generator, for new MCreator versions",
-    "version": "2.2.4",
+    "version": "2.3.0",
     "description": "A Fabric generator",
     "author": "300f20t",
-    "credits": "Goldorion"
+    "credits": "Goldorion, NerdyPuzzle, Spectrall and other contributors in original and that plugin"
   }
 }
 
