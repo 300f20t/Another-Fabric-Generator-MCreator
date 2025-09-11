@@ -63,7 +63,7 @@ public class ${JavaModName} implements ModInitializer {
 		<#if w.getGElementsOfType('procedure')?filter(e -> !e.procedurexml?contains('no_ext_trigger'))?size != 0>${JavaModName}Procedures.load();</#if>
 		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappingsServer.serverLoad();</#if>
 
-        tick();
+		tick();
 
 		// Start of user code block mod init
 		// End of user code block mod init
