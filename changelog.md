@@ -2,6 +2,8 @@
 
 ## 2.3
 - Updated to Fabric API 0.133.4
+- Some other minor improvements
+- [Bugfix] Potion items crash the game with custom potion effects
 
 ## 2.2
 - Updated to Fabric API 0.133.0
