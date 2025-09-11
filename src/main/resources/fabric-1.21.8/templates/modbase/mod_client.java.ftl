@@ -26,20 +26,22 @@ package ${package};
 		// Start of user code block mod constructor
 		// End of user code block mod constructor
 
-		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.clientLoad();</#if>
-		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.clientLoad();</#if>
-		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.clientLoad();</#if>
-		<#if w.hasElementsOfType("gui")>${JavaModName}Screens.clientLoad();</#if>
 		<#if w.hasJavaModels()>${JavaModName}Models.clientLoad();</#if>
-		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
-		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
-		<#if w.hasElementsOfBaseType("block")>${JavaModName}BlocksRenderers.clientLoad();</#if>
-		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.clientLoad();</#if>
+		<#if w.hasElementsOfType("armor")>${JavaModName}ArmorModels.clientLoad();</#if>
 		<#if w.getGElementsOfType("item")?filter(e -> e.getModels()?filter(a -> a.hasCustomJAVAModel())?has_content || e.hasCustomJAVAModel())?size != 0>${JavaModName}ItemRenderers.clientLoad();</#if>
 		<#if w.getGElementsOfType("item")?filter(e -> e.getModels()?has_content)?size != 0>LegacyOverrideSelectItemModel.clientLoad();</#if>
 		<#if w.getGElementsOfType("item")?filter(e -> e.customProperties?has_content)?size != 0>${JavaModName}ItemProperties.clientLoad();</#if>
-		<#if w.hasElementsOfType("armor")>${JavaModName}ArmorModels.clientLoad();</#if>
-		<#if w.hasElementsOfType("gui")>${JavaModName}Menus.clientLoad();</#if>
+		<#if w.hasElementsOfBaseType("block")>${JavaModName}BlocksRenderers.clientLoad();</#if>
+		<#if w.hasElementsOfType("particle")>${JavaModName}Particles.clientLoad();</#if>
+		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.clientLoad();</#if>
+		<#if w.hasElementsOfBaseType("entity")>${JavaModName}EntityRenderers.clientLoad();</#if>
+		<#if w.hasElementsOfType("gui")>
+		${JavaModName}Screens.clientLoad();
+		${JavaModName}Menus.clientLoad();
+		</#if>
+		<#if w.hasElementsOfType("overlay")>${JavaModName}Overlays.clientLoad();</#if>
+		<#if w.getGElementsOfType("command")?filter(e -> e.type == "CLIENTSIDE")?size != 0>${JavaModName}Commands.clientLoad();</#if>
+		<#if w.hasElementsOfType("keybind")>${JavaModName}KeyMappings.clientLoad();</#if>
 
 		<#if w.hasVariablesOfScope("GLOBAL_WORLD") || w.hasVariablesOfScope("GLOBAL_MAP")>
 			ClientPlayNetworking.registerGlobalReceiver(${JavaModName}Variables.SavedDataSyncMessage.TYPE, ${JavaModName}Variables.SavedDataSyncMessage::handleData);
