@@ -1,6 +1,6 @@
 rootProject.name = 'Fabric-Generator-MCreator'
 
-try {
+if(mcreator_path != "unassigned") {
     include ":MCreator"
     project(":MCreator").projectDir = file(mcreator_path)
-} catch(Exception ignored) {}
+}
