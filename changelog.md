@@ -1,5 +1,8 @@
 # Changelogs:
 
+## 2.3
+- Updated to Fabric API 0.133.4
+
 ## 2.2
 - Updated to Fabric API 0.133.0
 - Add new global triggers: Entity blocks with shield, Entity drops experience, Entity falls, Entity picks up item, Entity jumps, Entity picks up experience
