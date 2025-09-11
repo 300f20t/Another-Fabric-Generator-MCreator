@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
 import org.spongepowered.asm.mixin.injection.Constant;
 
 @Mixin(RepairItemRecipe.class)
-public abstract class ${JavaModName}RepairItemRecipeMixin {
+public abstract class RepairItemRecipeMixin {
 	@Inject(method = "assemble", at = @At("HEAD"), cancellable = true)
 	public void assemble(CraftingInput craftingInput, HolderLookup.Provider provider, CallbackInfoReturnable<ItemStack> cir) {
 		ItemStack itemStack3;
