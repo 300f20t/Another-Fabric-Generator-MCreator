@@ -38,8 +38,8 @@ public class ${JavaModName} implements ModInitializer {
 		LOGGER.info("Initializing ${JavaModName}");
 
 		<#if w.hasSounds()>${JavaModName}Sounds.load();</#if>
-		<#if w.hasItemsInTabs()>${JavaModName}Tabs.load()</#if>
-		<#if w.hasVariables()>${JavaModName}Variables.variablesLoad()</#if>
+		<#if w.hasItemsInTabs()>${JavaModName}Tabs.load();</#if>
+		<#if w.hasVariables()>${JavaModName}Variables.variablesLoad();</#if>
 		<#if w.hasElementsOfBaseType("feature")>${JavaModName}Features.load();</#if>
 		<#if w.hasElementsOfType("particle")>${JavaModName}ParticleTypes.load();</#if>
 		<#if w.hasElementsOfType("fluid")>${JavaModName}Fluids.load();</#if>
