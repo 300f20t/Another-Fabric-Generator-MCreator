@@ -24,6 +24,8 @@
 
 package ${package}.init;
 
+import java.text.DecimalFormat;
+
 @Environment(EnvType.CLIENT) public class ${JavaModName}Screens {
 
 	public static void clientLoad() {
