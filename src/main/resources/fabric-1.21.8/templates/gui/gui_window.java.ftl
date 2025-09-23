@@ -55,7 +55,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 	</#list>
 
 	<#list sliders as component>
-	private ExtendedSlider ${component.getName()};
+	private ${JavaModName}Screens.ExtendedSlider ${component.getName()};
 	</#list>
 
 	public ${name}Screen(${name}Menu container, Inventory inventory, Component text) {
@@ -317,7 +317,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 
 		<#assign slid = 0>
 		<#list sliders as component>
-			${component.getName()} = new ExtendedSlider(this.leftPos + ${component.gx(data.width)}, this.topPos + ${component.gy(data.height)},
+			${component.getName()} = new ${JavaModName}Screens.ExtendedSlider(this.leftPos + ${component.gx(data.width)}, this.topPos + ${component.gy(data.height)},
 				${component.getWidth(w.getWorkspace())}, ${component.getHeight(w.getWorkspace())}, Component.translatable(
 				"gui.${modid}.${registryname}.${component.getName()}_prefix"), Component.translatable("gui.${modid}.${registryname}.${component.getName()}_suffix"),
 				${component.min}, ${component.max}, ${component.value}, ${component.step}, 0, true) {
