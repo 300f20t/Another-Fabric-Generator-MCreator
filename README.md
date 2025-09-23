@@ -9,7 +9,7 @@ This project is not official. It is not affiliated with the respective owners an
 **The current targeted Minecraft version is 1.21.8.**
 
 ## Important Information
-- Make sure you use MCreator 2025.3 first snapshot
+- Make sure you use MCreator 2025.3 second snapshot
 - Back up your workspace before updating to a newer version of the plugin.
 - Mods will also require [Fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) to function properly, so when you want to play your mod, make sure you have Fabric API.
 
