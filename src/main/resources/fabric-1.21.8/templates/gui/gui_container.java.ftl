@@ -337,6 +337,10 @@ public class ${name}Menu extends AbstractContainerMenu implements ${JavaModName}
 			PayloadTypeRegistry.playC2S().register(${name}SlotMessage.TYPE, ${name}SlotMessage.STREAM_CODEC);
 			ServerPlayNetworking.registerGlobalReceiver(${name}SlotMessage.TYPE, ${name}SlotMessage::handleData);
 		</#if>
+		<#if data.hasSliderEvents()>
+			PayloadTypeRegistry.playC2S().register(${name}SliderMessage.TYPE, ${name}SliderMessage.STREAM_CODEC);
+			ServerPlayNetworking.registerGlobalReceiver(${name}SliderMessage.TYPE, ${name}SliderMessage::handleData);
+		</#if>
 
 		<#if hasProcedure(data.onTick)>
 			PlayerEvents.END_PLAYER_TICK.register(entity -> {

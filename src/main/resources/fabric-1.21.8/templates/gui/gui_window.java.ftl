@@ -27,6 +27,7 @@ package ${package}.client.gui;
 <#assign buttons = data.getComponentsOfType("Button")>
 <#assign imageButtons = data.getComponentsOfType("ImageButton")>
 <#assign tooltips = data.getComponentsOfType("Tooltip")>
+<#assign sliders = data.getComponentsOfType("Slider")>
 
 <#compress>
 public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implements ${JavaModName}Screens.FabricScreenAccessor {
@@ -38,19 +39,23 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 	private boolean menuStateUpdateActive = false;
 
 	<#list textFields as component>
-	EditBox ${component.getName()};
+	private EditBox ${component.getName()};
 	</#list>
 
 	<#list checkboxes as component>
-	Checkbox ${component.getName()};
+	private Checkbox ${component.getName()};
 	</#list>
 
 	<#list buttons as component>
-	Button ${component.getName()};
+	private Button ${component.getName()};
 	</#list>
 
 	<#list imageButtons as component>
-	ImageButton ${component.getName()};
+	private ImageButton ${component.getName()};
+	</#list>
+
+	<#list sliders as component>
+	private ExtendedSlider ${component.getName()};
 	</#list>
 
 	public ${name}Screen(${name}Menu container, Inventory inventory, Component text) {
@@ -77,6 +82,15 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 		</#if>
 
 		<#-- updateMenuState is not implemented for checkboxes, as there is no procedure block to set checkbox state currently -->
+
+		<#if sliders?has_content>
+		if (elementType == 2 && elementState instanceof Number n) {
+			<#list sliders as component>
+				<#if !component?is_first>else</#if> if (name.equals("${component.getName()}"))
+					${component.getName()}.setValue(n.doubleValue());
+			</#list>
+		}
+		</#if>
 
 		menuStateUpdateActive = false;
 	}
@@ -107,7 +121,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 				<#if hasProcedure(component.displayCondition)>
 					if (<@procedureOBJToConditionCode component.displayCondition/>)
 				</#if>
-				InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics,
+				InventoryScreen.renderEntityInInventoryFollowsAngle(guiGraphics,
 					this.leftPos + ${x + (10 - 1000)}, this.topPos + ${y + (20 - 1000)},
 					this.leftPos + ${x + (10 + 1000)}, this.topPos + ${y + (20 + 1000)},
 					${component.scale}, -livingEntity.getBbHeight() / (2.0f * livingEntity.getScale()),
@@ -188,6 +202,13 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 
 		return super.keyPressed(key, b, c);
 	}
+
+	<#if sliders?has_content> <#-- AbstractContainerScreen overrides it for slots only, causing a bug with Sliders, so we override it again -->
+	@Override public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+		return (this.getFocused() != null && this.isDragging() && button == 0) ? this.getFocused().mouseDragged(mouseX, mouseY, button, dragX, dragY)
+			: super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+	}
+	</#if>
 
 	<#if textFields?has_content>
 	@Override public void resize(Minecraft minecraft, int width, int height) {
@@ -293,6 +314,28 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 
 			this.addRenderableWidget(${component.getName()});
 		</#list>
+
+		<#assign slid = 0>
+		<#list sliders as component>
+			${component.getName()} = new ExtendedSlider(this.leftPos + ${component.gx(data.width)}, this.topPos + ${component.gy(data.height)},
+				${component.getWidth(w.getWorkspace())}, ${component.getHeight(w.getWorkspace())}, Component.translatable(
+				"gui.${modid}.${registryname}.${component.getName()}_prefix"), Component.translatable("gui.${modid}.${registryname}.${component.getName()}_suffix"),
+				${component.min}, ${component.max}, ${component.value}, ${component.step}, 0, true) {
+					@Override protected void applyValue() {
+						if (!menuStateUpdateActive)
+							menu.sendMenuStateUpdate(entity, 2, "${component.getName()}", this.getValue(), false);
+						<#if hasProcedure(component.whenSliderMoves)>
+							ClientPacketDistributor.sendToServer(new ${name}SliderMessage(${slid}, x, y, z, this.getValue()));
+							${name}SliderMessage.handleSliderAction(entity, ${slid}, x, y, z, this.getValue());
+						</#if>
+					}
+				};
+			this.addRenderableWidget(${component.getName()});
+			if (!menuStateUpdateActive)
+				menu.sendMenuStateUpdate(entity, 2, "${component.getName()}", ${component.getName()}.getValue(), false);
+
+			<#assign slid +=1>
+		</#list>
 	}
 
 	<#if data.getComponentsOfType("Button")?filter(component -> hasProcedure(component.displayCondition))?size != 0>
@@ -306,6 +349,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 		</#list>
 	}
 	</#if>
+
 }
 </#compress>
 

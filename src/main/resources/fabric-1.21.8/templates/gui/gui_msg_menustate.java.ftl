@@ -34,6 +34,8 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 			buffer.writeUtf((String) message.elementState);
 		} else if (message.elementType == 1) {
 			buffer.writeBoolean((boolean) message.elementState);
+		} else if (message.elementType == 2 && message.elementState instanceof Number n) {
+			buffer.writeDouble(n.doubleValue());
 		}
 	}
 
@@ -45,6 +47,8 @@ public record MenuStateUpdateMessage(int elementType, String name, Object elemen
 			elementState = buffer.readUtf();
 		} else if (elementType == 1) {
 			elementState = buffer.readBoolean();
+		} else if (elementType == 2) {
+			elementState = buffer.readDouble();
 		}
 		return new MenuStateUpdateMessage(elementType, name, elementState);
 	}

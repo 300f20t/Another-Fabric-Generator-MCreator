@@ -29,7 +29,7 @@ package ${package}.item;
 public class ${name}Item extends Item {
 
 	<#if data.hasBannerPatterns()>
-	public static final TagKey<BannerPattern> PROVIDED_PATTERNS = TagKey.create(Registries.BANNER_PATTERN, ResourceLocation.parse("${modid}:pattern_item/${registryname}"));
+	public static final TagKey<BannerPattern> PROVIDED_PATTERNS = TagKey.create(Registries.BANNER_PATTERN, ResourceLocation.fromNamespaceAndPath(${JavaModName}.MODID, "pattern_item/${registryname}"));
 	</#if>
 
 	public ${name}Item(Item.Properties properties) {
