@@ -121,7 +121,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 				<#if hasProcedure(component.displayCondition)>
 					if (<@procedureOBJToConditionCode component.displayCondition/>)
 				</#if>
-				InventoryScreen.renderEntityInInventoryFollowsAngle(guiGraphics,
+				InventoryScreen.renderEntityInInventoryFollowsMouse(guiGraphics,
 					this.leftPos + ${x + (10 - 1000)}, this.topPos + ${y + (20 - 1000)},
 					this.leftPos + ${x + (10 + 1000)}, this.topPos + ${y + (20 + 1000)},
 					${component.scale}, -livingEntity.getBbHeight() / (2.0f * livingEntity.getScale()),
@@ -325,7 +325,7 @@ public class ${name}Screen extends AbstractContainerScreen<${name}Menu> implemen
 						if (!menuStateUpdateActive)
 							menu.sendMenuStateUpdate(entity, 2, "${component.getName()}", this.getValue(), false);
 						<#if hasProcedure(component.whenSliderMoves)>
-							ClientPacketDistributor.sendToServer(new ${name}SliderMessage(${slid}, x, y, z, this.getValue()));
+							ClientPlayNetworking.send(new ${name}SliderMessage(${slid}, x, y, z, this.getValue()));
 							${name}SliderMessage.handleSliderAction(entity, ${slid}, x, y, z, this.getValue());
 						</#if>
 					}
