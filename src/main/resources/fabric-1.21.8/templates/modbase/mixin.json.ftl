@@ -4,7 +4,7 @@
 	<#assign mixins = mixins + ['NoiseGeneratorSettingsMixin']>
 </#if>
 <#if w.hasElementsOfBaseType('item')>
-	<#assign mixins = mixins + [JavaModName + 'RepairItemRecipeMixin']>
+	<#assign mixins = mixins + ['RepairItemRecipeMixin']>
 	<#assign mixins = mixins + ['ServerPlayerMixin']>
 </#if>
 <#if w.hasElementsOfType('attribute')>
