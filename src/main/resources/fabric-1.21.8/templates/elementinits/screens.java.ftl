@@ -38,7 +38,7 @@ import java.text.DecimalFormat;
 		void updateMenuState(int elementType, String name, Object elementState);
 	}
 
-	public class ExtendedSlider extends AbstractSliderButton {
+	public static class ExtendedSlider extends AbstractSliderButton {
         protected Component prefix;
         protected Component suffix;
 
