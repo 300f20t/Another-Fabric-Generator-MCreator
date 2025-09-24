@@ -198,6 +198,14 @@ public class ${name}Block extends ${getPlantClass(data.plantType)}Block
 	}
 	</#if>
 
+	<#if data.xpAmountMax != 0>
+	@Override protected void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean bl) {
+	    super.spawnAfterBreak(state, level, pos, stack, bl);
+	    if (bl)
+	        this.tryDropExperience(level, pos, stack, <#if data.xpAmountMin == data.xpAmountMax>ConstantInt.of(${data.xpAmountMin})<#else>UniformInt.of(${data.xpAmountMin}, ${data.xpAmountMax})</#if>);
+	}
+	</#if>
+
 	<#if (data.canBePlacedOn?size > 0) || hasProcedure(data.placingCondition)>
 		<#if data.plantType != "growapable">
 		@Override public boolean mayPlaceOn(BlockState groundState, BlockGetter worldIn, BlockPos pos) {

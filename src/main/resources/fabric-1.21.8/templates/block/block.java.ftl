@@ -496,6 +496,14 @@ public class ${name}Block extends
 	}
 	</#if>
 
+	<#if data.xpAmountMax != 0>
+	@Override protected void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean bl) {
+	    super.spawnAfterBreak(state, level, pos, stack, bl);
+	    if (bl)
+	        this.tryDropExperience(level, pos, stack, <#if data.xpAmountMin == data.xpAmountMax>ConstantInt.of(${data.xpAmountMin})<#else>UniformInt.of(${data.xpAmountMin}, ${data.xpAmountMax})</#if>);
+	}
+	</#if>
+
 	<@onBlockAdded data.onBlockAdded, hasProcedure(data.onTickUpdate) && data.shouldScheduleTick(), data.tickRate/>
 
 	<@onRedstoneOrNeighborChanged data.onRedstoneOn, data.onRedstoneOff, data.onNeighbourBlockChanges/>
