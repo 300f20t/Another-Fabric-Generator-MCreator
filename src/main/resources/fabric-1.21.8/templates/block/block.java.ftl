@@ -500,7 +500,7 @@ public class ${name}Block extends
 	@Override protected void spawnAfterBreak(BlockState state, ServerLevel level, BlockPos pos, ItemStack stack, boolean bl) {
 	    super.spawnAfterBreak(state, level, pos, stack, bl);
 	    if (bl)
-	        this.tryDropExperience(level, pos, stack, <#if data.xpAmountMin == data.xpAmountMax>ConstantInt.of(${data.xpAmountMin})<#else>UniformInt.of(${data.xpAmountMin}, ${data.xpAmountMax})</#if>);
+	        this.tryDropExperience(level, pos, stack, <#if data.xpAmountMin == data.xpAmountMax>ConstantInt.of(${data.xpAmountMin}<#else>UniformInt.of(${data.xpAmountMin}, ${data.xpAmountMax}</#if>));
 	}
 	</#if>
 
