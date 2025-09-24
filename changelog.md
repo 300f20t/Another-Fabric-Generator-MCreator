@@ -1,9 +1,10 @@
 # Changelogs:
 
 ## 2.3
+- Updated to MCreator 2025.3.38713
 - Updated to Fabric API 0.133.4
-- Some other minor improvements
 - [Bugfix] Potion items crash the game with custom potion effects
+- Some other minor improvements
 
 ## 2.2
 - Updated to Fabric API 0.133.0
