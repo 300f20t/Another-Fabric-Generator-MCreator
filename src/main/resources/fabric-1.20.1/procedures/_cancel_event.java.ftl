@@ -1,1 +1,0 @@
-eventResult = false;
